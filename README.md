@@ -2,6 +2,6 @@
 Open various other maps at the current WME location (if supported).
 
 Currently Supported:
-* Google Mapsy
-* Mapillar
+* Google Maps
+* Mapillary
 * Terraserver

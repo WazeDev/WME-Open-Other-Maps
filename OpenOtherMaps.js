@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2017.11.07.01
+// @version      2017.12.07.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -15,7 +15,7 @@
     'use strict';
 
     function init(){
-        $('.olControlAttribution').css("right", "300px");
+        $('.olControlAttribution').css("right", "350px");
         var $section = $("<div>", {style:"padding:8px 16px"});
         $section.html([
             '<span id="GMaps">',

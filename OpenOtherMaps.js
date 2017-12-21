@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2017.12.21.01
+// @version      2017.12.21.02
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -21,12 +21,21 @@
         var $section = $("<div>");
         $section.html([
             '<div>',
+            "<p>The below maps are for reference only and no data should be copied from them as it violates copyright.  </br></br>Mapillary's streetview is allowed to be used for mapping, while the various sources used for the map are not.</p></br>",
             '<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="http://i.imgur.com/whsQQFE.png" height="18" width="18">Google Maps</label></div>',
             '<div><input type="checkbox" id="chkMapillary" class="OOMchk"><label for="chkMapillary"><img src="https://i.imgur.com/vG2qieS.png" height="18" width="18">Mapillary</label></div>',
             '<div><input type="checkbox" id="chkTerraserver" class="OOMchk"><label for="chkTerraserver"><img src="https://imgur.com/IPUFNnR.png" height="18" width="18">Terraserver</label></div>',
             '<div><input type="checkbox" id="chkWikimapia" class="OOMchk"><label for="chkWikimapia"><img src="https://imgur.com/UsOwmvT.png" height="18" width="18">Wikimapia</label></div>',
             '<div><input type="checkbox" id="chkBing" class="OOMchk"><label for="chkBing"><img src="https://imgur.com/CF430d2.png" height="18" width="18">Bing Maps</label></div>',
-            '<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="https://imgur.com/xVqNdmm.png" height="18" width ="18">Open Street Maps</label></div>',
+            '<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="https://imgur.com/xVqNdmm.png" height="18" width ="18">Open Street Map</label></div>',
+            '</br><div>',
+            '<fieldsetstyle="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
+            '<legend style="margin-bottom:0px; border-bottom-style:none;width:auto;"><h4>Map Language (where applicable)</h4></legend>',
+            '<input type="radio" name="radOOMLanguage" id="radOOMNoLang">Do not set a language</br>',
+            '<input type="radio" name="radOOMLanguage" id="radOOMWMELang">Use WME language</br>',
+            '<input type="radio" name="radOOMLanguage" id="radOOMCustomLang">Custom language <input type="text" name="txtOOMLanguage" id="txtOOMLanguage" style="border: 1px solid #000000;" size="4"/>',
+            '</fieldset>',
+            '</div>',
             '</div>'
         ].join(' '));
 
@@ -42,6 +51,15 @@
         setChecked('chkBing', settings.Bing);
         setChecked('chkOSM', settings.OSM);
 
+        if(settings.LangSetting == 0)
+            setChecked("radOOMNoLang", true);
+        else if(settings.LangSetting == 1)
+            setChecked("radOOMWMELang", true);
+        else
+            setChecked("radOOMCustomLang", true);
+
+        $('#txtOOMLanguage')[0].value = settings.CustLang;
+
         $('.olControlAttribution').css("right", "400px");
 
         LoadMapButtons();
@@ -51,6 +69,29 @@
             saveSettings();
             LoadMapButtons();
         });
+        $("[id^='rad']").change(function() {
+            if(isChecked("radOOMNoLang"))
+                settings.LangSetting = 0;
+            else if(isChecked("radOOMWMELang"))
+                settings.LangSetting = 1;
+            else
+                settings.LangSetting = 2;
+            saveSettings();
+        });
+        $('#txtOOMLanguage').focusout(function(){
+            settings.CustLang = $('#txtOOMLanguage').val();
+            saveSettings();
+        });
+    }
+
+    function GetLanguage()
+    {
+        if(isChecked("OOMNoLang"))
+            return "";
+        else if(isChecked("OOMWMELang"))
+            return I18n.currentLocale().replace("en-US", "en");
+        else //Custom Language
+            return $('#txtOOMLanguage').val();
     }
 
     function LoadMapButtons()
@@ -73,7 +114,7 @@
                 let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
-                let lang = I18n.currentLocale().replace("en-US", "en");
+                let lang = GetLanguage();
 
                 window.open('https://www.google.com/maps/@' + lat + ',' + lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Google Maps');
             });
@@ -139,7 +180,9 @@
                 var center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
                 var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
-                window.open(`http://wikimapia.org/#lang=en&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
+                let lang = GetLanguage();
+
+                window.open(`http://wikimapia.org/#${(lang != "" ? "lang=" + lang : "")}&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
             });
         }
 
@@ -202,7 +245,9 @@
             Terraserver: true,
             Wikimapia: false,
             Bing: false,
-            OSM: false
+            OSM: false,
+            LangSetting: 1,
+            CustLang: ""
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -219,7 +264,9 @@
                 Terraserver: settings.Terraserver,
                 Wikimapia: settings.Wikimapia,
                 Bing: settings.Bing,
-                OSM: settings.OSM
+                OSM: settings.OSM,
+                LangSetting: settings.LangSetting,
+                CustLang: settings.CustLang
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));

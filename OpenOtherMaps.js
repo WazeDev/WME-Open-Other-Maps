@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2017.12.19.01
+// @version      2017.12.21.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -25,6 +25,8 @@
             '<div><input type="checkbox" id="chkMapillary" class="OOMchk"><label for="chkMapillary"><img src="https://i.imgur.com/vG2qieS.png" height="18" width="18">Mapillary</label></div>',
             '<div><input type="checkbox" id="chkTerraserver" class="OOMchk"><label for="chkTerraserver"><img src="https://imgur.com/IPUFNnR.png" height="18" width="18">Terraserver</label></div>',
             '<div><input type="checkbox" id="chkWikimapia" class="OOMchk"><label for="chkWikimapia"><img src="https://imgur.com/UsOwmvT.png" height="18" width="18">Wikimapia</label></div>',
+            '<div><input type="checkbox" id="chkBing" class="OOMchk"><label for="chkBing"><img src="https://imgur.com/CF430d2.png" height="18" width="18">Bing Maps</label></div>',
+            '<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="https://imgur.com/xVqNdmm.png" height="18" width ="18">Open Street Maps</label></div>',
             '</div>'
         ].join(' '));
 
@@ -37,8 +39,10 @@
         setChecked('chkMapillary', settings.Mapillary);
         setChecked('chkTerraserver', settings.Terraserver);
         setChecked('chkWikimapia', settings.Wikimapia);
+        setChecked('chkBing', settings.Bing);
+        setChecked('chkOSM', settings.OSM);
 
-        $('.olControlAttribution').css("right", "350px");
+        $('.olControlAttribution').css("right", "400px");
 
         LoadMapButtons();
         $('.OOMchk').change(function() {
@@ -120,7 +124,7 @@
         //********************* Wikimapia *********************
         $('#OOMWikimapia').remove();
         if(settings.Wikimapia){
-            var $sectionWikimapia = $("<div>", {style:"padding:8px 16px"});
+            let $sectionWikimapia = $("<div>", {style:"padding:8px 16px"});
             $sectionWikimapia.html([
                 '<span id="OOMWikimapia">',
                 '<img src="https://imgur.com/UsOwmvT.png" alt="Wikimapia" width="18" height="18" id="OOMWikimapiaImg" title="Open in Wikimapia" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">',
@@ -138,6 +142,56 @@
                 window.open(`http://wikimapia.org/#lang=en&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
             });
         }
+
+        $('#OOMBing').remove();
+        if(settings.Bing)
+        {
+            let $sectionBing = $("<div>", {style:"padding:8px 16px"});
+            $sectionBing.html([
+                '<span id="OOMBing">',
+                '<img src="https://imgur.com/CF430d2.png" alt="Bing Maps" width="18" height="18" id="OOMBingImg" title="Open in Bing Maps" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">',
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBing.html());
+
+            $('#OOMBingImg').click(function(){
+                let projI = new OpenLayers.Projection("EPSG:900913");
+                let projE = new OpenLayers.Projection("EPSG:4326");
+                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
+                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                //let lang = I18n.currentLocale().replace("en-US", "en");
+
+                window.open(`https://www.bing.com/maps?&cp=${lat}~${lon}&lvl=${( W.map.zoom + 12)}`);
+            });
+        }
+
+        $('#OOMOSM').remove();
+        if(settings.OSM)
+        {
+            //https://www.openstreetmap.org/#map=16/39.5588/-84.2365
+            let $sectionOSM = $("<div>", {style:"padding:8px 16px"});
+            $sectionOSM.html([
+                '<span id="OOMOSM">',
+                '<img src="https://imgur.com/xVqNdmm.png" alt="Open Street Map" width="18" height="18" id="OOMOSMImg" title="Open in Open Street Maps" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">',
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionOSM.html());
+
+            $('#OOMOSMImg').click(function(){
+                let projI = new OpenLayers.Projection("EPSG:900913");
+                let projE = new OpenLayers.Projection("EPSG:4326");
+                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
+                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                //let lang = I18n.currentLocale().replace("en-US", "en");
+
+                window.open(`https://www.openstreetmap.org/#map=${(W.map.zoom + 12)}/${lat}/${lon}`);
+                //window.open('https://www.google.com/maps/@' + lat + ',' + lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Bing Maps');
+            });
+        }
     }
 
     function loadSettings() {
@@ -146,7 +200,9 @@
             GMaps: true,
             Mapillary: true,
             Terraserver: true,
-            Wikimapia: false
+            Wikimapia: false,
+            Bing: false,
+            OSM: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -161,7 +217,9 @@
                 GMaps: settings.GMaps,
                 Mapillary: settings.Mapillary,
                 Terraserver: settings.Terraserver,
-                Wikimapia: settings.Wikimapia
+                Wikimapia: settings.Wikimapia,
+                Bing: settings.Bing,
+                OSM: settings.OSM
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2017.12.21.02
+// @version      2017.12.23.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -86,9 +86,9 @@
 
     function GetLanguage()
     {
-        if(isChecked("OOMNoLang"))
+        if(isChecked("radOOMNoLang"))
             return "";
-        else if(isChecked("OOMWMELang"))
+        else if(isChecked("radOOMWMELang"))
             return I18n.currentLocale().replace("en-US", "en");
         else //Custom Language
             return $('#txtOOMLanguage').val();

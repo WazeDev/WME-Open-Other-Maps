@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2017.12.23.01
+// @version      2018.01.08.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -21,7 +21,7 @@
         var $section = $("<div>");
         $section.html([
             '<div>',
-            "<p>The below maps are for reference only and no data should be copied from them as it violates copyright.  </br></br>Mapillary's streetview is allowed to be used for mapping, while the various sources used for the map are not.</p></br>",
+            "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates copyright.</br>",
             '<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="http://i.imgur.com/whsQQFE.png" height="18" width="18">Google Maps</label></div>',
             '<div><input type="checkbox" id="chkMapillary" class="OOMchk"><label for="chkMapillary"><img src="https://i.imgur.com/vG2qieS.png" height="18" width="18">Mapillary</label></div>',
             '<div><input type="checkbox" id="chkTerraserver" class="OOMchk"><label for="chkTerraserver"><img src="https://imgur.com/IPUFNnR.png" height="18" width="18">Terraserver</label></div>',

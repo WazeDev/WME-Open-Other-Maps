@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.01.08.01
+// @version      2018.01.10.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -181,8 +181,9 @@
                 var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 let lang = GetLanguage();
-
-                window.open(`http://wikimapia.org/#${(lang != "" ? "lang=" + lang : "")}&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
+                if(lang === "")
+                    lang = "en";
+                window.open(`http://wikimapia.org/#${(lang !== "" ? "lang=" + lang : "")}&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
             });
         }
 

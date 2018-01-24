@@ -15,4 +15,5 @@ Currently supported:
 
 
 Now also lets you open Waze from other maps!  Sorry - no way to disable this as the settings cannot be access across websites.
+
 ![](https://imgur.com/JFr1zx6.png)

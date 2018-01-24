@@ -10,15 +10,13 @@
 // @include      https://www.google.com/maps*
 // @exclude      https://www.waze.com/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
-// @resource     jqUI_CSS  https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css
-// @grant        GM_addStyle
-// @grant        GM_getResourceText
+// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
-    var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
-    GM_addStyle(jqUI_CssSrc);
+    //var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
+    //GM_addStyle(jqUI_CssSrc);
 
     var settings = {};
 
@@ -350,7 +348,7 @@
             if (W &&
                 W.map &&
                 W.model &&
-                $ && WazeWrap.Interface) {
+                $ && WazeWrap.Ready) {
                 initInterface();
             } else if (tries < 1000) {
                 setTimeout(function () {bootstrap(tries++);}, 200);

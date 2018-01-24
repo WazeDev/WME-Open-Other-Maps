@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.01.10.01
+// @version      2018.01.24.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
 // @include      https://www.waze.com/*/editor*
 // @include      https://beta.waze.com*
 // @exclude      https://www.waze.com/user/editor*
-// @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js?version=229392
+// @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @grant        none
 // ==/UserScript==
 
@@ -28,6 +28,8 @@
             '<div><input type="checkbox" id="chkWikimapia" class="OOMchk"><label for="chkWikimapia"><img src="https://imgur.com/UsOwmvT.png" height="18" width="18">Wikimapia</label></div>',
             '<div><input type="checkbox" id="chkBing" class="OOMchk"><label for="chkBing"><img src="https://imgur.com/CF430d2.png" height="18" width="18">Bing Maps</label></div>',
             '<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="https://imgur.com/xVqNdmm.png" height="18" width ="18">Open Street Map</label></div>',
+            '<div><input type="checkbox" id="chkYandex" class="OOMchk"><label for="chkYandex"><img src="https://imgur.com/wpoUA1E.png" height="18" width ="18">Yandex</label></div>',
+            '<div><input type="checkbox" id="chkHere" class="OOMchk"><label for="chkHere"><img src="https://imgur.com/6XGwxUg.png" height="18" width ="18">Here</label></div>',
             '</br><div>',
             '<fieldsetstyle="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
             '<legend style="margin-bottom:0px; border-bottom-style:none;width:auto;"><h4>Map Language (where applicable)</h4></legend>',
@@ -50,6 +52,8 @@
         setChecked('chkWikimapia', settings.Wikimapia);
         setChecked('chkBing', settings.Bing);
         setChecked('chkOSM', settings.OSM);
+        setChecked('chkYandex', settings.Yandex);
+        setChecked('chkHere', settings.Here);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -212,8 +216,7 @@
         }
 
         $('#OOMOSM').remove();
-        if(settings.OSM)
-        {
+        if(settings.OSM){
             //https://www.openstreetmap.org/#map=16/39.5588/-84.2365
             let $sectionOSM = $("<div>", {style:"padding:8px 16px"});
             $sectionOSM.html([
@@ -233,7 +236,54 @@
                 //let lang = I18n.currentLocale().replace("en-US", "en");
 
                 window.open(`https://www.openstreetmap.org/#map=${(W.map.zoom + 12)}/${lat}/${lon}`);
-                //window.open('https://www.google.com/maps/@' + lat + ',' + lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Bing Maps');
+            });
+        }
+
+        $('#OOMYandex').remove();
+        if(settings.Yandex){
+            //https://n.maps.yandex.ru/#!/?z=14&ll=46.019795%2C51.505120&l=nk%23sat
+            let $sectionYandex = $("<div>", {style:"padding:8px 16px"});
+            $sectionYandex.html([
+                '<span id="OOMYandex">',
+                '<img src="https://imgur.com/wpoUA1E.png" alt="Yandex" width="18" height="18" id="OOMYandexImg" title="Open in Yandex" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">',
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionYandex.html());
+
+            $('#OOMYandexImg').click(function(){
+                let projI = new OpenLayers.Projection("EPSG:900913");
+                let projE = new OpenLayers.Projection("EPSG:4326");
+                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
+                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                //let lang = I18n.currentLocale().replace("en-US", "en");
+
+                window.open(`https://n.maps.yandex.ru/#!/?z=${(W.map.zoom + 12)}&ll=${lon}%2C${lat}&l=nk%23sat`);
+            });
+        }
+
+        $('#OOMHere').remove();
+        if(settings.Here){
+            //https://wego.here.com/?map=39.56508,-84.26224,16,normal&x=ep
+            let $sectionHere = $("<div>", {style:"padding:8px 16px"});
+            $sectionHere.html([
+                '<span id="OOMHere">',
+                '<img src="https://imgur.com/6XGwxUg.png" alt="Here" width="18" height="18" id="OOMHereImg" title="Open in Here" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">',
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionHere.html());
+
+            $('#OOMHereImg').click(function(){
+                let projI = new OpenLayers.Projection("EPSG:900913");
+                let projE = new OpenLayers.Projection("EPSG:4326");
+                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
+                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                //let lang = I18n.currentLocale().replace("en-US", "en");
+
+                window.open(`https://wego.here.com/?map=${lat},${lon},${(W.map.zoom + 12)},satellite&x=ep`);
             });
         }
     }
@@ -248,7 +298,9 @@
             Bing: false,
             OSM: false,
             LangSetting: 1,
-            CustLang: ""
+            CustLang: "",
+            Yandex: false,
+            Here: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -267,7 +319,9 @@
                 Bing: settings.Bing,
                 OSM: settings.OSM,
                 LangSetting: settings.LangSetting,
-                CustLang: settings.CustLang
+                CustLang: settings.CustLang,
+                Yandex: settings.Yandex,
+                Here: settings.Here
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));
@@ -285,10 +339,11 @@
     function bootstrap(tries) {
         tries = tries || 1;
 
-        if (window.W &&
-            window.W.map &&
-            window.W.model &&
+        if (W &&
+            W.map &&
+            W.model &&
             $ && WazeWrap.Interface) {
+            setInterval(function(){console.log("OOM " + WazeWrap.Version);}, 3000);
             initInterface();
         } else if (tries < 1000) {
             setTimeout(function () {bootstrap(tries++);}, 200);

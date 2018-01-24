@@ -1,19 +1,24 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.01.24.02
+// @version      2018.01.10.01
 // @description  Links for opening external resources at the WME location
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
 // @include      https://www.waze.com/*/editor*
 // @include      https://beta.waze.com*
+// @include      https://www.google.com/maps*
 // @exclude      https://www.waze.com/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
-// @grant        none
+// @resource     jqUI_CSS  https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
 // ==/UserScript==
 
 (function() {
     'use strict';
+    var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
+    GM_addStyle(jqUI_CssSrc);
 
     var settings = {};
 
@@ -339,15 +344,44 @@
     function bootstrap(tries) {
         tries = tries || 1;
 
-        if (W &&
-            W.map &&
-            W.model &&
-            $ && WazeWrap.Interface) {
-            initInterface();
-        } else if (tries < 1000) {
-            setTimeout(function () {bootstrap(tries++);}, 200);
-        }
+        if(location.href.indexOf("google.com/maps") > -1)
+            bootstrapGM();
+        else{
+            if (W &&
+                W.map &&
+                W.model &&
+                $ && WazeWrap.Interface) {
+                initInterface();
+            } else if (tries < 1000) {
+                setTimeout(function () {bootstrap(tries++);}, 200);
+            }}
     }
+
+    function initGoogleMaps(){
+        let $OOMWazeButton = document.createElement("div");
+        $OOMWazeButton.innerHTML = '<div id="OOMWazeButtonDiv" style="height:30px; width:34px; position: fixed; right:30px; top:75px; cursor: pointer; background-image: url(https://imgur.com/NTLWfFz.png); background-repeat: no-repeat;" title="Open in WME"></div>';
+        let parent = document.getElementById("content-container");
+        parent.appendChild($OOMWazeButton);
+
+        document.getElementById("OOMWazeButtonDiv").addEventListener("click", GMToWaze);
+    }
+
+    function GMToWaze(){
+        let lon, lat, zoom;
+        let curURL = location.href.split('@').pop().split(',');
+        lon = curURL[1];
+        lat = curURL[0];
+        zoom = parseInt(curURL[2]);
+        window.open(`https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`);
+    }
+
+    function bootstrapGM(tries = 1){
+        if(document.readyState !== 'complete' )
+            setTimeout(function() {bootstrapGM(tries++);}, 200);
+        else
+            initGoogleMaps();
+    }
+
 
     bootstrap();
 })();

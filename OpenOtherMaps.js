@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.01.24.04
+// @version      2018.02.07.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -361,8 +361,34 @@
         let parent = document.getElementById("content-container");
         parent.appendChild($OOMWazeButton);
 
-        document.getElementById("OOMWazeButtonDiv").addEventListener("click", GMToWaze);
+        document.getElementById("OOMWazeButtonDiv").addEventListener("click", function(){
+            window.open(GMToWaze());
+        });
+
+        document.getElementById('OOMWazeButtonDiv').addEventListener("mouseenter",function(e) {
+            document.addEventListener('keydown', copyPLHotkeyEvent);
+            document.getElementsByClassName('widget-scene-canvas')[0].addEventListener('keydown', copyPLHotkeyEvent);
+        });
+
+        document.getElementById('OOMWazeButtonDiv').addEventListener('mouseleave', function() {
+            document.removeEventListener('keydown', copyPLHotkeyEvent);
+            document.getElementsByClassName('widget-scene-canvas')[0].removeEventListener('keydown', copyPLHotkeyEvent);
+        });
     }
+
+    var copyToClipboard = function(str) {
+        var temp = document.createElement("input");
+        document.body.append(temp);
+        temp.value = str;
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+    };
+
+    var copyPLHotkeyEvent = function(e) {
+        if ((e.metaKey || e.ctrlKey) && (e.which === 67))
+            copyToClipboard(GMToWaze());
+    };
 
     function GMToWaze(){
         let lon, lat, zoom;
@@ -370,7 +396,7 @@
         lon = curURL[1];
         lat = curURL[0];
         zoom = parseInt(curURL[2]);
-        window.open(`https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`);
+        return `https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
     }
 
     function bootstrapGM(tries = 1){

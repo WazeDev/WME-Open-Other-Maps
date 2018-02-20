@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.09.02
+// @version      2018.02.20.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
 // @include      https://www.waze.com/*/editor*
 // @include      https://beta.waze.com*
 // @include      https://www.google.com/maps*
+// @include      *wv511.org/*
 // @exclude      https://www.waze.com/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
+// @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
 // @grant        none
 // ==/UserScript==
 
@@ -28,6 +30,7 @@
     var yandexIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABa0lEQVQ4T62TPc8BQRSF/SdfER8FFZH4ASoSnYpCIkGCjoRGpaHS04iWUqHS+0hQoxPHnR12dnauxvtu8uTOPfecm9lN1gPgX2HFv8CKGpsNMJkAg4Gs6zXJjO8NK1qcz0CzCaTTQCQC+P2yJpNS5zIEK1rUakAgAHi9JkLvdMhm5gzBYrmUtxFhcbNMBshmZQ0GpR6LwfK5slpjUyqp24jX2++BxwM4HIB2W82Ez5XVGptEQoUuF5Icz+mkZsLnymqNTTSqQvc7SY7ndlMzgSurNTaFggqMx3LJ8wlcr8BopGa5HNn1rNbYzGZAKCRDolYqQLcLlMtAOKwWDodk17Nao1EsqiCH+H7bLVn1nNYY5POAz8cvbLXIYmYMwWCxAOp1IJVSy+JxYLWisek3hK/0empho0ES4yFYkeWzUPxBxyNJjIdgRZbPwumUWmb+hhVZ+n2gWqUjM3PAiizzObDb0ZGZOWDF34HnBbQcm5EIFazJAAAAAElFTkSuQmCC";
     var hereIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAAB0klEQVQ4T62RSy9DURSF+69U79XWq9p6NDEgMRAxEI1XQjqQGBATP8AjaElJKxGPlqLCmDAyEI8IpYKqViJ+wLLPuXo5vSclavDl7L3W2evs5JgA/CtSsRikYjFIxWIwCGvrG1iLbFIp6oyd+B4dRv07QrOyGkFpWQ3hQHRjiyRNj25uw+FuhFmt5l5f/6Du5SM03X0+KHYXVIKd8d19kmFivZmCzIoWqNhc8HYPcC8fg+Dt6ofF6oTF5kSFw4NO6tlmJUoVGhpbeG2x1vA7zMufF5oc7HU2wLYxq9pGg0MjSKfTCIWXea/a6VG609Xro5GvWSHoOzyUtrRV1vGA4dExkjUvEo19hrp4aGu7V/eEkHy00K/B9UiMZM1jn5b7wPGpWV0XAmR0UKhSXouycjffNrYVJ1nzVlajmA+G9J6hF4UY6PFBpVDV7ubnwuISyfK7erH4lIQ/dY/Awy38j3cIMO4TmMs+IZy4wow/iIkpP2dyOkAjxjCGXsSeH+C6O4fn7RF1qRviGp73FOpvTnH0mqErxmEZQnOcSaMpecFDaom25CUuXrNkiUOFMAgHLyk03J6hOXGG0+zvN8shFQ8p9CTzQqXR+wmpWAxS8e/A9AGMrnKfuSpKAAAAAABJRU5ErkJggg==";
     var midriveIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAASCAYAAABfJS4tAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QsdDy4g/1qyDQAAA1JJREFUOMt1lH9oVnUUxj/n+saS/lhSkBNKKJL+yCAiaQNtP2KBLgyMChuIe0P/qEgsMymzbNnmyKgIjLUpLDShpKJgQriEBhKD0IxCAyMhoyhyi7Xe+z3n6Y/37nU/6gvn3vu9nOe55/uc5x5rebSvif9fGRFnRwa3/9rS1QOIkcEdtJR7F4HdCgTw18jAM6daynu7gIcAAT+UQKM1Gs2gNEAC0zctXT0dI4PP/gTQ0rVnMdJRjMYi8xywDMVyzNqrGJaWiJhTpKoXYRKYsVziQHP51TUCJ9gv1Giq4f4AkGIS4QXFeEkKTEIGJhA2CjoPdGJGFa9WkvYaXJTZWiRUPVJxNGBqaidmL05XVyKcwGTimGBY8qNm1g38I1FXqOKCTUAdClBBahQywxeHd0dtA5QkATEmRfnE0Es/N2/sziLysikbBjYCh2T2iaS7gcdBqwQlapzVxqzs3PUAqKPgPV8KOcCdwIWVnS8Me6WyW8bpL9/bdRg43LT++frM7Fqhr0x0mWWHMOY5SYpGYEOx/baky83LgNXAakKDTet3bDGyVzDaJd0IXBFwAPl1VJs6y0QKpemuA3nJw+e7V2wA+13oEUwDkrYZ9hRm/ZZpYbheAzpnQrzKWzNWofE85gUSW0BNiOOGvS40cPL9nglgYsWD23+zOYiI2TyZh+PuuCfcE8kTyQMPfy653+wRYyeP9Gz92338jnVPFyR+IoUzHQApEikKjkiU3H2OCgIY//rDfX23r9vab7I9AKc+6KuVlIe/a9gvwOKaFB7UrA1kKYL/iI8AkseVleRjMz+8/P4tL0eod3Li0vXJ/VxeNN8lkl/mKKWiYrPqaCjW6SqxfwdWD/x5U8dmFl11NWNHendOJ91y3xNnkJYUuczs1yxXzHg/VeyHUuRDQHNlEqYWTM2SLfdkVmDy5DN/PLLcndydSnEvnpcAfP/pWxc8dHDpvZu7Lxx/hzMfv0HDPWUAbmjf9HCefG2lsEMlEhWPWmR5cvIU5MnJowhPrQDL1jzG+eH9Bz38UkNbeVtDW7nu4ucDXLNqo6WIJ1OEJU8G4Mnrqu5ykvvCUpo3NgFY0dBWbj372dvHq6DYR2a3Af0NbeU3gXpJd80ZtqNAfTHufvwXtm8nDnLoEBMAAAAASUVORK5CYII=";
+    var NYFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAADL0lEQVQ4T2VUSUtjQRDObRzw7kSdgyKiiCIo7stBPMw4MyB4M4mDB8E/oF48eBJUPImIDqIgiOKCJ3HfsrgkuB4EBb0paojGLC8Jz5rva19EZxrqdb+q+r6upbtN/w4R+QKxQIZ1XXdrmuaDPGLtgW4EYn15eUk23P8fMH6C0/doNDp9c3Nzd3x87He73ZrdbtcpBwcHGnW0hcPhOfj/gH+CAX8dV1dXCVBaYLT7fL7gxcWFnJycCIBydHSkhP+np6dCG3xC8HUAY/tAhp9vANknJiai/f390tPT8ya9vb3S19enhGvquB4dHY3t7+87ga2LkyR7vd7ptra2SHFxseTk5EhBQYEUFhZKSUmJVFVVSXV1tZSVlSldfn6+ZGdnS2Njo2xubkaBn0V0KSSyoAZ39fX1kpeXp8ClpaUKSMKMjAxJS0uTrKwsKSoqUmQVFRXS0dGhUkeaDyCymtCN4fn5ef/g4KAMDAzI0NAQw1Zr7pqZmanImpqa3uxjY2OyvLwsaADJArFYbMQUDAbdq6ur2u7urng8HlVY7jQ5OalSSk9Pl5qaGsFmynZ4eCiojSALRba0tKSFQiG36enpybeysqJDZGNjQ/b29mRmZkYaGhokKSlJpdXd3a2A29vbgk1lbW1N+XJeX1/X/X6/z4TPI5Q6FGqnra0t6ezsVCnl5uZKc3OzIiARbSiwEuqIIRGCeWRqHkSj0ciwWQcW3Gw2q4IzJZfLpYD0iZPx34hKIweLPQJWP0kIslgskpqaqtrc1dWl6razs/MmJIjPJMLMYv/h1bBeX1/fcZfW1lZ1RtglpuRwOATXRJxOp4qKM3WcScYGXV5eesFhI9FXnKU5FDhSWVkpiYmJUltbK+Pj43J2dqZqQ/B74aZsCq5LNBAILJAjfrrrAHC0tLTEysvLpb29XTkyfNaEM8HxTpHs/Pw89vz87AL2pyLhwA8vrQ2hOqempkKLi4sqJXaFYJLEC8wUEUkY3SbJb0Tz2aB5HcYLwKdh9v7+/oEnFic3gnroiEAHcYS629vbBzw1C/D7Bfn4jLwf2MEMBytEPWx4e3yQ9w+bDT4phrsxTKa/NeZmq7YI4fAAAAAASUVORK5CYII=";
 
     function initInterface(){
         var $section = $("<div>");
@@ -35,6 +38,7 @@
             '<div>',
             '<p>The below maps are legal to use and do not violate copyright</p>',
             `<div><input type="checkbox" id="chkMiDrive" class="OOMchk"><label for="chkMiDrive"><img src="${midriveIcon}" height="18" width="18">MiDrive</label></div>`,
+            `<div><input type="checkbox" id="chkNYFC" class="OOMchk"><img src="${NYFCIcon}" height="18" width="18">NY FC</div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates copyright.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -70,6 +74,7 @@
         setChecked('chkYandex', settings.Yandex);
         setChecked('chkHere', settings.Here);
         setChecked('chkMiDrive', settings.MiDrive);
+        setChecked('chkNYFC', settings.NYFC);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -326,6 +331,56 @@
                 window.open(`https://wego.here.com/?map=${lat},${lon},${(W.map.zoom + 12)},satellite&x=ep`);
             });
         }
+
+        $('#OOMNYFC').remove();
+        if(settings.NYFC){
+            let $sectionNYFC = $("<div>", {style:"padding:8px 16px"});
+            $sectionNYFC.html([
+                '<span id="OOMNYFC">',
+                `<img src="${NYFCIcon}" alt="NY FC" width="18" height="18" id="OOMNYFCImg" title="Open in NY FC" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYFC.html());
+
+            $('#OOMNYFCImg').click(function(){
+                let e=W.map.getExtent();
+                let geoNW=new OL.Geometry.Point(e.left,e.top);
+                let geoSE=new OL.Geometry.Point(e.right,e.bottom);
+
+                Proj4js.defs["EPSG:26918"] = "+proj=utm +zone=18 +ellps=GRS80 +datum=NAD83 +units=m +no_defs";
+
+                let source = new Proj4js.Proj('EPSG:900913');
+                let dest = new Proj4js.Proj('EPSG:26918');
+
+                geoNW = new Proj4js.Point(geoNW.x,geoNW.y);
+                geoSE = new Proj4js.Point(geoSE.x,geoSE.y);
+
+                Proj4js.transform(source, dest, geoNW);
+                Proj4js.transform(source, dest, geoSE);
+
+                let mapScale = 36111.909643;
+
+                switch (W.map.zoom) {
+                    case 0:
+                    case 1:
+                        mapScale = 72223.819286;
+                        break;
+                    case 2:
+                        mapScale = 36111.909643;
+                        break;
+                    case 3:
+                        mapScale = 18055.954822;
+                        break;
+                    default:
+                        mapScale = 9027.977411;
+                        break;
+                }
+
+                let URL='http://gis3.dot.ny.gov/html5viewer/?viewer=FC&scale='+mapScale+'&extent='+geoNW.x+'%2C'+geoNW.y+'%2C'+geoSE.x+'%2C'+geoSE.y;
+                window.open(URL,"_blank");
+            });
+        }
     }
 
     function loadSettings() {
@@ -341,7 +396,8 @@
             CustLang: "",
             Yandex: false,
             Here: false,
-            MiDrive: false
+            MiDrive: false,
+            NYFC: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -363,7 +419,8 @@
                 CustLang: settings.CustLang,
                 Yandex: settings.Yandex,
                 Here: settings.Here,
-                MiDrive: settings.MiDrive
+                MiDrive: settings.MiDrive,
+                NYFC: settings.NYFC
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));
@@ -378,11 +435,11 @@
         $('#' + checkboxId).prop('checked', checked);
     }
 
-    function bootstrap(tries) {
-        tries = tries || 1;
-
+    function bootstrap(tries = 1) {
         if(location.href.indexOf("google.com/maps") > -1)
-            bootstrapGM();
+            bootstrapGeneral(initGoogleMaps, 1);
+        else if(location.href.indexOf("wv511.org") > -1)
+            bootstrapGeneral(initWV511, 1);
         else{
             if (W &&
                 W.map &&
@@ -438,13 +495,36 @@
         return `https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
     }
 
-    function bootstrapGM(tries = 1){
+    function bootstrapGeneral(initdelegate, tries = 1){
         if(document.readyState !== 'complete' )
-            setTimeout(function() {bootstrapGM(tries++);}, 200);
+            setTimeout(function() {bootstrapGeneral(initdelegate, tries++);}, 200);
         else
-            initGoogleMaps();
+            initdelegate();
     }
 
+    function initWV511(){
+        if(document.getElementById("OOMWazeButtonDi") !== null)
+            document.getElementById("OOMWazeButtonDi").remove();
+
+        let $OOMWazeButton = document.createElement("div");
+        $OOMWazeButton.setAttribute("id", "OOMWazeButtonDiv");
+        $OOMWazeButton.setAttribute("style", "position:absolute; right:15px; top:190px; height:30px; width:34px; cursor:pointer; background-image:url(https://imgur.com/NTLWfFz.png); background-repeat:no-repeat;");
+        $OOMWazeButton.setAttribute("title", "Open in WME");
+        document.body.appendChild($OOMWazeButton);
+
+        document.getElementById("OOMWazeButtonDiv").addEventListener("click", function(){
+            let lon1, lon2, lonCenter, lat1, lat2, latCenter;
+            let latlon = location.href.split(":");
+            lon1 = latlon[2];
+            lat1 = latlon[3];
+            lon2 = latlon[4];
+            lat2 = latlon[5];
+
+            lonCenter = Math.min(lon1,lon2) + (Math.abs(lon1 - lon2)/2);
+            latCenter = Math.min(lat1, lat2) + (Math.abs(lat1 - lat2)/2);
+            window.open(`https://www.waze.com/en-US/editor/?lon=${lonCenter}&lat=${latCenter}&zoom=5`);
+        });
+    }
 
     bootstrap();
 })();

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.20.01
+// @version      2018.02.21.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -9,6 +9,7 @@
 // @include      https://beta.waze.com*
 // @include      https://www.google.com/maps*
 // @include      *wv511.org/*
+// @include      http://www.511virginia.org/mobile/?menu_id=incidents
 // @exclude      https://www.waze.com/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -440,6 +441,8 @@
             bootstrapGeneral(initGoogleMaps, 1);
         else if(location.href.indexOf("wv511.org") > -1)
             bootstrapGeneral(initWV511, 1);
+        else if(location.href.indexOf("511virginia.org") > -1)
+            bootstrapGeneral(init511virginia, 1);
         else{
             if (W &&
                 W.map &&
@@ -500,6 +503,24 @@
             setTimeout(function() {bootstrapGeneral(initdelegate, tries++);}, 200);
         else
             initdelegate();
+    }
+
+    function init511virginia(){
+        $('#incident_table_paginate > a').click(insertWazeLinks511Virginia);
+        insertWazeLinks511Virginia();
+    }
+
+    function insertWazeLinks511Virginia(){
+        $('#incident_table > tbody > tr > td > a').parent().append(function(){
+            if($(this).find("a").length === 1){
+                let latlons = $(this).find("a")[0].href.match(/lon1=(.*)&lat1=(.*)&lon2=(.*)&lat2=(.*)/);
+
+                let lonCenter = Math.min(latlons[1],latlons[3]) + (Math.abs(latlons[1] - latlons[3])/2);
+                let latCenter = Math.min(latlons[2], latlons[4]) + (Math.abs(latlons[2] - latlons[4])/2);
+                return ` <a href='https://www.waze.com/editor/?env=usa&lon=${lonCenter}&lat=${latCenter}&zoom=4' target='_blank'>Open in WME</a>`;
+            }
+            return "";
+        });
     }
 
     function initWV511(){

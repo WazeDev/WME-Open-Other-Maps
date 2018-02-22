@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.21.02
+// @version      2018.02.22.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -136,8 +136,8 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
-                var topleft= (new OpenLayers.LonLat(Waze.map.getExtent().left,Waze.map.getExtent().top));
-                var bottomright= (new OpenLayers.LonLat(Waze.map.getExtent().right,Waze.map.getExtent().bottom));
+                var topleft= (new OpenLayers.LonLat(W.map.getExtent().left,W.map.getExtent().top));
+                var bottomright= (new OpenLayers.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
                 var xmin = topleft.lon;
                 var xmax = bottomright.lon;
                 var ymin = bottomright.lat;
@@ -162,7 +162,7 @@
             $('#OOMGMapsImg').click(function(){
                 let projI = new OpenLayers.Projection("EPSG:900913");
                 let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 let lang = GetLanguage();
@@ -186,7 +186,7 @@
             $('#OOMMapillaryImg').click(function(){
                 var projI=new OpenLayers.Projection("EPSG:900913");
                 var projE=new OpenLayers.Projection("EPSG:4326");
-                var center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                var center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
 
@@ -207,7 +207,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionTerraserver.html());
             $('#OOMTerraserverImg').click(function(){
-                var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(Waze.map.getCenter().lon,Waze.map.getCenter().lat);
+                var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
                 window.open(`http://www.terraserver.com/view?utf8=✓&searchLng=${center_lonlat.lon}&searchLat=${center_lonlat.lat}`);
             });
         }
@@ -225,10 +225,9 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWikimapia.html());
             $('#OOMWikimapiaImg').click(function(){
-                //var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(Waze.map.getCenter().lon,Waze.map.getCenter().lat);
                 var projI=new OpenLayers.Projection("EPSG:900913");
                 var projE=new OpenLayers.Projection("EPSG:4326");
-                var center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                var center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 let lang = GetLanguage();
@@ -253,7 +252,7 @@
             $('#OOMBingImg').click(function(){
                 let projI = new OpenLayers.Projection("EPSG:900913");
                 let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 //let lang = I18n.currentLocale().replace("en-US", "en");
@@ -277,7 +276,7 @@
             $('#OOMOSMImg').click(function(){
                 let projI = new OpenLayers.Projection("EPSG:900913");
                 let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let center_lonlat = (new OpenLayers.LonLat(Wmap.center.lon, W.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 //let lang = I18n.currentLocale().replace("en-US", "en");
@@ -301,7 +300,7 @@
             $('#OOMYandexImg').click(function(){
                 let projI = new OpenLayers.Projection("EPSG:900913");
                 let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 //let lang = I18n.currentLocale().replace("en-US", "en");
@@ -325,7 +324,7 @@
             $('#OOMHereImg').click(function(){
                 let projI = new OpenLayers.Projection("EPSG:900913");
                 let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Waze.map.center.lon, Waze.map.center.lat)).transform(projI,projE);
+                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
                 let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
                 let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
                 //let lang = I18n.currentLocale().replace("en-US", "en");

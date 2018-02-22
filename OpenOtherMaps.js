@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.22.01
+// @version      2018.02.22.03
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -11,7 +11,7 @@
 // @include      *wv511.org/*
 // @include      http://www.511virginia.org/mobile/?menu_id=incidents
 // @include      https://mdotnetpublic.state.mi.us/drive/
-// @exclude      https://www.waze.com/user/editor*
+// @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
 // @grant        none
@@ -33,6 +33,7 @@
     var hereIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAAB0klEQVQ4T62RSy9DURSF+69U79XWq9p6NDEgMRAxEI1XQjqQGBATP8AjaElJKxGPlqLCmDAyEI8IpYKqViJ+wLLPuXo5vSclavDl7L3W2evs5JgA/CtSsRikYjFIxWIwCGvrG1iLbFIp6oyd+B4dRv07QrOyGkFpWQ3hQHRjiyRNj25uw+FuhFmt5l5f/6Du5SM03X0+KHYXVIKd8d19kmFivZmCzIoWqNhc8HYPcC8fg+Dt6ofF6oTF5kSFw4NO6tlmJUoVGhpbeG2x1vA7zMufF5oc7HU2wLYxq9pGg0MjSKfTCIWXea/a6VG609Xro5GvWSHoOzyUtrRV1vGA4dExkjUvEo19hrp4aGu7V/eEkHy00K/B9UiMZM1jn5b7wPGpWV0XAmR0UKhSXouycjffNrYVJ1nzVlajmA+G9J6hF4UY6PFBpVDV7ubnwuISyfK7erH4lIQ/dY/Awy38j3cIMO4TmMs+IZy4wow/iIkpP2dyOkAjxjCGXsSeH+C6O4fn7RF1qRviGp73FOpvTnH0mqErxmEZQnOcSaMpecFDaom25CUuXrNkiUOFMAgHLyk03J6hOXGG0+zvN8shFQ8p9CTzQqXR+wmpWAxS8e/A9AGMrnKfuSpKAAAAAABJRU5ErkJggg==";
     var midriveIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAASCAYAAABfJS4tAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QsdDy4g/1qyDQAAA1JJREFUOMt1lH9oVnUUxj/n+saS/lhSkBNKKJL+yCAiaQNtP2KBLgyMChuIe0P/qEgsMymzbNnmyKgIjLUpLDShpKJgQriEBhKD0IxCAyMhoyhyi7Xe+z3n6Y/37nU/6gvn3vu9nOe55/uc5x5rebSvif9fGRFnRwa3/9rS1QOIkcEdtJR7F4HdCgTw18jAM6daynu7gIcAAT+UQKM1Gs2gNEAC0zctXT0dI4PP/gTQ0rVnMdJRjMYi8xywDMVyzNqrGJaWiJhTpKoXYRKYsVziQHP51TUCJ9gv1Giq4f4AkGIS4QXFeEkKTEIGJhA2CjoPdGJGFa9WkvYaXJTZWiRUPVJxNGBqaidmL05XVyKcwGTimGBY8qNm1g38I1FXqOKCTUAdClBBahQywxeHd0dtA5QkATEmRfnE0Es/N2/sziLysikbBjYCh2T2iaS7gcdBqwQlapzVxqzs3PUAqKPgPV8KOcCdwIWVnS8Me6WyW8bpL9/bdRg43LT++frM7Fqhr0x0mWWHMOY5SYpGYEOx/baky83LgNXAakKDTet3bDGyVzDaJd0IXBFwAPl1VJs6y0QKpemuA3nJw+e7V2wA+13oEUwDkrYZ9hRm/ZZpYbheAzpnQrzKWzNWofE85gUSW0BNiOOGvS40cPL9nglgYsWD23+zOYiI2TyZh+PuuCfcE8kTyQMPfy653+wRYyeP9Gz92338jnVPFyR+IoUzHQApEikKjkiU3H2OCgIY//rDfX23r9vab7I9AKc+6KuVlIe/a9gvwOKaFB7UrA1kKYL/iI8AkseVleRjMz+8/P4tL0eod3Li0vXJ/VxeNN8lkl/mKKWiYrPqaCjW6SqxfwdWD/x5U8dmFl11NWNHendOJ91y3xNnkJYUuczs1yxXzHg/VeyHUuRDQHNlEqYWTM2SLfdkVmDy5DN/PLLcndydSnEvnpcAfP/pWxc8dHDpvZu7Lxx/hzMfv0HDPWUAbmjf9HCefG2lsEMlEhWPWmR5cvIU5MnJowhPrQDL1jzG+eH9Bz38UkNbeVtDW7nu4ucDXLNqo6WIJ1OEJU8G4Mnrqu5ykvvCUpo3NgFY0dBWbj372dvHq6DYR2a3Af0NbeU3gXpJd80ZtqNAfTHufvwXtm8nDnLoEBMAAAAASUVORK5CYII=";
     var NYFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAADL0lEQVQ4T2VUSUtjQRDObRzw7kSdgyKiiCIo7stBPMw4MyB4M4mDB8E/oF48eBJUPImIDqIgiOKCJ3HfsrgkuB4EBb0paojGLC8Jz5rva19EZxrqdb+q+r6upbtN/w4R+QKxQIZ1XXdrmuaDPGLtgW4EYn15eUk23P8fMH6C0/doNDp9c3Nzd3x87He73ZrdbtcpBwcHGnW0hcPhOfj/gH+CAX8dV1dXCVBaYLT7fL7gxcWFnJycCIBydHSkhP+np6dCG3xC8HUAY/tAhp9vANknJiai/f390tPT8ya9vb3S19enhGvquB4dHY3t7+87ga2LkyR7vd7ptra2SHFxseTk5EhBQYEUFhZKSUmJVFVVSXV1tZSVlSldfn6+ZGdnS2Njo2xubkaBn0V0KSSyoAZ39fX1kpeXp8ClpaUKSMKMjAxJS0uTrKwsKSoqUmQVFRXS0dGhUkeaDyCymtCN4fn5ef/g4KAMDAzI0NAQw1Zr7pqZmanImpqa3uxjY2OyvLwsaADJArFYbMQUDAbdq6ur2u7urng8HlVY7jQ5OalSSk9Pl5qaGsFmynZ4eCiojSALRba0tKSFQiG36enpybeysqJDZGNjQ/b29mRmZkYaGhokKSlJpdXd3a2A29vbgk1lbW1N+XJeX1/X/X6/z4TPI5Q6FGqnra0t6ezsVCnl5uZKc3OzIiARbSiwEuqIIRGCeWRqHkSj0ciwWQcW3Gw2q4IzJZfLpYD0iZPx34hKIweLPQJWP0kIslgskpqaqtrc1dWl6razs/MmJIjPJMLMYv/h1bBeX1/fcZfW1lZ1RtglpuRwOATXRJxOp4qKM3WcScYGXV5eesFhI9FXnKU5FDhSWVkpiYmJUltbK+Pj43J2dqZqQ/B74aZsCq5LNBAILJAjfrrrAHC0tLTEysvLpb29XTkyfNaEM8HxTpHs/Pw89vz87AL2pyLhwA8vrQ2hOqempkKLi4sqJXaFYJLEC8wUEUkY3SbJb0Tz2aB5HcYLwKdh9v7+/oEnFic3gnroiEAHcYS629vbBzw1C/D7Bfn4jLwf2MEMBytEPWx4e3yQ9w+bDT4phrsxTKa/NeZmq7YI4fAAAAAASUVORK5CYII=";
+    var rosreestrIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABy0lEQVQ4T2PABdbvPy+w//R1h+v3nzvsP3/d4fz1+w7r9592gEoTD05evLG/b+rc/8Xldf93HDjxv6656//ClZv+3338sgGqhDC4dOvetcTU7P/Wdq7/za0c/2/ZdeC/pY3zfztHj/8tnf2/rtx+6AdVihvsO3lhVUpm4X8zSwc4BhkEYzs4e/2fv3z9//X7zwRAtWAHdU0dq2zs3XAaBMJpWYX/dxy78B+qBRPcfvLSqrii7gfIO8gat+5GNcjBxev/6cu3cBt0/PJth92HT4E1IuNDZ6+h8LfsOvj/4LkbuA26//y1Q15xJYrtIAzSjMz3C4r8f/zCTXIMOojCb2zr/r/lwHFNqDZMgMugbXsQBgWFxfxv6ZoQCtWCHYAMyi+uQjEEhHfsPfzf2y/0f2Vty/+d+49cvfX4sQxUC3ZwGBjY567f+3/55n0UfOLK3f8nL936v+Xwhf/3778XgCrHDbC5yMs35P/p6w/fz15/mPh8hs2gvkkzgAY9Ji2zohsUFpXwv6OjH3fs4AIggwpKq8H5KTYx439Ley/+2MEFjgPLnC17Dv9fvXnX/43b94Y+fvMGf+zgAmfO/Ge9deuZ6DkghgoRCRgYAAGFe4VDwIAnAAAAAElFTkSuQmCC";
 
     function initInterface(){
         var $section = $("<div>");
@@ -41,6 +42,7 @@
             '<p>The below maps are legal to use and do not violate copyright</p>',
             `<div><input type="checkbox" id="chkMiDrive" class="OOMchk"><label for="chkMiDrive"><img src="${midriveIcon}" height="18" width="18">MiDrive</label></div>`,
             `<div><input type="checkbox" id="chkNYFC" class="OOMchk"><img src="${NYFCIcon}" height="18" width="18">NY FC</div>`,
+            `<div><input type="checkbox" id="chkrosreestr" class="OOMchk"><label for="chkrosreestr"><img src="${rosreestrIcon}" height ="18" width="18">Rosreestr</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates copyright.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -77,6 +79,7 @@
         setChecked('chkHere', settings.Here);
         setChecked('chkMiDrive', settings.MiDrive);
         setChecked('chkNYFC', settings.NYFC);
+        setChecked('chkrosreestr', settings.rosreestr);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -121,6 +124,15 @@
             return $('#txtOOMLanguage').val();
     }
 
+    function get4326CenterPoint(){
+        let projI = new OL.Projection("EPSG:900913");
+        let projE = new OL.Projection("EPSG:4326");
+        let center_lonlat = (new OL.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
+        let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
+        let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+        return new OL.LonLat(lon, lat);
+    }
+
     function LoadMapButtons()
     {
         $('#OOMMiDrive').remove();
@@ -136,8 +148,8 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
-                var topleft= (new OpenLayers.LonLat(W.map.getExtent().left,W.map.getExtent().top));
-                var bottomright= (new OpenLayers.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
+                var topleft= (new OL.LonLat(W.map.getExtent().left,W.map.getExtent().top));
+                var bottomright= (new OL.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
                 var xmin = topleft.lon;
                 var xmax = bottomright.lon;
                 var ymin = bottomright.lat;
@@ -160,14 +172,10 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
 
             $('#OOMGMapsImg').click(function(){
-                let projI = new OpenLayers.Projection("EPSG:900913");
-                let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
                 let lang = GetLanguage();
 
-                window.open('https://www.google.com/maps/@' + lat + ',' + lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Google Maps');
+                window.open('https://www.google.com/maps/@' + latlon.lat + ',' + latlon.lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Google Maps');
             });
         }
 
@@ -184,13 +192,9 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionMapillary.html());
             $('#OOMMapillaryImg').click(function(){
-                var projI=new OpenLayers.Projection("EPSG:900913");
-                var projE=new OpenLayers.Projection("EPSG:4326");
-                var center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
 
-                window.open(`https://www.mapillary.com/app/?lat=${lat}&lng=${lon}&z=${( W.map.zoom + 11)}`, 'Mapillary');
+                window.open(`https://www.mapillary.com/app/?lat=${latlon.lat}&lng=${latlon.lon}&z=${( W.map.zoom + 11)}`, 'Mapillary');
             });
         }
 
@@ -207,7 +211,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionTerraserver.html());
             $('#OOMTerraserverImg').click(function(){
-                var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
+                var center_lonlat=OL.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
                 window.open(`http://www.terraserver.com/view?utf8=✓&searchLng=${center_lonlat.lon}&searchLat=${center_lonlat.lat}`);
             });
         }
@@ -225,15 +229,11 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWikimapia.html());
             $('#OOMWikimapiaImg').click(function(){
-                var projI=new OpenLayers.Projection("EPSG:900913");
-                var projE=new OpenLayers.Projection("EPSG:4326");
-                var center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                var lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                var lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
                 let lang = GetLanguage();
                 if(lang === "")
                     lang = "en";
-                window.open(`http://wikimapia.org/#${(lang !== "" ? "lang=" + lang : "")}&lat=${lat}&lon=${lon}&z=${( W.map.zoom + 12)}&m=b`);
+                window.open(`http://wikimapia.org/#${(lang !== "" ? "lang=" + lang : "")}&lat=${latlon.lat}&lon=${latlon.lon}&z=${( W.map.zoom + 12)}&m=b`);
             });
         }
 
@@ -250,14 +250,10 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBing.html());
 
             $('#OOMBingImg').click(function(){
-                let projI = new OpenLayers.Projection("EPSG:900913");
-                let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
                 //let lang = I18n.currentLocale().replace("en-US", "en");
 
-                window.open(`https://www.bing.com/maps?&cp=${lat}~${lon}&lvl=${( W.map.zoom + 12)}`);
+                window.open(`https://www.bing.com/maps?&cp=${latlon.lat}~${latlon.lon}&lvl=${( W.map.zoom + 12)}`);
             });
         }
 
@@ -274,14 +270,10 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionOSM.html());
 
             $('#OOMOSMImg').click(function(){
-                let projI = new OpenLayers.Projection("EPSG:900913");
-                let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(Wmap.center.lon, W.map.center.lat)).transform(projI,projE);
-                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
                 //let lang = I18n.currentLocale().replace("en-US", "en");
 
-                window.open(`https://www.openstreetmap.org/#map=${(W.map.zoom + 12)}/${lat}/${lon}`);
+                window.open(`https://www.openstreetmap.org/#map=${(W.map.zoom + 12)}/${latlon.lat}/${latlon.lon}`);
             });
         }
 
@@ -298,14 +290,10 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionYandex.html());
 
             $('#OOMYandexImg').click(function(){
-                let projI = new OpenLayers.Projection("EPSG:900913");
-                let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
+                let latlon = get4326CenterPoint();
                 //let lang = I18n.currentLocale().replace("en-US", "en");
 
-                window.open(`https://n.maps.yandex.ru/#!/?z=${(W.map.zoom + 12)}&ll=${lon}%2C${lat}&l=nk%23sat`);
+                window.open(`https://n.maps.yandex.ru/#!/?z=${(W.map.zoom + 12)}&ll=${latlon.lon}%2C${latlon.lat}&l=nk%23sat`);
             });
         }
 
@@ -322,14 +310,9 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionHere.html());
 
             $('#OOMHereImg').click(function(){
-                let projI = new OpenLayers.Projection("EPSG:900913");
-                let projE = new OpenLayers.Projection("EPSG:4326");
-                let center_lonlat = (new OpenLayers.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
-                let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
-                let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
-                //let lang = I18n.currentLocale().replace("en-US", "en");
+                let latlon = get4326CenterPoint();
 
-                window.open(`https://wego.here.com/?map=${lat},${lon},${(W.map.zoom + 12)},satellite&x=ep`);
+                window.open(`https://wego.here.com/?map=${latlon.lat},${latlon.lon},${(W.map.zoom + 12)},satellite&x=ep`);
             });
         }
 
@@ -382,6 +365,22 @@
                 window.open(URL,"_blank");
             });
         }
+
+        $('#OOMrosreestr').remove();
+        if(settings.rosreestr){
+            let $sectionRosreestr = $("<div>", {style:"padding:8px 16px"});
+            $sectionRosreestr.html([
+                '<span id="OOMrosreestr">',
+                `<img src="${rosreestrIcon}" alt="Rosreestr" width="18" height="18" id="OOMrosreestrImg" title="Open in Rosreestr" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionRosreestr.html());
+
+            $('#OOMrosreestrImg').click(function(){
+                window.open(`http://pkk5.rosreestr.ru/#x=${W.map.center.lon}&y=${W.map.center.lat}&z=${(W.map.zoom + 12)}`);
+            });
+        }
     }
 
     function loadSettings() {
@@ -398,7 +397,8 @@
             Yandex: false,
             Here: false,
             MiDrive: false,
-            NYFC: false
+            NYFC: false,
+            rosreestr: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -421,7 +421,8 @@
                 Yandex: settings.Yandex,
                 Here: settings.Here,
                 MiDrive: settings.MiDrive,
-                NYFC: settings.NYFC
+                NYFC: settings.NYFC,
+                rosreestr: settings.rosreestr
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));

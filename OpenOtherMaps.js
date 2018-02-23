@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.23.01
+// @version      2018.02.23.02
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -475,10 +475,25 @@
     }
 
     function initRosreestr(){
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === "attributes" && mutation.target == document.getElementsByClassName("btn btn-default btn-tool-lg js-showList")[0]) insertWMELinkRosreestr();
+            });
+        });
+
+        observer.observe(document.getElementById("sidebar-region"), { childList: true, subtree: true, attributes:true});
+
+        insertWMELinkRosreestr();
+    }
+
+    function insertWMELinkRosreestr(){
+        if(document.getElementById("OOMWazeButton") !== null)
+            document.getElementById("OOMWazeButton").remove();
+
         let $OOMWazeButton = document.createElement("div");
 
         $OOMWazeButton.innerHTML = '<button type="button" class="btn btn-default btn-tool-lg" data-toggle="tooltip" data-placement="right" title="" id="OOMWazeButton" style="background-image: url(https://imgur.com/NTLWfFz.png); background-repeat: no-repeat; background-position: center;"></button>'; //'<div id="OOMWazeButtonDiv" style="height:30px; width:34px; position: fixed; right:30px; top:75px; cursor: pointer; ></div>';
-       document.getElementsByClassName('btn-group-vertical js-appList')[0].appendChild($OOMWazeButton);
+        document.getElementsByClassName('btn-group-vertical js-appList')[0].appendChild($OOMWazeButton);
 
         document.getElementById("OOMWazeButton").addEventListener("click", function(){
             window.open(RosreestrToWaze());
@@ -583,8 +598,8 @@
     }
 
     function initWV511(){
-        if(document.getElementById("OOMWazeButtonDi") !== null)
-            document.getElementById("OOMWazeButtonDi").remove();
+        if(document.getElementById("OOMWazeButtonDiv") !== null)
+            document.getElementById("OOMWazeButtonDiv").remove();
 
         let $OOMWazeButton = document.createElement("div");
         $OOMWazeButton.setAttribute("id", "OOMWazeButtonDiv");

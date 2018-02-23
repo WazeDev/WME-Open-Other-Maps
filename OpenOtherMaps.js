@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.02.22.03
+// @version      2018.02.23.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -11,6 +11,7 @@
 // @include      *wv511.org/*
 // @include      http://www.511virginia.org/mobile/?menu_id=incidents
 // @include      https://mdotnetpublic.state.mi.us/drive/
+// @include      http://pkk5.rosreestr.ru*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -446,6 +447,8 @@
             bootstrapGeneral(init511virginia, 1);
         else if(location.href.indexOf("mdotnetpublic.state.mi.us") > -1)
             bootstrapGeneral(initmiDrive, 1);
+        else if(location.href.indexOf("http://pkk5.rosreestr.ru") > -1)
+            bootstrapRosreestr(1);
         else{
             if (W &&
                 W.map &&
@@ -455,6 +458,39 @@
             } else if (tries < 1000) {
                 setTimeout(function () {bootstrap(tries++);}, 200);
             }}
+    }
+
+    function RosreestrToWaze(){
+        let lon, lat, zoom;
+        let curURL = location.href.match(/x=(\d*.\d*)&y=(\d*.\d*)&z=(\d+)/);
+        lon = curURL[1];
+        lat = curURL[2];
+        zoom = parseInt(curURL[3]);
+
+        let source = new Proj4js.Proj('EPSG:900913');
+
+        var point = new Proj4js.Point(parseFloat(lon), parseFloat(lat));
+        Proj4js.transform(source, Proj4js.WGS84, point);
+        return `https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
+    }
+
+    function initRosreestr(){
+        let $OOMWazeButton = document.createElement("div");
+
+        $OOMWazeButton.innerHTML = '<button type="button" class="btn btn-default btn-tool-lg" data-toggle="tooltip" data-placement="right" title="" id="OOMWazeButton" style="background-image: url(https://imgur.com/NTLWfFz.png); background-repeat: no-repeat; background-position: center;"></button>'; //'<div id="OOMWazeButtonDiv" style="height:30px; width:34px; position: fixed; right:30px; top:75px; cursor: pointer; ></div>';
+       document.getElementsByClassName('btn-group-vertical js-appList')[0].appendChild($OOMWazeButton);
+
+        document.getElementById("OOMWazeButton").addEventListener("click", function(){
+            window.open(RosreestrToWaze());
+        });
+    }
+
+    function bootstrapRosreestr(tries=1){
+        if (document.getElementsByClassName('btn-group-vertical js-appList').length > 0) {
+            initRosreestr();
+        } else if (tries < 1000) {
+            setTimeout(function () {bootstrapRosreestr(tries++);}, 200);
+        }
     }
 
     function initGoogleMaps(){

@@ -26,5 +26,6 @@ Currently support maps that have a button/link to open WME:
 * wv511.org
 * 511virginia.org
 * MiDrive (mdotnetpublic.state.mi.us)
+* Rosreestr
 
 ![](https://imgur.com/JFr1zx6.png)

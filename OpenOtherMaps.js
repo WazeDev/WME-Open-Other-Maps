@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.03.08.01
+// @version      2018.03.09.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -13,6 +13,7 @@
 // @include      https://mdotnetpublic.state.mi.us/drive/
 // @include      http://pkk5.rosreestr.ru*
 // @include      http://www.511pa.com/Traffic.aspx*
+// @include      http://newengland511.org*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -504,6 +505,8 @@
             bootstrapRosreestr(1);
         else if(location.href.indexOf("http://www.511pa.com/Traffic") > -1)
             bootstrap511PA(1);//bootstrapGeneral(init511PA, 1);
+        else if(location.href.indexOf("http://newengland511.org") > -1)
+            bootstrapGeneral(initNE511, 1);
         else{
             if (W &&
                 W.map &&
@@ -644,6 +647,27 @@
             }
             return "";
         });
+    }
+
+    function initNE511(){
+        var observer = new MutationObserver(function(mutations) {
+               mutations.forEach(function(mutation) {
+                   if ($(mutation.target)[0] == $('.ol-overlay-container.ol-selectable')[0] && $(mutation.target).css('display') == "block") {
+                       insertWMELinkNE511();
+                   }
+               });
+           });
+
+        observer.observe($('.ol-overlay-container.ol-selectable').parent()[0], { childList: true, subtree: true, attributes:true});
+    }
+
+    function insertWMELinkNE511(){
+        //http://newengland511.org/
+        let selectedIncident = $('.popover-content > [data-ng-bind="item.Description"]')[0];
+        let incidentDesc = selectedIncident.innerHTML;
+        let incidents = Leidos.Traffic.Data.events.find(function(e){ return e.Description == incidentDesc;});
+
+        $(selectedIncident).append(`<br><a href='https://www.waze.com/en-US/editor/?env=usa&lon=${incidents.StartLongitude}&lat=${incidents.StartLatitude}&zoom=6' target="_blank">Open in WME</a>`);
     }
 
     function initmiDrive(){

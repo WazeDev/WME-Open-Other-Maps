@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.03.10.01
+// @version      2018.03.12.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -40,6 +40,7 @@
     var rosreestrIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABy0lEQVQ4T2PABdbvPy+w//R1h+v3nzvsP3/d4fz1+w7r9592gEoTD05evLG/b+rc/8Xldf93HDjxv6656//ClZv+3338sgGqhDC4dOvetcTU7P/Wdq7/za0c/2/ZdeC/pY3zfztHj/8tnf2/rtx+6AdVihvsO3lhVUpm4X8zSwc4BhkEYzs4e/2fv3z9//X7zwRAtWAHdU0dq2zs3XAaBMJpWYX/dxy78B+qBRPcfvLSqrii7gfIO8gat+5GNcjBxev/6cu3cBt0/PJth92HT4E1IuNDZ6+h8LfsOvj/4LkbuA26//y1Q15xJYrtIAzSjMz3C4r8f/zCTXIMOojCb2zr/r/lwHFNqDZMgMugbXsQBgWFxfxv6ZoQCtWCHYAMyi+uQjEEhHfsPfzf2y/0f2Vty/+d+49cvfX4sQxUC3ZwGBjY567f+3/55n0UfOLK3f8nL936v+Xwhf/3778XgCrHDbC5yMs35P/p6w/fz15/mPh8hs2gvkkzgAY9Ji2zohsUFpXwv6OjH3fs4AIggwpKq8H5KTYx439Ley/+2MEFjgPLnC17Dv9fvXnX/43b94Y+fvMGf+zgAmfO/Ge9deuZ6DkghgoRCRgYAAGFe4VDwIAnAAAAAElFTkSuQmCC";
     var PA511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACClBMVEX//vz//vv8+/r4+Pj7+vn9/Pr///709vfn6u7U2+Td4ei/ydmotc/r7fBziLHHz92+x9qsuc/y9Pf////29/fX2+b9/f7+/v79/v18j7Q9WZPO1eH//v7n6u3+///AydpbcaG5xNfO1eS2wdiyvtavu9TFzt7m6e6/x9j///3p7fDDzdu+yNkML3kaPIDk6PD5+fktSokWOYBMZpxBXZeDlLbd4us6V5EkRYTY3uhFYJUYPH/7/PtziLMzUpKRo8Pi5u0QNYA1VJOTo8Wgrsjv8/aRpMEAH25je6mltc0CKXU4V5O4w9Zddqdrgq3R1uQaPIE8WpROap8AJXJofqzGzt0AJnOFmb73+foWO4BIZJnd4u1Rap9cdKbK0d6Aj7Xr7vH8/vwZPYRHYZuotc0AJHWntM8CJ3NyiLDM1OJacqNfeKiTpMEAHnC0v9avutIAI3N6jrKYqMcAHm7Aydumss0AG22frsqKnb5feKZxhbDl6e5FYJYpSYgnSIlAXJjl6fCClLgdP4Lh5OqOn8AbPYLV3ebs7/NlfKpOaJy9x9r+/vzr7fPt7/Tz9Pbx8/b09/b29/h9kLRMZ5p/k7jZ3+l6j7ZOZ5uNn775+/v//v35+vrJ0d/t8PPu8fXd4uqvu9OMnb1Sa6F5j7XCzN78/fzQ1+K9x9m1wNaksc6aqMart8/X3ef+//0JSeH9AAAAAWJLR0QTDLtclgAAAAd0SU1FB+IDCA8HAr9f8sAAAAD7SURBVBjTY2BgYGBkZGJmZGFlgAA2dg5OLm4eXj5+AUEhYWFhBhFRTjFxYWEJYTZJKWlhYRkGWWEokBMWlldQFGZgU1JWUVUTVtfQ1NLW0dXTZzAwNDI2MTUzt7C0sraxtbNncHB0cnZxdXP38PTyFvbx9WPwDwgMCg4JDQuPiIwSjo6JZYiLT0hMSk5JTeNMzxDOzMpmyMnNyy8oLCouKS0rF66orGKorqmtq29obGpuaW1r7+jsYmDr7ullE+7rl5gQMXHS5CnCDJowhwlPnTZ9xkxhhlnCs+eYzZ03f8HCRYuXgPwyi23psuUrVq5aLb9mLRsQAP2OCgBLzD+TNb5HDAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0wOFQxNTowNzowMi0wNTowMAebKzMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMDhUMTU6MDc6MDItMDU6MDB2xpOPAAAAAElFTkSuQmCC";
     var Miss511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABjUlEQVQ4T2MYWsClYXM+Q/CcEoZAVGxfvakkpHWbKFQZflA272iXXOqyXwxBs/+jY8eaTf+jenfpQpXiBpuP356uV7j6B1PwHAxDQNivdfv/7BkHCBtkULTmElvYXKyGgHDipL3/21eexm/Q2iM3luHyEgwXzz3yf96u6/gNOnLlwQ6zsnX/JRKX4MT9G8/9P3DxEX6Dbj58saNvw7n/dUtP4sRHrzz8/+jFW/wGXbr7bEf+nMP/I3v34MY9u9yhynGDG0AX1S498T91yv7/KVhwzsxD/4vmHcRv0K2HL90qFx2/IZm05D9H+DysWClj+X+jojX4DVp96MZMy4oN/3GlHxCWSVn6Xy+fgEEJk/bOlAYqxGYADIvEL/qvkLEUv0Hz91yd2bP+7P+GZSf/1y87AcfiwCiHGcQdOf+/YOxC/AbtPnOXf9mus1JzNqBihfTlcIOYQ+b8Zw6bh98gXGD2jkv/PZu2/m9ddfp/84pT/6sWHiXPoFWrVjGHhq5iBtEgzPD/PyNUCgoYGACx+Fztt2VvAQAAAABJRU5ErkJggg==";
+    var LAFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKM+Vkc8rRFEUxz/MiBhRLCiLScPKyI8SG2WkoSZNY5TBZuZ5b0bNjNd7T5Ktsp2ixMavBX8BW2WtFJGShZU1sUHPeZ6aSc3Cvd1zPvd77zndcy5UxrNKzvT2QC5vGbFwyD+TmPVXP+HBRzNeWpOKqY9EoxHKjvdbKhx/HXRy8b9Rt6CaClTUCA8rumEJjwtHVizd4S3hZiWTXBA+Ee4y5IHCN46ecvnZ4bTLnw4b8dio1NYo7E+XcKqElYyRE5bKCeSyy8rve5xKfGp+ekp8u6w2TGKECeFngjFGGaCXIbEDBOmjW3aUie/5iZ9kSWIVsTqrGCySJoNFl6jLkl0Vr4muysyy6vT/b19Nrb/Pze4LQdWjbb92QPUmfBVs++PAtr8OwfMA5/li/NI+DL6JXihqgT1oWIfTi6KW2oazDWi515NG8kfyyKrUNHg5hvoENF1B7Zzbs99zju4gviZfdQk7u9Ap9xvmvwH7o2e1G6/3lQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAJJSURBVDhPlZRPSBRRHMfX3Zm34+JCFFoKHqIuHTxnoVSUUJAX0xWL3Cz6Y6ZphZm5TMm6amnrzJt/C3rpWl4K6iDU0Q5CaAYRdQhvarf+0AZO3zd/lhl3GegLX2YO3+9n3r73exviCLkHf208cnReVrUVWdXf3R2+/0ZS1AXm0fTYa04Q5iLR6PFQkBB4AtC3vv6BTarqJvPk42nrySxR1dxVVfWRi0ZvOJXSihBi7K6uXsxKtFDuvdlfeGduOnnqE0DziIftVglhRTNn2to/eIsp8YEPdL23bxMf1BHn7FYJCRUVjSnxYd5bzEw88oHGxifz8Xj8oFMpLdM0y6iqffEWL1256gPBEqJldiNACE55i8mui4V3WdH+SIaxz4kGi1KjDqW/bnng9h0PSF8SRbGwN2bQyrLZ7A6UfrllnxVtDasampGVoZ2VlRfY3OGARuFMKBbb4yBsUU07jdKWWx7Zdmqu6w83rGIM8rAJ4DqqxCY4wldfuGE2Ty1tiSIIc8f5zh9YyWcLxICC0OAgbCH0yg2zqW5NtBdBmDEmJsrvHRDzS9QjNgXCHVt1w+nMhJnoOFsEYWbXpaa2dtmB/AwLQpLn+ToLoijKfsyRgeAUTuj58Ejq97nOJCt+lzV9ml1kL+zYiaYN7M8Gg+FnLnPl5fUWaLuam1v3dvf03MK/wGAul4tROltDVeMZTs46jMvXurcAWsCVWcRzDhX/hgfJmn6qdgG2lM6Mz2I1TwkhBwAahN+GeT7hRP9bAsyzF2z+oQghLf8AAjyYhRxw+xIAAAAASUVORK5CYII=";
 
     function initInterface(){
         var $section = $("<div>");
@@ -51,6 +52,7 @@
             `<div><input type="checkbox" id="chkrosreestr" class="OOMchk"><label for="chkrosreestr"><img src="${rosreestrIcon}" height ="18" width="18">Rosreestr</label></div>`,
             `<div><input type="checkbox" id="chkPA511" class="OOMchk"><label for="chkPA511"><img src="${PA511Icon}" height = 18 width="18">511PA</label></div>`,
             `<div><input type="checkbox" id="chkMiss511" class="OOMchk"><label for="chkMiss511"><img src="${Miss511Icon}" height=18 width="18">Mississippi 511</label></div>`,
+            `<div><input type="checkbox" id="chkLAFC" class="OOMchk"><label for="chkLAFC"><img src="${LAFCIcon}" height="18" width="18">Louisiana FC</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates copyright.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -90,6 +92,7 @@
         setChecked('chkrosreestr', settings.rosreestr);
         setChecked('chkPA511', settings.PA511);
         setChecked('chkMiss511', settings.Miss511);
+        setChecked('chkLAFC', settings.LAFC);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -428,6 +431,22 @@
                 window.open(`https://www.mdottraffic.com/default.aspx?lat=${latlon.lat}&lon=${latlon.lon}&zoom=${(W.map.zoom + 12)}`, 'Mississippi 511');
             });
         }
+
+        $('#OOMLAFC').remove();
+        if(settings.LAFC){
+            let $sectionLAFC = $("<div>");
+            $sectionLAFC.html([
+                '<span id="OOMLAFC">',
+                `<img src="${LAFCIcon}" alt="LAFC" width="18" height="18" id="OOMLAFCImg" title="Open in Louisiana FC Map" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionLAFC.html());
+            $('#OOMLAFCImg').click(function(){
+                let latlon = get4326CenterPoint();
+                window.open(`http://www.arcgis.com/home/webmap/viewer.html?webmap=8a893b672da94be793b83b4581ca877d&center=${latlon.lon},${latlon.lat}&level=${(W.map.zoom + 12)}`);
+            });
+        }
     }
 
     function loadSettings() {
@@ -447,7 +466,8 @@
             NYFC: false,
             rosreestr: false,
             PA511: false,
-            Miss511: false
+            Miss511: false,
+            LAFC: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
         for (var prop in defaultSettings) {
@@ -473,7 +493,8 @@
                 NYFC: settings.NYFC,
                 rosreestr: settings.rosreestr,
                 PA511: settings.PA511,
-                Miss511: settings.Miss511
+                Miss511: settings.Miss511,
+                LAFC: settings.LAFC
             };
 
             localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));

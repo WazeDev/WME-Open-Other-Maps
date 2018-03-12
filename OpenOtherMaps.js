@@ -46,7 +46,7 @@
         var $section = $("<div>");
         $section.html([
             '<div>',
-            '<p>The below maps are legal to use and do not violate copyright</p>',
+            "<p>The below maps are legal to use and do not violate Waze's external sources policy</p>",
             `<div><input type="checkbox" id="chkMiDrive" class="OOMchk"><label for="chkMiDrive"><img src="${midriveIcon}" height="18" width="18">MiDrive</label></div>`,
             `<div><input type="checkbox" id="chkNYFC" class="OOMchk"><img src="${NYFCIcon}" height="18" width="18">NY FC</div>`,
             `<div><input type="checkbox" id="chkrosreestr" class="OOMchk"><label for="chkrosreestr"><img src="${rosreestrIcon}" height ="18" width="18">Rosreestr</label></div>`,
@@ -54,7 +54,7 @@
             `<div><input type="checkbox" id="chkMiss511" class="OOMchk"><label for="chkMiss511"><img src="${Miss511Icon}" height=18 width="18">Mississippi 511</label></div>`,
             `<div><input type="checkbox" id="chkLAFC" class="OOMchk"><label for="chkLAFC"><img src="${LAFCIcon}" height="18" width="18">Louisiana FC</label></div>`,
             '</br>',
-            "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates copyright.</p>",
+            "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
             `<div><input type="checkbox" id="chkMapillary" class="OOMchk"><label for="chkMapillary"><img src="${mapillaryIcon}" height="18" width="18">Mapillary</label></div>`,
             `<div><input type="checkbox" id="chkTerraserver" class="OOMchk"><label for="chkTerraserver"><img src="${terraIcon}" height="18" width="18">Terraserver</label></div>`,

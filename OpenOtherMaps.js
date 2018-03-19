@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.03.19.01
+// @version      2018.03.19.02
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -44,7 +44,7 @@
     var Miss511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABjUlEQVQ4T2MYWsClYXM+Q/CcEoZAVGxfvakkpHWbKFQZflA272iXXOqyXwxBs/+jY8eaTf+jenfpQpXiBpuP356uV7j6B1PwHAxDQNivdfv/7BkHCBtkULTmElvYXKyGgHDipL3/21eexm/Q2iM3luHyEgwXzz3yf96u6/gNOnLlwQ6zsnX/JRKX4MT9G8/9P3DxEX6Dbj58saNvw7n/dUtP4sRHrzz8/+jFW/wGXbr7bEf+nMP/I3v34MY9u9yhynGDG0AX1S498T91yv7/KVhwzsxD/4vmHcRv0K2HL90qFx2/IZm05D9H+DysWClj+X+jojX4DVp96MZMy4oN/3GlHxCWSVn6Xy+fgEEJk/bOlAYqxGYADIvEL/qvkLEUv0Hz91yd2bP+7P+GZSf/1y87AcfiwCiHGcQdOf+/YOxC/AbtPnOXf9mus1JzNqBihfTlcIOYQ+b8Zw6bh98gXGD2jkv/PZu2/m9ddfp/84pT/6sWHiXPoFWrVjGHhq5iBtEgzPD/PyNUCgoYGACx+Fztt2VvAQAAAABJRU5ErkJggg==";
     var LAFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKM+Vkc8rRFEUxz/MiBhRLCiLScPKyI8SG2WkoSZNY5TBZuZ5b0bNjNd7T5Ktsp2ixMavBX8BW2WtFJGShZU1sUHPeZ6aSc3Cvd1zPvd77zndcy5UxrNKzvT2QC5vGbFwyD+TmPVXP+HBRzNeWpOKqY9EoxHKjvdbKhx/HXRy8b9Rt6CaClTUCA8rumEJjwtHVizd4S3hZiWTXBA+Ee4y5IHCN46ecvnZ4bTLnw4b8dio1NYo7E+XcKqElYyRE5bKCeSyy8rve5xKfGp+ekp8u6w2TGKECeFngjFGGaCXIbEDBOmjW3aUie/5iZ9kSWIVsTqrGCySJoNFl6jLkl0Vr4muysyy6vT/b19Nrb/Pze4LQdWjbb92QPUmfBVs++PAtr8OwfMA5/li/NI+DL6JXihqgT1oWIfTi6KW2oazDWi515NG8kfyyKrUNHg5hvoENF1B7Zzbs99zju4gviZfdQk7u9Ap9xvmvwH7o2e1G6/3lQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAJJSURBVDhPlZRPSBRRHMfX3Zm34+JCFFoKHqIuHTxnoVSUUJAX0xWL3Cz6Y6ZphZm5TMm6amnrzJt/C3rpWl4K6iDU0Q5CaAYRdQhvarf+0AZO3zd/lhl3GegLX2YO3+9n3r73exviCLkHf208cnReVrUVWdXf3R2+/0ZS1AXm0fTYa04Q5iLR6PFQkBB4AtC3vv6BTarqJvPk42nrySxR1dxVVfWRi0ZvOJXSihBi7K6uXsxKtFDuvdlfeGduOnnqE0DziIftVglhRTNn2to/eIsp8YEPdL23bxMf1BHn7FYJCRUVjSnxYd5bzEw88oHGxifz8Xj8oFMpLdM0y6iqffEWL1256gPBEqJldiNACE55i8mui4V3WdH+SIaxz4kGi1KjDqW/bnng9h0PSF8SRbGwN2bQyrLZ7A6UfrllnxVtDasampGVoZ2VlRfY3OGARuFMKBbb4yBsUU07jdKWWx7Zdmqu6w83rGIM8rAJ4DqqxCY4wldfuGE2Ty1tiSIIc8f5zh9YyWcLxICC0OAgbCH0yg2zqW5NtBdBmDEmJsrvHRDzS9QjNgXCHVt1w+nMhJnoOFsEYWbXpaa2dtmB/AwLQpLn+ToLoijKfsyRgeAUTuj58Ejq97nOJCt+lzV9ml1kL+zYiaYN7M8Gg+FnLnPl5fUWaLuam1v3dvf03MK/wGAul4tROltDVeMZTs46jMvXurcAWsCVWcRzDhX/hgfJmn6qdgG2lM6Mz2I1TwkhBwAahN+GeT7hRP9bAsyzF2z+oQghLf8AAjyYhRxw+xIAAAAASUVORK5CYII=";
     //var NJ511Icon = "";
-    var NM511Icon = "";
+    var NM511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACg0lEQVQ4T6WTX0iTURjGF10k3QVO56CLQPKmDBUMUbEyDYUwXSOFlQqCf6AIIyhRWtIwRBGCJPVCqzUyNrzKNGem3yRJpvvC5qbml6bln/VtTTedzvdp06+CZGDrB4fznvc87wPnPeeI9gIg3y+EwUPzjck0WdAgLIMDXEoIfa1XkPXKMzDHDwnpfwNAKFlzMmn6qo4m8nVkjGoRtvbGB40mvFcuVzIymXKmuWiQ7yoy/xjIN6+8STSaKio1/nxvWVmpIA+MsbY2eioiAjZJOFZLJPCOFGHLfBPe/mzwcaFYCgvDYFbWW0EeGL8RJ5VivToGWJv1nRDY9G6ByDe4J+CTxOhNO6cU5H8gonD/DK41hNjEDMfr9NKFi2IQz8Lp8mCBd2N81g7rDA+Hcw2eV9dga481kim+hSzZZ/y1vyG+I5mW2xX0+ZbOM35D71LLoHrO4tFLC0obh1D1dBTlLe8x882B9SkGdl1KOxlEMnonyiHGN+bqDu8YWfMqyHJJTZZcrddcqHe35uGuhkV9x0dcrmNQ2GDYNhyfsoE3MXB0Ksw0fV1Hs1WVxN3OIffkjpEfzN85SOzJBxsjSTpXUzoswywu3OvDC4bDxBc7+kbn0GmYhrvtPha0ijYyHDhNXHmMUL6b7WZHSOGUncX64iJca5uwOXy98Wxio78Hy5FS9KSl7W723/y6NbtEAvuxKLgfVsP9uAmrykIsRR7BnFiM7tTUvRlN+N7RWELC/HBsNOvsPu+wd2WMrRjkDpNK1cAUFyuZmppTgjwwAyqVeCA3l/mk18f71zR6QkvWAjWxcdptQbDQ985M36dV01LzUSEVPDRZohbC/wMQ7RPCAIhEPwGmF45ZgI9RNAAAAABJRU5ErkJggg==";
 
     function initInterface(){
         var $section = $("<div>");
@@ -472,7 +472,7 @@
             });
         }*/
 
-        /*$('#OOMNM511').remove();
+        $('#OOMNM511').remove();
         if(settings.NM511){
             let $sectionNM511 = $("<div>");
             $sectionNM511.html([
@@ -483,11 +483,12 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNM511.html());
             $('#OOMNM511Img').click(function(){
-                let latlon = get4326CenterPoint();
+                let latlon = W.map.center;
+
                 //http://nmroads.com/mapIndex.html?
-                window.open(`http://www.511nj.org/trafficmap.aspx?X=${latlon.lat}&Y=${latlon.lon}&zoom=${(W.map.zoom + 12)}`);
+                window.open(`http://nmroads.com/mapIndex.html?X=${latlon.lon}&Y=${latlon.lat}&zoom=${(W.map.zoom + 12)}`);
             });
-        }*/
+        }
     }
 
     function loadSettings() {
@@ -508,7 +509,8 @@
             rosreestr: false,
             PA511: false,
             Miss511: false,
-            LAFC: false
+            LAFC: false,
+            NM511: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -536,7 +538,8 @@
                 rosreestr: settings.rosreestr,
                 PA511: settings.PA511,
                 Miss511: settings.Miss511,
-                LAFC: settings.LAFC
+                LAFC: settings.LAFC,
+                NM511: settings.NM511
                 //NJ511: settings.NJ511
             };
 
@@ -582,6 +585,15 @@
         });
     }
 
+    function bootstrapNM511(tries = 1){
+        if(map && map.extent && map.loaded){
+            initNM511();
+        }
+        else{
+            setTimeout(function() {bootstrapNM511(tries++);}, 100);
+        }
+    }
+
     function bootstrap(tries = 1) {
         if(location.href.indexOf("google.com/maps") > -1)
             bootstrapGeneral(initGoogleMaps, 1);
@@ -604,7 +616,7 @@
                 setTimeout(function () {bootstrap(tries++);}, 200);
         }
         else if(location.href.indexOf("http://nmroads.com/mapIndex.html") > -1){
-            bootstrapGeneral(initNM511, 1);
+            bootstrapNM511(1);
         }
         /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
             bootstrapGeneral(initNJ511, 1);
@@ -743,13 +755,19 @@
     }
 
     function initNM511(){
-        /*$(document).ready(function() {
-            if(location.search.indexOf("?") > -1){
-                let params = location.search.match(/X=(-?\d*.\d*)&Y=(-?\d*.\d*)&zoom=(\d+)/);
-                $("#EvetnsMap").attr('src', `http://icx1-map21x.lan.511nj.org/mapwidget/mapwidget.aspx?FullScreen=false&fss=0&njlegend=1&search=0&X=${parseFloat(params[1])}Y=${parseFloat(params[2])}&zoom=${parseFloat(params[3])}&maplegend=2&Weather=1&Congestion=1&Construction=1&Incident=1&Detour=1&SpecialEvents=1&AirportParking=0&height=100&width=100&ispercent=1&WinkCamera=2&zoom=14&refershcamera=1&refershevent=1&refershspeed=1`);
-            }
-        });*/
-        //#mapSettingsList
+        if(location.search.indexOf("?") > -1){
+            let params = location.search.match(/X=(-?\d*.\d*)&Y=(-?\d*.\d*)&zoom=(\d+)/);
+            setTimeout(function(){
+                try{
+                    map.centerAt({x:parseFloat(params[1]), y:parseFloat(params[2])});
+                    setTimeout(function(){map.setLevel(parseInt(params[3]));}, 500);
+                }
+                catch(err) {
+                    console.log(err);
+                }
+            }, 1000);
+        }
+
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.type === "attributes" && mutation.target == document.getElementsByClassName("mapSettingsList")[0]) insertWMELinkNM511();

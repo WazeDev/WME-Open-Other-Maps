@@ -5,6 +5,9 @@ Currently supported usage maps (data can be copied - no copyright issues):
 * MiDrive
 * NY state GIS FC map
 * Rosreestr
+* 511PA
+* Louisiana FC
+* NMroads (New Mexico 511)
 
 Currently supported reference maps (no data can be copied - copyright restriction):
 * Google Maps
@@ -27,5 +30,7 @@ Currently support maps that have a button/link to open WME:
 * 511virginia.org
 * MiDrive (mdotnetpublic.state.mi.us)
 * Rosreestr
+* Mississippi 511
+* NMRoads (New Mexico)
 
 ![](https://imgur.com/JFr1zx6.png)

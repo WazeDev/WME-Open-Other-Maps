@@ -24,7 +24,7 @@ Currently supported reference maps (no data can be copied - copyright restrictio
 
 Now also lets you open Waze from other maps!  Sorry - no way to disable this as the settings cannot be accessed across websites.
 
-Currently support maps that have a button/link to open WME:
+Currently supported maps that have a button/link to open WME:
 * Google Maps
 * wv511.org
 * 511virginia.org

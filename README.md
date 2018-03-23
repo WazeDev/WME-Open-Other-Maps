@@ -1,7 +1,7 @@
 # WME-Open-Other-Maps
 Open various other maps at the current WME location (if supported).
 
-Currently supported usage maps (data can be copied - no copyright issues):
+Currently supported usage maps (data can be copied - does **not** violate Waze's external sources policy):
 * MiDrive
 * NY state GIS FC map
 * Rosreestr
@@ -9,7 +9,7 @@ Currently supported usage maps (data can be copied - no copyright issues):
 * Louisiana FC
 * NMroads (New Mexico 511)
 
-Currently supported reference maps (no data can be copied - copyright restriction):
+Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps
 * Mapillary
 * Terraserver

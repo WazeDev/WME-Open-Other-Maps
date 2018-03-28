@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.03.19.02
+// @version      2018.03.28.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -17,6 +17,7 @@
 // @include      https://www.mdottraffic.com*
 // @include      http://www.511nj.org/trafficmap*
 // @include      http://nmroads.com/mapIndex.html*
+// @include      https://gis.transportation.wv.gov/measures*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -615,6 +616,9 @@
             else if(tries < 1000)
                 setTimeout(function () {bootstrap(tries++);}, 200);
         }
+        else if(location.href.indexOf("https://gis.transportation.wv.gov/measures") > -1){
+            bootstrapGeneral(initWVGIS, 1);
+        }
         else if(location.href.indexOf("http://nmroads.com/mapIndex.html") > -1){
             bootstrapNM511(1);
         }
@@ -903,6 +907,19 @@
             lonCenter = Math.min(lon1,lon2) + (Math.abs(lon1 - lon2)/2);
             latCenter = Math.min(lat1, lat2) + (Math.abs(lat1 - lat2)/2);
             window.open(`https://www.waze.com/en-US/editor/?lon=${lonCenter}&lat=${latCenter}&zoom=5`);
+        });
+    }
+
+    function initWVGIS(){
+        if(document.getElementById("OOMWazeButtonDiv") !== null)
+            document.getElementById("OOMWazeButtonDiv").remove();
+        $('#RoadLayerList').prepend('<li><div id="OOMWazeButtonDiv" aria-hidden="true" style="cursor:pointer; margin-top:8px; height:30px; width:34px; background-image:url(https://imgur.com/NTLWfFz.png); background-repeat:no-repeat;"></div></li>');
+        $('#OOMWazeButtonDiv').click(function(){
+            let source = new Proj4js.Proj('EPSG:900913');
+            var point = new Proj4js.Point(parseFloat(view.center.x), parseFloat(view.center.y));
+            Proj4js.transform(source, Proj4js.WGS84, point);
+
+            window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${view.zoom-5}`);
         });
     }
 

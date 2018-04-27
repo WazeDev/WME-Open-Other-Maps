@@ -453,7 +453,7 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionLAFC.html());
             $('#OOMLAFCImg').click(function(){
                 let latlon = get4326CenterPoint();
-                window.open(`http://www.arcgis.com/home/webmap/viewer.html?webmap=8a893b672da94be793b83b4581ca877d&center=${latlon.lon},${latlon.lat}&level=${(W.map.zoom + 12)}`);
+                window.open(`http://www.arcgis.com/home/webmap/viewer.html?webmap=a37461260bec43dea7bcbf6b710a662e&center=${latlon.lon},${latlon.lat}&level=${(W.map.zoom + 12)}`);
             });
         }
 

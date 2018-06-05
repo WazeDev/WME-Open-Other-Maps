@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.04.27.01
+// @version      2018.06.05.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -18,6 +18,7 @@
 // @include      http://www.511nj.org/trafficmap*
 // @include      http://nmroads.com/mapIndex.html*
 // @include      https://gis.transportation.wv.gov/measures*
+// @include      https://www.mapwv.gov/flood/map*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -46,6 +47,7 @@
     var LAFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKM+Vkc8rRFEUxz/MiBhRLCiLScPKyI8SG2WkoSZNY5TBZuZ5b0bNjNd7T5Ktsp2ixMavBX8BW2WtFJGShZU1sUHPeZ6aSc3Cvd1zPvd77zndcy5UxrNKzvT2QC5vGbFwyD+TmPVXP+HBRzNeWpOKqY9EoxHKjvdbKhx/HXRy8b9Rt6CaClTUCA8rumEJjwtHVizd4S3hZiWTXBA+Ee4y5IHCN46ecvnZ4bTLnw4b8dio1NYo7E+XcKqElYyRE5bKCeSyy8rve5xKfGp+ekp8u6w2TGKECeFngjFGGaCXIbEDBOmjW3aUie/5iZ9kSWIVsTqrGCySJoNFl6jLkl0Vr4muysyy6vT/b19Nrb/Pze4LQdWjbb92QPUmfBVs++PAtr8OwfMA5/li/NI+DL6JXihqgT1oWIfTi6KW2oazDWi515NG8kfyyKrUNHg5hvoENF1B7Zzbs99zju4gviZfdQk7u9Ap9xvmvwH7o2e1G6/3lQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAJJSURBVDhPlZRPSBRRHMfX3Zm34+JCFFoKHqIuHTxnoVSUUJAX0xWL3Cz6Y6ZphZm5TMm6amnrzJt/C3rpWl4K6iDU0Q5CaAYRdQhvarf+0AZO3zd/lhl3GegLX2YO3+9n3r73exviCLkHf208cnReVrUVWdXf3R2+/0ZS1AXm0fTYa04Q5iLR6PFQkBB4AtC3vv6BTarqJvPk42nrySxR1dxVVfWRi0ZvOJXSihBi7K6uXsxKtFDuvdlfeGduOnnqE0DziIftVglhRTNn2to/eIsp8YEPdL23bxMf1BHn7FYJCRUVjSnxYd5bzEw88oHGxifz8Xj8oFMpLdM0y6iqffEWL1256gPBEqJldiNACE55i8mui4V3WdH+SIaxz4kGi1KjDqW/bnng9h0PSF8SRbGwN2bQyrLZ7A6UfrllnxVtDasampGVoZ2VlRfY3OGARuFMKBbb4yBsUU07jdKWWx7Zdmqu6w83rGIM8rAJ4DqqxCY4wldfuGE2Ty1tiSIIc8f5zh9YyWcLxICC0OAgbCH0yg2zqW5NtBdBmDEmJsrvHRDzS9QjNgXCHVt1w+nMhJnoOFsEYWbXpaa2dtmB/AwLQpLn+ToLoijKfsyRgeAUTuj58Ejq97nOJCt+lzV9ml1kL+zYiaYN7M8Gg+FnLnPl5fUWaLuam1v3dvf03MK/wGAul4tROltDVeMZTs46jMvXurcAWsCVWcRzDhX/hgfJmn6qdgG2lM6Mz2I1TwkhBwAahN+GeT7hRP9bAsyzF2z+oQghLf8AAjyYhRxw+xIAAAAASUVORK5CYII=";
     //var NJ511Icon = "";
     var NM511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACg0lEQVQ4T6WTX0iTURjGF10k3QVO56CLQPKmDBUMUbEyDYUwXSOFlQqCf6AIIyhRWtIwRBGCJPVCqzUyNrzKNGem3yRJpvvC5qbml6bln/VtTTedzvdp06+CZGDrB4fznvc87wPnPeeI9gIg3y+EwUPzjck0WdAgLIMDXEoIfa1XkPXKMzDHDwnpfwNAKFlzMmn6qo4m8nVkjGoRtvbGB40mvFcuVzIymXKmuWiQ7yoy/xjIN6+8STSaKio1/nxvWVmpIA+MsbY2eioiAjZJOFZLJPCOFGHLfBPe/mzwcaFYCgvDYFbWW0EeGL8RJ5VivToGWJv1nRDY9G6ByDe4J+CTxOhNO6cU5H8gonD/DK41hNjEDMfr9NKFi2IQz8Lp8mCBd2N81g7rDA+Hcw2eV9dga481kim+hSzZZ/y1vyG+I5mW2xX0+ZbOM35D71LLoHrO4tFLC0obh1D1dBTlLe8x882B9SkGdl1KOxlEMnonyiHGN+bqDu8YWfMqyHJJTZZcrddcqHe35uGuhkV9x0dcrmNQ2GDYNhyfsoE3MXB0Ksw0fV1Hs1WVxN3OIffkjpEfzN85SOzJBxsjSTpXUzoswywu3OvDC4bDxBc7+kbn0GmYhrvtPha0ijYyHDhNXHmMUL6b7WZHSOGUncX64iJca5uwOXy98Wxio78Hy5FS9KSl7W723/y6NbtEAvuxKLgfVsP9uAmrykIsRR7BnFiM7tTUvRlN+N7RWELC/HBsNOvsPu+wd2WMrRjkDpNK1cAUFyuZmppTgjwwAyqVeCA3l/mk18f71zR6QkvWAjWxcdptQbDQ985M36dV01LzUSEVPDRZohbC/wMQ7RPCAIhEPwGmF45ZgI9RNAAAAABJRU5ErkJggg==";
+    var WVFloodIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACvElEQVQ4T42T3W/SUBTA+88oDCjQUr636OY+oGtH+Sg4YLBNmPsQaEtpESWbiQ/G/8DsxT27aNziXLI5xxKzrYx9RxPjHoxPJkYTE2OicvEy0Omi0eT3dHN+59xz7rmI1sXp3LyW5LXujM6VQd0cSnL6XkFP1THQ2QZGWsRo4SdNDe3lUZJHXRm9mzOQvIEWrX6pLSzjXtlURyL8sonJmb0ShGByiI7k6g5M6cnhjGRiZMKbt7Ly3Ky8W+I7orIjlC/enpq8VRCmblgY0XIsIzAaa6ZsYgvKCw8EsGMFW9jB6khgNPflRT/YsR2uTZjotMUrQhDoNGjcxxHMP5nnwLYFKCpItWJ4Xer7WiFqivpwOWZwjRB+iQjkm1q9jg86culRurptrimqmnK2yaa6jqI+WB7QdV8ifDlzQG5oEuzKGcw9e5wC22ZY5MQ5QX2wFNG0x7E+3sSICErxeoq3s+L64jiowDqnon+wqXq7TncGhzCKM1I8Ah1nUCwvjVYrpuOIP5aC2llQ1r/ZiFODPEbzCO4RpmduvlM8f7nbb3za6rw3W3R4U4gBbgOZXrk/DMr/1FSvnobOOFm0O4kYaNgbt/pwBJThuE7FnUJ1tBZWn49gvRNQg4vHl+YuV5X/0SIt7VGcSiPGPhHz5ErzY0BpgeP6dSSgTuOkgRpqmo4BjE4h0IGPtrJY/LgbAHvnQFlXd8oasGP/vEdV97trW3jDARX8aGNc2zVI+HioiTgjtrE84YolM8nNheS3lwPPV4eLkwk7GWFiQzPTo+/3Yh/243fvJMlQVN+TIHwCQvgkSyBvYSWzTzB7OZwaM3bF0M640Z0gPFesfp7wpIyuYbQjrLkQRXsSJk/a7BcQW7BgZfO2YN4eKthDV+E3sbEixBmSW/uvtYavt4YLjouy1Z+1BrIWVjQHsoRf+A79jNM0D/QKqgAAAABJRU5ErkJggg==";
 
     function initInterface(){
         var $section = $("<div>");
@@ -60,6 +62,7 @@
             `<div><input type="checkbox" id="chkLAFC" class="OOMchk"><label for="chkLAFC"><img src="${LAFCIcon}" height="18" width="18">Louisiana FC</label></div>`,
             //`<div><input type="checkbox" id="chkNJ511" class="OOMchk"><label for="chkNJ511"><img src="${NJ511Icon}" height="18" width="18">New Jersey 511</label></div>`,//NJ does not directly use the map at this time
             `<div><input type="checkbox" id="chkNM511" class="OOMchk"><label for="chkNM511"><img src="${NM511Icon}" height="18" width="18">New Mexico 511</label></div>`,
+            `<div><input type="checkbox" id="chkWVFlood" class="OOMchk"><label for="chkWVFlood"><img src="${WVFloodIcon}" height="18" width="18">WV Flood</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -102,6 +105,7 @@
         setChecked('chkLAFC', settings.LAFC);
         setChecked('chkNM511', settings.NM511);
         //setChecked('chkNJ511', settings.NJ511);
+        setChecked('chkWVFlood', settings.WVFlood);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -490,6 +494,24 @@
                 window.open(`http://nmroads.com/mapIndex.html?X=${latlon.lon}&Y=${latlon.lat}&zoom=${(W.map.zoom + 12)}`);
             });
         }
+
+        $('#OOMWVFlood').remove();
+        if(settings.WVFlood){
+            let $sectionWVFlood = $("<div>");
+            $sectionWVFlood.html([
+                '<span id="OOMWVFlood">',
+                `<img src="${WVFloodIcon}" alt="WV Flood" width="18" height="18" id="OOMWVFloodImg" title="Open in WV Flood map" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWVFlood.html());
+            $('#OOMWVFloodImg').click(function(){
+                let latlon = W.map.center;
+
+                //https://www.mapwv.gov/flood/map/?x=-8915274&y=4681300&l=4&v=0
+                window.open(`https://www.mapwv.gov/flood/map/?x=${latlon.lon}&y=${latlon.lat}&l=${(W.map.zoom+4)}`);
+            });
+        }
     }
 
     function loadSettings() {
@@ -511,7 +533,8 @@
             PA511: false,
             Miss511: false,
             LAFC: false,
-            NM511: false
+            NM511: false,
+            WVFlood: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -540,7 +563,8 @@
                 PA511: settings.PA511,
                 Miss511: settings.Miss511,
                 LAFC: settings.LAFC,
-                NM511: settings.NM511
+                NM511: settings.NM511,
+                WVFlood: settings.WVFlood
                 //NJ511: settings.NJ511
             };
 
@@ -621,6 +645,9 @@
         }
         else if(location.href.indexOf("http://nmroads.com/mapIndex.html") > -1){
             bootstrapNM511(1);
+        }
+        else if(location.href.indexOf("https://www.mapwv.gov/flood/map") > -1){
+            bootstrapGeneral(initWVFlood, 1);
         }
         /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
             bootstrapGeneral(initNJ511, 1);
@@ -920,6 +947,24 @@
             Proj4js.transform(source, Proj4js.WGS84, point);
 
             window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${view.zoom-5}`);
+        });
+    }
+
+    function initWVFlood(){
+        if($("#OOMWazeButtonDiv") !== null)
+            $("#OOMWazeButtonDiv").remove();
+
+        $('#tools').prepend('<button type="button" id="btnOpenWaze" class="btn btn-default btn-lg bootstrap_btn2" style="cursor:pointer; margin-left: 0px; min-width:31px; height=26px; background-image:url(https://imgur.com/NTLWfFz.png); background-repeat:no-repeat; background-size:100%;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="click to open in Waze Map Editor"><span ></span></button>');
+
+        $('#btnOpenWaze').click(function(){
+            let source = new Proj4js.Proj('EPSG:900913');
+            var point = new Proj4js.Point(parseFloat(Flood.map.extent.getCenter().x), parseFloat(Flood.map.extent.getCenter().y));
+            Proj4js.transform(source, Proj4js.WGS84, point);
+            let zoom = Flood.map.getLevel() - 4;
+            if(zoom < 0)
+                zoom = 0;
+
+            window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${zoom}`);
         });
     }
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.06.05.01
+// @version      2018.06.06.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -87,6 +87,10 @@
         new WazeWrap.Interface.Tab('OOM', $section.html(), init);
     }
 
+    function getolControlAttributionDivRightValue(){
+        return parseInt($('.olControlAttribution').css("right").slice(0,-2));;
+    }
+
     function init(){
         loadSettings();
         setChecked('chkGMaps', settings.GMaps);
@@ -116,7 +120,16 @@
 
         $('#txtOOMLanguage')[0].value = settings.CustLang;
 
-        $('.olControlAttribution').css("right", "400px");
+        let annoyingDivRight = getolControlAttributionDivRightValue();
+        $('.olControlAttribution').css("right", `${annoyingDivRight+100}px`);
+        annoyingDivRight = getolControlAttributionDivRightValue();
+        let checkedBoxes = $('.OOMchk:Checked');
+        let totalButtonsWidth = 0;
+        debugger;
+        for(let i=0; i<checkedBoxes.length;i++){
+            totalButtonsWidth += parseInt($(`label[for='${$(checkedBoxes[i]).attr('id')}'] img`).css('width').slice(0,-2));
+        }
+        $('.olControlAttribution').css("right", `${annoyingDivRight+totalButtonsWidth}px`);
 
         LoadMapButtons();
         $('.OOMchk').change(function() {
@@ -124,6 +137,16 @@
             settings[settingName] = this.checked;
             saveSettings();
             LoadMapButtons();
+
+            let btnWidth = parseInt($(`label[for='${$(this).attr('id')}'] img`).css('width').slice(0,-2));
+            if(this.checked){ //add button width
+                let annoyingDivRight = getolControlAttributionDivRightValue();
+                $('.olControlAttribution').css("right", `${annoyingDivRight+btnWidth}px`);
+            }
+            else{ //subtract button width
+                let annoyingDivRight = getolControlAttributionDivRightValue();
+                $('.olControlAttribution').css("right", `${annoyingDivRight-btnWidth}px`);
+            }
         });
         $("[id^='rad']").change(function() {
             if(isChecked("radOOMNoLang"))

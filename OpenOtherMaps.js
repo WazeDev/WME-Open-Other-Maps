@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.06.06.01
+// @version      2018.06.08.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -125,7 +125,6 @@
         annoyingDivRight = getolControlAttributionDivRightValue();
         let checkedBoxes = $('.OOMchk:Checked');
         let totalButtonsWidth = 0;
-        debugger;
         for(let i=0; i<checkedBoxes.length;i++){
             totalButtonsWidth += parseInt($(`label[for='${$(checkedBoxes[i]).attr('id')}'] img`).css('width').slice(0,-2));
         }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.06.08.01
+// @version      2018.06.11.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -48,6 +48,7 @@
     //var NJ511Icon = "";
     var NM511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACg0lEQVQ4T6WTX0iTURjGF10k3QVO56CLQPKmDBUMUbEyDYUwXSOFlQqCf6AIIyhRWtIwRBGCJPVCqzUyNrzKNGem3yRJpvvC5qbml6bln/VtTTedzvdp06+CZGDrB4fznvc87wPnPeeI9gIg3y+EwUPzjck0WdAgLIMDXEoIfa1XkPXKMzDHDwnpfwNAKFlzMmn6qo4m8nVkjGoRtvbGB40mvFcuVzIymXKmuWiQ7yoy/xjIN6+8STSaKio1/nxvWVmpIA+MsbY2eioiAjZJOFZLJPCOFGHLfBPe/mzwcaFYCgvDYFbWW0EeGL8RJ5VivToGWJv1nRDY9G6ByDe4J+CTxOhNO6cU5H8gonD/DK41hNjEDMfr9NKFi2IQz8Lp8mCBd2N81g7rDA+Hcw2eV9dga481kim+hSzZZ/y1vyG+I5mW2xX0+ZbOM35D71LLoHrO4tFLC0obh1D1dBTlLe8x882B9SkGdl1KOxlEMnonyiHGN+bqDu8YWfMqyHJJTZZcrddcqHe35uGuhkV9x0dcrmNQ2GDYNhyfsoE3MXB0Ksw0fV1Hs1WVxN3OIffkjpEfzN85SOzJBxsjSTpXUzoswywu3OvDC4bDxBc7+kbn0GmYhrvtPha0ijYyHDhNXHmMUL6b7WZHSOGUncX64iJca5uwOXy98Wxio78Hy5FS9KSl7W723/y6NbtEAvuxKLgfVsP9uAmrykIsRR7BnFiM7tTUvRlN+N7RWELC/HBsNOvsPu+wd2WMrRjkDpNK1cAUFyuZmppTgjwwAyqVeCA3l/mk18f71zR6QkvWAjWxcdptQbDQ985M36dV01LzUSEVPDRZohbC/wMQ7RPCAIhEPwGmF45ZgI9RNAAAAABJRU5ErkJggg==";
     var WVFloodIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACvElEQVQ4T42T3W/SUBTA+88oDCjQUr636OY+oGtH+Sg4YLBNmPsQaEtpESWbiQ/G/8DsxT27aNziXLI5xxKzrYx9RxPjHoxPJkYTE2OicvEy0Omi0eT3dHN+59xz7rmI1sXp3LyW5LXujM6VQd0cSnL6XkFP1THQ2QZGWsRo4SdNDe3lUZJHXRm9mzOQvIEWrX6pLSzjXtlURyL8sonJmb0ShGByiI7k6g5M6cnhjGRiZMKbt7Ly3Ky8W+I7orIjlC/enpq8VRCmblgY0XIsIzAaa6ZsYgvKCw8EsGMFW9jB6khgNPflRT/YsR2uTZjotMUrQhDoNGjcxxHMP5nnwLYFKCpItWJ4Xer7WiFqivpwOWZwjRB+iQjkm1q9jg86culRurptrimqmnK2yaa6jqI+WB7QdV8ifDlzQG5oEuzKGcw9e5wC22ZY5MQ5QX2wFNG0x7E+3sSICErxeoq3s+L64jiowDqnon+wqXq7TncGhzCKM1I8Ah1nUCwvjVYrpuOIP5aC2llQ1r/ZiFODPEbzCO4RpmduvlM8f7nbb3za6rw3W3R4U4gBbgOZXrk/DMr/1FSvnobOOFm0O4kYaNgbt/pwBJThuE7FnUJ1tBZWn49gvRNQg4vHl+YuV5X/0SIt7VGcSiPGPhHz5ErzY0BpgeP6dSSgTuOkgRpqmo4BjE4h0IGPtrJY/LgbAHvnQFlXd8oasGP/vEdV97trW3jDARX8aGNc2zVI+HioiTgjtrE84YolM8nNheS3lwPPV4eLkwk7GWFiQzPTo+/3Yh/243fvJMlQVN+TIHwCQvgkSyBvYSWzTzB7OZwaM3bF0M640Z0gPFesfp7wpIyuYbQjrLkQRXsSJk/a7BcQW7BgZfO2YN4eKthDV+E3sbEixBmSW/uvtYavt4YLjouy1Z+1BrIWVjQHsoRf+A79jNM0D/QKqgAAAABJRU5ErkJggg==";
+    var GMDMIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAINSURBVDhPnZPfS1NhGMcf6A8QgpIVpczN82vKCCyoLvpxWdRutMn5uTGhvJEoiIl0kxeDLOqiKBqSsKCrrIyCJhGlIl14IavAMFs4IU3BmIUz9+054w3GcKF94L047/t8v+f7Puc5VBVZ95Bih0ixukhxoiQ7+8TJJtCcTvLpX8lrgBrcZYJ2t6+SbKZI7vCIqipoVjf5LHiOX8SlW4MYHn+P/icjOBS7CpKjIMmaoGZjp6iuQLWDVNe+5j8Rx0xuHuX8LhYRS6RAfhukmNeFogLF6CPJwY1HI3g9vYJnk9+R/rCIpZVCySRfKMB/qgdU3zZHgXCtUJXREE5vP3oBw5lZJMe+4Vo6i97nMxiaXCgZ/FoDTncnQXtD66TpLUJVhi/8quZwF95+nMXSz3VkcnlcfjqNHl73x+fwYuoHQvF7oLpqBrJ50+347cE3pTe6vPuyjP6xHB5OLCC7mId0Ms4JwvMkRXcJVRmqtZ/8erH2yHmMZj4Li78UEe0dAPm4iaqVFIoN0OyE2+mag504m3iAgaFR9KVeosW4wmKeh0b7E8/JHlG9Aa2t29jkMckRvmsbd/yM23WQVwfvL/OXOiAq/0EwsoM0c4qaYm5cFjqgAA+RauuiYhOozjFq1AsU4CTNHWxi3BEnW0Ax71LwnJsgW0q1ZSS7nqOv8jXiYuc/0Ph3bop4xVMFRH8AgigQaceEwpQAAAAASUVORK5CYII=";
 
     function initInterface(){
         var $section = $("<div>");
@@ -63,6 +64,7 @@
             //`<div><input type="checkbox" id="chkNJ511" class="OOMchk"><label for="chkNJ511"><img src="${NJ511Icon}" height="18" width="18">New Jersey 511</label></div>`,//NJ does not directly use the map at this time
             `<div><input type="checkbox" id="chkNM511" class="OOMchk"><label for="chkNM511"><img src="${NM511Icon}" height="18" width="18">New Mexico 511</label></div>`,
             `<div><input type="checkbox" id="chkWVFlood" class="OOMchk"><label for="chkWVFlood"><img src="${WVFloodIcon}" height="18" width="18">WV Flood</label></div>`,
+            `<div><input type="checkbox" id="chkGMDM" class="OOMchk"><label for="chkGMDM"><img src="${GMDMIcon}" height="18" width="18">Gaia - Mexico</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -110,6 +112,7 @@
         setChecked('chkNM511', settings.NM511);
         //setChecked('chkNJ511', settings.NJ511);
         setChecked('chkWVFlood', settings.WVFlood);
+        setChecked('chkGMDM', settings.GMDM);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -534,6 +537,23 @@
                 window.open(`https://www.mapwv.gov/flood/map/?x=${latlon.lon}&y=${latlon.lat}&l=${(W.map.zoom+4)}`);
             });
         }
+
+        $('#OOMGMDM').remove();
+        if(settings.GMDM){
+            let $sectionGMDM = $("<div>");
+            $sectionGMDM.html([
+                '<span id="OOMGMDM">',
+                `<img src="${GMDMIcon}" alt="Gaia Mexico" width="18" height="18" id="OOMGMDMImg" title="Open in Gaia Digital Mapa de Mexico" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionGMDM.html());
+            $('#OOMGMDMImg').click(function(){
+                let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
+
+                window.open(`http://gaia.inegi.org.mx/mdm6/?v=${btoa("lat:"+latlon.lat+",lon:"+latlon.lon+",z:"+(W.map.zoom+8))}`);
+            });
+        }
     }
 
     function loadSettings() {
@@ -556,7 +576,8 @@
             Miss511: false,
             LAFC: false,
             NM511: false,
-            WVFlood: false
+            WVFlood: false,
+            GMDM: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -586,7 +607,8 @@
                 Miss511: settings.Miss511,
                 LAFC: settings.LAFC,
                 NM511: settings.NM511,
-                WVFlood: settings.WVFlood
+                WVFlood: settings.WVFlood,
+                GMDM: settings.GMDM
                 //NJ511: settings.NJ511
             };
 

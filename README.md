@@ -8,6 +8,9 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * 511PA
 * Louisiana FC
 * NMroads (New Mexico 511)
+* WV Flood
+* GAIA - Mexico
+* PennDOT OneMap
 
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps

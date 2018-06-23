@@ -11,6 +11,7 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * WV Flood
 * GAIA - Mexico
 * PennDOT OneMap
+* Mapas Bogota
 
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps
@@ -33,7 +34,9 @@ Currently supported maps that have a button/link to open WME:
 * 511virginia.org
 * MiDrive (mdotnetpublic.state.mi.us)
 * Rosreestr
-* Mississippi 511
+* Mississippi Traffic (511)
 * NMRoads (New Mexico)
+* West Virginia GIS (Geometry & Measures)
+* WV Flood
 
 ![](https://imgur.com/JFr1zx6.png)

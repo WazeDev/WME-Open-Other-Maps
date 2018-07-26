@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.07.22.01
+// @version      2018.07.26.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -24,6 +24,7 @@
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
 // @grant        none
+// @contributionURL https://github.com/WazeDev/Thank-The-Authors
 // ==/UserScript==
 
 (function() {
@@ -52,6 +53,7 @@
     var GMDMIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAINSURBVDhPnZPfS1NhGMcf6A8QgpIVpczN82vKCCyoLvpxWdRutMn5uTGhvJEoiIl0kxeDLOqiKBqSsKCrrIyCJhGlIl14IavAMFs4IU3BmIUz9+054w3GcKF94L047/t8v+f7Puc5VBVZ95Bih0ixukhxoiQ7+8TJJtCcTvLpX8lrgBrcZYJ2t6+SbKZI7vCIqipoVjf5LHiOX8SlW4MYHn+P/icjOBS7CpKjIMmaoGZjp6iuQLWDVNe+5j8Rx0xuHuX8LhYRS6RAfhukmNeFogLF6CPJwY1HI3g9vYJnk9+R/rCIpZVCySRfKMB/qgdU3zZHgXCtUJXREE5vP3oBw5lZJMe+4Vo6i97nMxiaXCgZ/FoDTncnQXtD66TpLUJVhi/8quZwF95+nMXSz3VkcnlcfjqNHl73x+fwYuoHQvF7oLpqBrJ50+347cE3pTe6vPuyjP6xHB5OLCC7mId0Ms4JwvMkRXcJVRmqtZ/8erH2yHmMZj4Li78UEe0dAPm4iaqVFIoN0OyE2+mag504m3iAgaFR9KVeosW4wmKeh0b7E8/JHlG9Aa2t29jkMckRvmsbd/yM23WQVwfvL/OXOiAq/0EwsoM0c4qaYm5cFjqgAA+RauuiYhOozjFq1AsU4CTNHWxi3BEnW0Ax71LwnJsgW0q1ZSS7nqOv8jXiYuc/0Ph3bop4xVMFRH8AgigQaceEwpQAAAAASUVORK5CYII=";
     var PennDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQXRFWHREZXNjcmlwdGlvbgBjaHJvbWUKNi8xMy8yMDE4ICwgOTowMTo1NCBBTQpPbmUgTWFwIC0gR29vZ2xlIENocm9tZYnkUN8AAANFSURBVDhPpZPfb5NVGMd74YXxTh3grf+CXbuhkHUrqXZZMWgEg8lUYFXSICPbiEw0c0F0vwoUN+THZlZr0ETmiIYpdOuK7WCsQFiHrLRAu7qBLf2xMsYce/14+p4u0Wsvnve85znP8/l+z/Pm1eRyOf5vaPKPIrODolcccq2wU7Sug6LKQzJXeZiV5oOsqmjlGdMhnjD1oCl3saryKJtsO+k/aZCQFTXf8Ow2JytrXDz51gmequ5mhdWl5p6zOnl6qwvN6yfRbPqZ599zUmPfjvuSjnj8Bb78caOEVHWMYLGPYG6/gP6TYUqbvFS2+7Ec8GNsuYa2aQLTvn7sfbsJ3TbAYz3hmBnrVy5e/HhAQtY7rqlhOnCVdW0BEZcpa5ukwh7F2v0r33tsxOJr1Oa5bCldZ/aztiXMtqPfEYwYJcTs+J2XHdfZcOQGrx6JYu76g3e6/biG6rj/52q1OR8TEQtbenxov0jSOdAsgCXwl05CNvfG2Nh7l6oTs9R8G6J3uI3pGWF7Uac2P8rq6R9txHIsw4bjdxm8ugUWxNnDYpjVSsiO04vs/GmBLs8PhO5UycN80SMdmeRaOgdPUX58idpTQW7G1ktnc6Imq1XrVEi7J8zoZB2P50pVe2qBiPi0hcPeMd7tU9h3dpTpeyYJyGklQIjlMmsk5H7SKJUfFMsQhzdjb9N6PsoHvyj0XPSSShmlwDJAiCgP9fRdOSYhy3dTAfM6AhEbzd4EDUMKzoCPdKpciuRrlkPsL4et1A48kJC/swWImMFYpJ4P3Wm2nlHoujgmAEY1/x+A2CcSRlq8IerOKhKylJVz8IXq2Ts0yw5xhc88EaIz5oKDwhDza66YpTk9rjEXtQLQNFyAKAJyJbKL+nM53hcO9rqTTESrVcW8gJLRqTVKRg58/I6NBvc8u9wKewYLkEB4D+3+NB95FOrOLTB8o1FVXEiXMJ9eLddUiepmNllG96Ugn3oVGsXM8m5UiH0kSfN5hf2+JU6PO0knysgkDKTuVYh3A+mkgVzyJRYzJbivd9IkAK1+8dl/+5eTz31iBiLxdSDI+K3tTMY2c2uqmujUm+KfeYOp+GvMTJsI3rZxUAjmmztG5DwaBOQfz4NsOxz77pAAAAAASUVORK5CYII=";
     var BogotaIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAADAUlEQVQ4T7WTW0hTcRzHz/8w6CUKISiioIhKikCbzpk3VApvky6ardK2uU3nZc7NzbnUxGvO27zmLUPEa5luriP24AnqIXywAjOhHpTwpad6jfLb/xwHIpOe6gc/DvzP+X7O7/f9/37MPw+p2lMn07ob5LoXt8Oy55LC9V69XOful2o8qyHZnpUQjbtVluNVRufORUXkcZFheo86Mp9z+uQ7kWga5EubrZDrplDblYfGR3pUdRQiu6oeiUWDsDjtqHCZYGwoh1Qzg6wKJ2Q6z6pPvhOV7Ua+hgLiC4ZxufAJYgyjMDeW4V5Fo/i0NdlwxTiEtNIOFNRVimdKR48/6Jq1mxf+aKq3Yu2VBN9WDonJDbN4/YzFj7UD2PxwBMvz+zA+lYLWATUicqb9QeG6Sd7RakGJ04qwIIL0ZIK3syw0GQQPTARvplkkxRHcUhCMTSlQ121AqHaP1oJUbl6qeQ7Bp2oLQcBBBoGnGBgyCZSpBMHnGRzYz8CoJhidVIB+T0Fz/qCbdhd/v82MMlrVMsfiwlkG9HhXHj3MYGFku6I0W+feFVmbbXzH4yyUtxXj+woLrZJAItkNyrxOsLnEYnEhHEX09vLq6v1BqeYe0SOhNWywWFtkYcslOH2CwcnjDO5cJXhHK8UXVjT7IR2P2PxJf1CwapbPqa4WQVvdVNDJormcgPiqEQzfaqPZwoqttfRr6K3N+IMu6Sf4YPXsNqiHRVMCwbCNRVQoQbycYLySoC+Rgvq3QaHZ03ubbW8pESdbGMDf6xJ86qNVUXG9jaDZQQEqgo1xekbbFrwUJjvBNOIPynC0v3T26nC3vEn86OlYIj5yZ7A0J8H7eRbr3DFw7hg4Ws3i2ghmKyxDyz75TtAlTZfrJn419WnFFaGeIcPuQk1XvlilMDdCKsy96B1WIqW4/2eIxnPDJ98dsQavVKbzChv/+SL1S9gn14AKrkEVDLVVIijaMPGVzk9nXCF3zif7eyTbvQERBk5BRSOhWjcn13tyU8x8oO/1/wqG+QNiJs5Og1W2+gAAAABJRU5ErkJggg==";
+    var ZoomEarthIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAADhElEQVQ4T32TXWgUVxTHB0F8FTO7Mzs7mcl+RY3GBk1VTPwINcGvULFqQPoira1t1RC1+CTxQaTUtulO8SEPbUBsaUFpQrKmrK0sWY3ZZTfRzc4StjHFRNeNawyJlkBY8/fcu5NW0fYPl7kz957fnHv+5wpvUktLy+Lh4eFKM2Ua09PTxtT0lDFwZ8DIZDJlbM3a9v9KJBMHR++Pjl1pv4yPjhzCrr07seu9Hfik8TA6utoxMnJ3LJ1O11vb36zB5GDw2vVrz8vXlUNy2SC77ZBddth1kQ+HS8K6TZXoi97Kx+LRoBX2qkwzGfzh4vdweGWIJSJsNOwlBGMgNicQmztK7NCXqfjpl0swU4Mdfv/RRRZCEKgeBwPdXc8VjwRRLyKIjUMkykiiYIm9ayJ/OticoKpXQncwgHg82sAhbW1ti7PZh2MVdBwGESlALVXh9Cn/QihQ0m0oLnXCtUzj32SXiJrtG/Hg4QOztbV1IcumMtDdCZkWRY2BilC9tQrZ8SzOf3se67eshcMtYdXalXgy+QRb6jYRROIwp09CNB5B1x9dutDfHzNOnmqiP1JdOEjkoHnNzMwg1BNC0+eNmJ2dxebaan48B5mh+mR8891XuB763RBYj+zZX2+BxNdA85qbm+PPmtoNUEqWQNGXwLNcxbETn+FR7pEh5HI5Y0/Du1TMQjZsbCQQC8zn8zz4Ze3etw0Vb5eifLUHZRVuHG06jEw2YwjhcMg4TmkXjkWOMVBtFa/H+x8eQEegHc+ePbUwwDvbq+FbrmDVGi8Hffn1OXR2thsCa/urvwUKR6PBHGIg6m743vLxHmKF9l9owcTEY2yu2wDNbYPus6PYa0M01odIJFLE7b83em9sTdXqf0DFZL+2lNkscYcUt8ybUSP73WUaij02aORYXX0NRv4aKdjPlL6brg/3hvNqqVLoGcpCpr5RCMIcclJjKpSF4hahL3UQRIZ3pY6emz1/307eruaQefVFeoM//nwJikcudDUBVZqrHnYEyooaUKVMGMi7QqML/CsischlK/xVpYZSHaxezH6ZmtBJ945dBY2GTlm46Y7t3F2HnhshJM3EFSvsdfn9/kVDfw415CZy5o3eMJrPnsbHRz7Ap42HcPaLM4hE+zA+njUTZmJHc3PzAivsvxWLxRbG43F94E6/MTU1aUxOThjkjpFKpYrYmrXtJQnCCzP4PmtswqUfAAAAAElFTkSuQmCC";
 
     function initInterface(){
         var $section = $("<div>");
@@ -80,6 +82,7 @@
             `<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="${osmIcon}" height="18" width ="18">Open Street Map</label></div>`,
             `<div><input type="checkbox" id="chkYandex" class="OOMchk"><label for="chkYandex"><img src="${yandexIcon}" height="18" width ="18">Yandex</label></div>`,
             `<div><input type="checkbox" id="chkHere" class="OOMchk"><label for="chkHere"><img src="${hereIcon}" height="18" width ="18">Here</label></div>`,
+            `<div><input type="checkbox" id="chkZoomEarth" class="OOMchk"><label for="chkZoomEarth"><img src="${ZoomEarthIcon}" height="18" width ="18">Zoom Earth</label></div>`,
             '</br><div>',
             '<fieldsetstyle="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
             '<legend style="margin-bottom:0px; border-bottom-style:none;width:auto;"><h4>Map Language (where applicable)</h4></legend>',
@@ -119,6 +122,7 @@
         setChecked('chkWVFlood', settings.WVFlood);
         setChecked('chkGMDM', settings.GMDM);
         setChecked('chkBogota', settings.Bogota);
+        setChecked('chkZoomEarth', settings.ZoomEarth);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -235,7 +239,6 @@
                 window.open('https://www.google.com/maps/@' + latlon.lat + ',' + latlon.lon + ',' + ( W.map.zoom + 12) + 'z' + (lang != "" ? "?hl=" + lang : ""), 'Google Maps');
             });
         }
-
 
         //************** Mapillary *****************
         $('#OOMMapillary').remove();
@@ -601,6 +604,25 @@
                 window.open(`http://mapas.bogota.gov.co/?&e=${topleft4686.x},${bottomright4686.y},${bottomright4686.x},${topleft4686.y},4686&b=261`);
             });
         }
+
+        $('#OOMZoomEarth').remove();
+        if(settings.ZoomEarth)
+        {
+            let $section = $("<div>", {style:"padding:8px 16px"});
+            $section.html([
+                '<span id="OOMZoomEarth">',
+                `<img src="${ZoomEarthIcon}" alt="Zoom Earth" width="18" height="18" id="OOMZoomEarthImg" title="Open in Zoom Earth" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+
+            $('#OOMZoomEarthImg').click(function(){
+                let latlon = get4326CenterPoint();
+                let lang = GetLanguage();
+                window.open(`https://zoom.earth/#${latlon.lat},${latlon.lon},${( W.map.zoom + 12)}z,map`, 'Zoom Earth');
+            });
+        }
     }
 
     function loadSettings() {
@@ -626,7 +648,8 @@
             WVFlood: false,
             GMDM: false,
             PennDOT: false,
-            Bogota: false
+            Bogota: false,
+            ZoomEarth: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -659,7 +682,8 @@
                 WVFlood: settings.WVFlood,
                 GMDM: settings.GMDM,
                 PennDOT: settings.PennDOT,
-                Bogota: settings.Bogota
+                Bogota: settings.Bogota,
+                ZoomEarth: settings.ZoomEarth
                 //NJ511: settings.NJ511
             };
 

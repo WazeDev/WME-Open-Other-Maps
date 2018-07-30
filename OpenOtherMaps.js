@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.07.26.01
+// @version      2018.07.30.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -20,6 +20,7 @@
 // @include      http://nmroads.com/mapIndex.html*
 // @include      https://gis.transportation.wv.gov/measures*
 // @include      https://www.mapwv.gov/flood/map*
+// @include      https://roadworks.org/*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -47,6 +48,7 @@
     var PA511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACClBMVEX//vz//vv8+/r4+Pj7+vn9/Pr///709vfn6u7U2+Td4ei/ydmotc/r7fBziLHHz92+x9qsuc/y9Pf////29/fX2+b9/f7+/v79/v18j7Q9WZPO1eH//v7n6u3+///AydpbcaG5xNfO1eS2wdiyvtavu9TFzt7m6e6/x9j///3p7fDDzdu+yNkML3kaPIDk6PD5+fktSokWOYBMZpxBXZeDlLbd4us6V5EkRYTY3uhFYJUYPH/7/PtziLMzUpKRo8Pi5u0QNYA1VJOTo8Wgrsjv8/aRpMEAH25je6mltc0CKXU4V5O4w9Zddqdrgq3R1uQaPIE8WpROap8AJXJofqzGzt0AJnOFmb73+foWO4BIZJnd4u1Rap9cdKbK0d6Aj7Xr7vH8/vwZPYRHYZuotc0AJHWntM8CJ3NyiLDM1OJacqNfeKiTpMEAHnC0v9avutIAI3N6jrKYqMcAHm7Aydumss0AG22frsqKnb5feKZxhbDl6e5FYJYpSYgnSIlAXJjl6fCClLgdP4Lh5OqOn8AbPYLV3ebs7/NlfKpOaJy9x9r+/vzr7fPt7/Tz9Pbx8/b09/b29/h9kLRMZ5p/k7jZ3+l6j7ZOZ5uNn775+/v//v35+vrJ0d/t8PPu8fXd4uqvu9OMnb1Sa6F5j7XCzN78/fzQ1+K9x9m1wNaksc6aqMart8/X3ef+//0JSeH9AAAAAWJLR0QTDLtclgAAAAd0SU1FB+IDCA8HAr9f8sAAAAD7SURBVBjTY2BgYGBkZGJmZGFlgAA2dg5OLm4eXj5+AUEhYWFhBhFRTjFxYWEJYTZJKWlhYRkGWWEokBMWlldQFGZgU1JWUVUTVtfQ1NLW0dXTZzAwNDI2MTUzt7C0sraxtbNncHB0cnZxdXP38PTyFvbx9WPwDwgMCg4JDQuPiIwSjo6JZYiLT0hMSk5JTeNMzxDOzMpmyMnNyy8oLCouKS0rF66orGKorqmtq29obGpuaW1r7+jsYmDr7ullE+7rl5gQMXHS5CnCDJowhwlPnTZ9xkxhhlnCs+eYzZ03f8HCRYuXgPwyi23psuUrVq5aLb9mLRsQAP2OCgBLzD+TNb5HDAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0wOFQxNTowNzowMi0wNTowMAebKzMAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMDhUMTU6MDc6MDItMDU6MDB2xpOPAAAAAElFTkSuQmCC";
     var Miss511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABjUlEQVQ4T2MYWsClYXM+Q/CcEoZAVGxfvakkpHWbKFQZflA272iXXOqyXwxBs/+jY8eaTf+jenfpQpXiBpuP356uV7j6B1PwHAxDQNivdfv/7BkHCBtkULTmElvYXKyGgHDipL3/21eexm/Q2iM3luHyEgwXzz3yf96u6/gNOnLlwQ6zsnX/JRKX4MT9G8/9P3DxEX6Dbj58saNvw7n/dUtP4sRHrzz8/+jFW/wGXbr7bEf+nMP/I3v34MY9u9yhynGDG0AX1S498T91yv7/KVhwzsxD/4vmHcRv0K2HL90qFx2/IZm05D9H+DysWClj+X+jojX4DVp96MZMy4oN/3GlHxCWSVn6Xy+fgEEJk/bOlAYqxGYADIvEL/qvkLEUv0Hz91yd2bP+7P+GZSf/1y87AcfiwCiHGcQdOf+/YOxC/AbtPnOXf9mus1JzNqBihfTlcIOYQ+b8Zw6bh98gXGD2jkv/PZu2/m9ddfp/84pT/6sWHiXPoFWrVjGHhq5iBtEgzPD/PyNUCgoYGACx+Fztt2VvAQAAAABJRU5ErkJggg==";
     var LAFCIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAARCAYAAADQWvz5AAABgWlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKM+Vkc8rRFEUxz/MiBhRLCiLScPKyI8SG2WkoSZNY5TBZuZ5b0bNjNd7T5Ktsp2ixMavBX8BW2WtFJGShZU1sUHPeZ6aSc3Cvd1zPvd77zndcy5UxrNKzvT2QC5vGbFwyD+TmPVXP+HBRzNeWpOKqY9EoxHKjvdbKhx/HXRy8b9Rt6CaClTUCA8rumEJjwtHVizd4S3hZiWTXBA+Ee4y5IHCN46ecvnZ4bTLnw4b8dio1NYo7E+XcKqElYyRE5bKCeSyy8rve5xKfGp+ekp8u6w2TGKECeFngjFGGaCXIbEDBOmjW3aUie/5iZ9kSWIVsTqrGCySJoNFl6jLkl0Vr4muysyy6vT/b19Nrb/Pze4LQdWjbb92QPUmfBVs++PAtr8OwfMA5/li/NI+DL6JXihqgT1oWIfTi6KW2oazDWi515NG8kfyyKrUNHg5hvoENF1B7Zzbs99zju4gviZfdQk7u9Ap9xvmvwH7o2e1G6/3lQAAAAlwSFlzAAALEgAACxIB0t1+/AAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAAJJSURBVDhPlZRPSBRRHMfX3Zm34+JCFFoKHqIuHTxnoVSUUJAX0xWL3Cz6Y6ZphZm5TMm6amnrzJt/C3rpWl4K6iDU0Q5CaAYRdQhvarf+0AZO3zd/lhl3GegLX2YO3+9n3r73exviCLkHf208cnReVrUVWdXf3R2+/0ZS1AXm0fTYa04Q5iLR6PFQkBB4AtC3vv6BTarqJvPk42nrySxR1dxVVfWRi0ZvOJXSihBi7K6uXsxKtFDuvdlfeGduOnnqE0DziIftVglhRTNn2to/eIsp8YEPdL23bxMf1BHn7FYJCRUVjSnxYd5bzEw88oHGxifz8Xj8oFMpLdM0y6iqffEWL1256gPBEqJldiNACE55i8mui4V3WdH+SIaxz4kGi1KjDqW/bnng9h0PSF8SRbGwN2bQyrLZ7A6UfrllnxVtDasampGVoZ2VlRfY3OGARuFMKBbb4yBsUU07jdKWWx7Zdmqu6w83rGIM8rAJ4DqqxCY4wldfuGE2Ty1tiSIIc8f5zh9YyWcLxICC0OAgbCH0yg2zqW5NtBdBmDEmJsrvHRDzS9QjNgXCHVt1w+nMhJnoOFsEYWbXpaa2dtmB/AwLQpLn+ToLoijKfsyRgeAUTuj58Ejq97nOJCt+lzV9ml1kL+zYiaYN7M8Gg+FnLnPl5fUWaLuam1v3dvf03MK/wGAul4tROltDVeMZTs46jMvXurcAWsCVWcRzDhX/hgfJmn6qdgG2lM6Mz2I1TwkhBwAahN+GeT7hRP9bAsyzF2z+oQghLf8AAjyYhRxw+xIAAAAASUVORK5CYII=";
+    var RoadworksIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACFElEQVQ4T7VTzYtpcRieLOxY2tiIzZQFykJkIkRGoixEkjSlCFkoSzv+AhulLKxmp2wpKWY7avYsuMpH+dio+9zzvhzjXuY2d3Gfejq/834853nfc87DfwGAGxJ+CqDrYrHYrdfrHxz8G+4J7fd7zGYz9Pt9zOdzDAYDHA4HIfX5oBuISZGbzYZFGo0GhsMhptMpWq2WkPqsucF1krjb7TAej1GtVtFutzGZTPD6+opKpSKkvym0XC7x/v6OYrHIjSTU6/X4XC6XsVqthLJvCBEjkQgKhQKP8vb2hmQyiVKpxGNe192AgtRACIVCyOVySKVS3ExOstkswuEwut0ubfq+COGcRL1eRyAQwMvLC2q1Go+RSCSQz+fh8/moRKw9d/6B0WhERXh6emI3NArto9lsIh6PI5PJwOVyUcl9ITFIC6ZvxWKx8EjpdJqdOZ1OPpNDk8kklH7hRkwcj0d24Pf72YHBYOBv6OPjAzqdDtFoFGazmd+g2EO84CrI1skFLVuj0bAQUa1WIxgMwuPxcP6Mr4VUKhW8Xi+en5/5SmO53W4miRDlcjmEX4/KL72/CVGSiux2OxwOB7uzWq3QarW8NxKj+OPjI2KxmNDCuBWiHUmlUt4DCRDpTM20LzFGD5JIJCRCOIkQ6IZIjmQyGWw224UKhQLb7RadTgdKpfLiVq/Xw2g0spKAkyvx8K8UcbrHwy9Ba5ZwWKd5ZwAAAABJRU5ErkJggg==";
     //var NJ511Icon = "";
     var NM511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACg0lEQVQ4T6WTX0iTURjGF10k3QVO56CLQPKmDBUMUbEyDYUwXSOFlQqCf6AIIyhRWtIwRBGCJPVCqzUyNrzKNGem3yRJpvvC5qbml6bln/VtTTedzvdp06+CZGDrB4fznvc87wPnPeeI9gIg3y+EwUPzjck0WdAgLIMDXEoIfa1XkPXKMzDHDwnpfwNAKFlzMmn6qo4m8nVkjGoRtvbGB40mvFcuVzIymXKmuWiQ7yoy/xjIN6+8STSaKio1/nxvWVmpIA+MsbY2eioiAjZJOFZLJPCOFGHLfBPe/mzwcaFYCgvDYFbWW0EeGL8RJ5VivToGWJv1nRDY9G6ByDe4J+CTxOhNO6cU5H8gonD/DK41hNjEDMfr9NKFi2IQz8Lp8mCBd2N81g7rDA+Hcw2eV9dga481kim+hSzZZ/y1vyG+I5mW2xX0+ZbOM35D71LLoHrO4tFLC0obh1D1dBTlLe8x882B9SkGdl1KOxlEMnonyiHGN+bqDu8YWfMqyHJJTZZcrddcqHe35uGuhkV9x0dcrmNQ2GDYNhyfsoE3MXB0Ksw0fV1Hs1WVxN3OIffkjpEfzN85SOzJBxsjSTpXUzoswywu3OvDC4bDxBc7+kbn0GmYhrvtPha0ijYyHDhNXHmMUL6b7WZHSOGUncX64iJca5uwOXy98Wxio78Hy5FS9KSl7W723/y6NbtEAvuxKLgfVsP9uAmrykIsRR7BnFiM7tTUvRlN+N7RWELC/HBsNOvsPu+wd2WMrRjkDpNK1cAUFyuZmppTgjwwAyqVeCA3l/mk18f71zR6QkvWAjWxcdptQbDQ985M36dV01LzUSEVPDRZohbC/wMQ7RPCAIhEPwGmF45ZgI9RNAAAAABJRU5ErkJggg==";
     var WVFloodIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACvElEQVQ4T42T3W/SUBTA+88oDCjQUr636OY+oGtH+Sg4YLBNmPsQaEtpESWbiQ/G/8DsxT27aNziXLI5xxKzrYx9RxPjHoxPJkYTE2OicvEy0Omi0eT3dHN+59xz7rmI1sXp3LyW5LXujM6VQd0cSnL6XkFP1THQ2QZGWsRo4SdNDe3lUZJHXRm9mzOQvIEWrX6pLSzjXtlURyL8sonJmb0ShGByiI7k6g5M6cnhjGRiZMKbt7Ly3Ky8W+I7orIjlC/enpq8VRCmblgY0XIsIzAaa6ZsYgvKCw8EsGMFW9jB6khgNPflRT/YsR2uTZjotMUrQhDoNGjcxxHMP5nnwLYFKCpItWJ4Xer7WiFqivpwOWZwjRB+iQjkm1q9jg86culRurptrimqmnK2yaa6jqI+WB7QdV8ifDlzQG5oEuzKGcw9e5wC22ZY5MQ5QX2wFNG0x7E+3sSICErxeoq3s+L64jiowDqnon+wqXq7TncGhzCKM1I8Ah1nUCwvjVYrpuOIP5aC2llQ1r/ZiFODPEbzCO4RpmduvlM8f7nbb3za6rw3W3R4U4gBbgOZXrk/DMr/1FSvnobOOFm0O4kYaNgbt/pwBJThuE7FnUJ1tBZWn49gvRNQg4vHl+YuV5X/0SIt7VGcSiPGPhHz5ErzY0BpgeP6dSSgTuOkgRpqmo4BjE4h0IGPtrJY/LgbAHvnQFlXd8oasGP/vEdV97trW3jDARX8aGNc2zVI+HioiTgjtrE84YolM8nNheS3lwPPV4eLkwk7GWFiQzPTo+/3Yh/243fvJMlQVN+TIHwCQvgkSyBvYSWzTzB7OZwaM3bF0M640Z0gPFesfp7wpIyuYbQjrLkQRXsSJk/a7BcQW7BgZfO2YN4eKthDV+E3sbEixBmSW/uvtYavt4YLjouy1Z+1BrIWVjQHsoRf+A79jNM0D/QKqgAAAABJRU5ErkJggg==";
@@ -83,6 +85,7 @@
             `<div><input type="checkbox" id="chkYandex" class="OOMchk"><label for="chkYandex"><img src="${yandexIcon}" height="18" width ="18">Yandex</label></div>`,
             `<div><input type="checkbox" id="chkHere" class="OOMchk"><label for="chkHere"><img src="${hereIcon}" height="18" width ="18">Here</label></div>`,
             `<div><input type="checkbox" id="chkZoomEarth" class="OOMchk"><label for="chkZoomEarth"><img src="${ZoomEarthIcon}" height="18" width ="18">Zoom Earth</label></div>`,
+            `<div title='Roadworks (https://roadworks.org/)'><input type="checkbox" id="chkRoadworks" class="OOMchk"><label for="chkRoadworks"><img src="${RoadworksIcon}" height="18" width ="18">Roadworks</label></div>`,
             '</br><div>',
             '<fieldsetstyle="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
             '<legend style="margin-bottom:0px; border-bottom-style:none;width:auto;"><h4>Map Language (where applicable)</h4></legend>',
@@ -123,6 +126,7 @@
         setChecked('chkGMDM', settings.GMDM);
         setChecked('chkBogota', settings.Bogota);
         setChecked('chkZoomEarth', settings.ZoomEarth);
+        setChecked('chkRoadworks', settings.Roadworks);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -623,6 +627,24 @@
                 window.open(`https://zoom.earth/#${latlon.lat},${latlon.lon},${( W.map.zoom + 12)}z,map`, 'Zoom Earth');
             });
         }
+
+        $('#OOMRoadworks').remove();
+        if(settings.Roadworks)
+        {
+            let $section = $("<div>", {style:"padding:8px 16px"});
+            $section.html([
+                '<span id="OOMRoadworks">',
+                `<img src="${RoadworksIcon}" alt="Roadworks" width="18" height="18" id="OOMRoadworksImg" title="Open in Roadworks" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+
+            $('#OOMRoadworksImg').click(function(){
+                let latlon = get4326CenterPoint();
+                window.open(`https://roadworks.org/?lng=${latlon.lon}&lat=${latlon.lat}&zoom=${( W.map.zoom + 12)}`, 'Roadworks');
+            });
+        }
     }
 
     function loadSettings() {
@@ -649,7 +671,8 @@
             GMDM: false,
             PennDOT: false,
             Bogota: false,
-            ZoomEarth: false
+            ZoomEarth: false,
+            Roadworks: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -683,7 +706,8 @@
                 GMDM: settings.GMDM,
                 PennDOT: settings.PennDOT,
                 Bogota: settings.Bogota,
-                ZoomEarth: settings.ZoomEarth
+                ZoomEarth: settings.ZoomEarth,
+                Roadworks: settings.Roadworks
                 //NJ511: settings.NJ511
             };
 
@@ -730,12 +754,17 @@
     }
 
     function bootstrapNM511(tries = 1){
-        if(map && map.extent && map.loaded){
+        if(map && map.extent && map.loaded)
             initNM511();
-        }
-        else{
+        else
             setTimeout(function() {bootstrapNM511(tries++);}, 100);
-        }
+    }
+
+    function bootstrapRoadworks(tries = 1){
+        if(Elgin && Elgin.map && Elgin.map.tilesloading === false)
+            initRoadworks();
+        else
+            setTimeout(function(){bootstrapRoadworks(tries++);}, 100);
     }
 
     function bootstrap(tries = 1) {
@@ -767,6 +796,9 @@
         }
         else if(location.href.indexOf("https://www.mapwv.gov/flood/map") > -1){
             bootstrapGeneral(initWVFlood, 1);
+        }
+        else if(location.href.indexOf("https://roadworks.org/") > -1){
+            bootstrapRoadworks(1);
         }
         /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
             bootstrapGeneral(initNJ511, 1);
@@ -892,7 +924,7 @@
 
         let $OOMWazeButton = document.createElement("li");
 
-        $OOMWazeButton.innerHTML = '<span id="OOMWazeButton" style="background-image: url(https://imgur.com/NTLWfFz.png;"></span>';
+        $OOMWazeButton.innerHTML = '<span id="OOMWazeButton" style="background-image: url(https://imgur.com/NTLWfFz.png);"></span>';
         document.getElementsByClassName('mapSettingsList')[0].appendChild($OOMWazeButton);
 
         document.getElementById("OOMWazeButton").addEventListener("click", function(){
@@ -927,6 +959,40 @@
         observer.observe(document.getElementsByClassName('mapSettings')[0], { childList: true, subtree: true, attributes:true});
 
         insertWMELinkNM511();
+    }
+
+    function insertWMELinkRoadworks(){
+        if(document.getElementById("OOMWazeButton") !== null)
+            document.getElementById("OOMWazeButton").remove();
+
+        let $OOMWazeButton = document.createElement("li");
+        $OOMWazeButton.style.minHeight = "60px";
+        $OOMWazeButton.id = "OOMWazeButton";
+        $OOMWazeButton.innerHTML = '<a href="#"><span style="background-image: url(https://imgur.com/NTLWfFz.png); background-repeat:no-repeat; background-position:center;"></span></a>';
+        document.getElementById('nav-main').getElementsByTagName('ul')[0].appendChild($OOMWazeButton);
+
+        document.getElementById("OOMWazeButton").addEventListener("click", function(){
+            let source = new Proj4js.Proj('EPSG:900913');
+            let center = Elgin.map.getCenter();
+            window.open(`https://www.waze.com/en-US/editor/?lon=${center.lng()}&lat=${center.lat()}&zoom=${(Math.max(0,Math.min(10,(Elgin.map.zoom - 12))))}`);
+        });
+    }
+
+    function initRoadworks(){
+        if(location.search.indexOf("?") > -1){
+            let params = location.search.match(/lng=(-?\d*.\d*)&lat=(-?\d*.\d*)&zoom=(\d+)/);
+            debugger;
+            setTimeout(function(){
+                try{
+                    Elgin.map.setCenter({lng:parseFloat(params[1]), lat:parseFloat(params[2])});
+                    setTimeout(function(){Elgin.map.setZoom(parseInt(params[3]));}, 500);
+                }
+                catch(err) {
+                    console.log(err);
+                }
+            }, 1000);
+        }
+        insertWMELinkRoadworks();
     }
 
     var copyToClipboard = function(str) {

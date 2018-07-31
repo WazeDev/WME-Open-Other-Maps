@@ -22,6 +22,8 @@ Currently supported reference maps (no data can be copied - violate Waze's exter
 * Open Street Map
 * Yandex
 * Here
+* ZoomEarth
+* Roadworks
 
 ![alt text](https://imgur.com/V1QODfB.png)
 
@@ -38,5 +40,6 @@ Currently supported maps that have a button/link to open WME:
 * NMRoads (New Mexico)
 * West Virginia GIS (Geometry & Measures)
 * WV Flood
+* Roadworks
 
 ![](https://imgur.com/JFr1zx6.png)

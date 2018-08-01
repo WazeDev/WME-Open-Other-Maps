@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.07.30.01
+// @version      2018.08.01.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -11,7 +11,7 @@
 // @include      https://www.google.com/maps*
 // @include      *wv511.org/*
 // @include      http://www.511virginia.org/mobile/?menu_id=incidents
-// @include      https://mdotnetpublic.state.mi.us/drive/
+// @include      https://mdotjboss.state.mi.us/MiDrive/map
 // @include      http://pkk5.rosreestr.ru*
 // @include      http://www.511pa.com/Traffic.aspx*
 // @include      http://newengland511.org*
@@ -213,14 +213,8 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
-                var topleft= (new OL.LonLat(W.map.getExtent().left,W.map.getExtent().top));
-                var bottomright= (new OL.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
-                var xmin = topleft.lon;
-                var xmax = bottomright.lon;
-                var ymin = bottomright.lat;
-                var ymax = topleft.lat;
-
-                window.open('http://mdotnetpublic.state.mi.us/drive/Default.aspx?xmin=' + xmin + '&xmax=' + xmax + '&ymin=' + ymin + '&ymax=' + ymax + '&lc=true&cam=true&tb=false&bc=false&bh1=false&bh2=false&sensor=false&inc=true&mp=false&sign=false&mb=false&cps=false&aps=false&bing=false&source=social&rsp=false&rest=false&park=false&plow=false', 'MiDrive');
+                var center = W.map.getCenter().transform(W.map.projection, W.map.displayProjection);
+                window.open(`https://mdotjboss.state.mi.us/MiDrive/map?constZone=true&incidents=true&lat=${center.lat}&lon=${center.lon}&zoom=${W.map.zoom + 12}`, 'MiDrive');
             });
         }
 
@@ -774,7 +768,7 @@
             bootstrapGeneral(initWV511, 1);
         else if(location.href.indexOf("511virginia.org") > -1)
             bootstrapGeneral(init511virginia, 1);
-        else if(location.href.indexOf("mdotnetpublic.state.mi.us") > -1)
+        else if(location.href.indexOf("https://mdotjboss.state.mi.us") > -1)
             bootstrapGeneral(initmiDrive, 1);
         else if(location.href.indexOf("http://pkk5.rosreestr.ru") > -1)
             bootstrapRosreestr(1);
@@ -1079,20 +1073,20 @@
     }
 
     function initmiDrive(){
-        //g$('#dialog')
         var observer = new MutationObserver(function(mutations) {
                mutations.forEach(function(mutation) {
-                   if (g$(mutation.target).is("#dialog")) insertWMELinkMiDrive(mutation.target);
+                   if ($(mutation.target).hasClass('esri-popup__content')) insertWMELinkMiDrive(mutation.target);
                });
            });
 
-        observer.observe(g$('#dialog').parent()[0], { childList: true, subtree: true });
+        observer.observe($('.esri-component.esri-popup')[0], { childList: true, subtree: true });
     }
 
     function insertWMELinkMiDrive(changedDiv){
-        for(let i=0; i<incidents.graphics.length; i++){
-            if(incidents.graphics[i].attributes.Message.replace("<br/>", "<br>").indexOf(g$(changedDiv).html().replace("<br/>", "<br>").replace("&amp;", "&")) > -1 && g$(changedDiv).html().indexOf("Open in WME") === -1){
-                g$(changedDiv).append(`<br><a href='https://www.waze.com/en-US/editor/?env=usa&lon=${incidents.graphics[i].attributes.XCoord}&lat=${incidents.graphics[i].attributes.YCoord}&zoom=6' target="_blank">Open in WME</a>`);
+        for(let i=0; i<incidents.graphics.items.length; i++){
+            let location = incidents.graphics.items[i].attributes.Message.match(/<strong>Location: <\/strong>(.*?)<\/div>/)[1];
+            if($(changedDiv).html().indexOf(location) > -1 && $(changedDiv).html().indexOf("Open in WME") === -1){
+                $('#newItemAdded').append(`<div><a href='https://www.waze.com/en-US/editor/?env=usa&lon=${incidents.graphics.items[i].attributes.XCoord}&lat=${incidents.graphics.items[i].attributes.YCoord}&zoom=6' target="_blank">Open in WME</a></div>`);
                 break;
             }
         }

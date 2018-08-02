@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.08.01.01
+// @version      2018.08.01.02
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -11,7 +11,7 @@
 // @include      https://www.google.com/maps*
 // @include      *wv511.org/*
 // @include      http://www.511virginia.org/mobile/?menu_id=incidents
-// @include      https://mdotjboss.state.mi.us/MiDrive/map
+// @include      https://mdotjboss.state.mi.us/MiDrive/map*
 // @include      http://pkk5.rosreestr.ru*
 // @include      http://www.511pa.com/Traffic.aspx*
 // @include      http://newengland511.org*
@@ -1080,6 +1080,12 @@
            });
 
         observer.observe($('.esri-component.esri-popup')[0], { childList: true, subtree: true });
+
+        $('#layerContainer').append(`<button tabindex="0" class="legendIcon layerIcon clickableLegendIcon ui-btn ui-btn-inline" title="Open in WME" id="oomOpenWME"><img tabindex="-1" class="focusRem" src="https://imgur.com/NTLWfFz.png" alt="icons"></button>`);
+        $('#legendIconContainer').css('width', (325));
+        $('#oomOpenWME').click(function(){
+            window.open(`https://www.waze.com/en-US/editor/?lon=${mapView.center.longitude}&lat=${mapView.center.latitude}&zoom=${Math.max(mapView.zoom-12,0)}`);
+        });
     }
 
     function insertWMELinkMiDrive(changedDiv){

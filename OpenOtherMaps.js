@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.08.28.01
+// @version      2018.10.05.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -13,7 +13,7 @@
 // @include      http://www.511virginia.org/mobile/?menu_id=incidents
 // @include      https://mdotjboss.state.mi.us/MiDrive/map*
 // @include      http://pkk5.rosreestr.ru*
-// @include      http://www.511pa.com/Traffic.aspx*
+// @include      /https?:\/\/www\.511pa\.com\/Traffic\.aspx.*/
 // @include      http://newengland511.org*
 // @include      https://www.mdottraffic.com*
 // @include      http://www.511nj.org/trafficmap*
@@ -655,7 +655,6 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWI511.html());
 
             $('#OOMWI511Img').click(function(){
-                debugger;
                 let latlon = get4326CenterPoint();
                 window.open(`https://511wi.gov/?Latitude=${latlon.lat}&Longitude=${latlon.lon}&Zoom=${(W.map.zoom + 12)}&SelectedLayers=WeatherAlerts,Incidents#:Alerts`);
             });
@@ -795,7 +794,7 @@
             bootstrapGeneral(initmiDrive, 1);
         else if(location.href.indexOf("http://pkk5.rosreestr.ru") > -1)
             bootstrapRosreestr(1);
-        else if(location.href.indexOf("http://www.511pa.com/Traffic") > -1)
+        else if(location.href.indexOf("http://www.511pa.com/Traffic") > -1 || location.href.indexOf("https://www.511pa.com/Traffic") > -1)
             bootstrap511PA(1);//bootstrapGeneral(init511PA, 1);
         else if(location.href.indexOf("http://newengland511.org") > -1)
             bootstrapGeneral(initNE511, 1);
@@ -998,7 +997,6 @@
     function initRoadworks(){
         if(location.search.indexOf("?") > -1){
             let params = location.search.match(/lng=(-?\d*.\d*)&lat=(-?\d*.\d*)&zoom=(\d+)/);
-            debugger;
             setTimeout(function(){
                 try{
                     Elgin.map.setCenter({lng:parseFloat(params[1]), lat:parseFloat(params[2])});

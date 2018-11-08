@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2018.10.22.01
+// @version      2018.11.08.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -821,7 +821,7 @@
         else if(location.href.indexOf("http://newengland511.org") > -1)
             bootstrapGeneral(initNE511, 1);
         else if(location.href.indexOf("https://www.mdottraffic.com") > -1){
-            if(document.getElementById("map-container") != null)
+            if(document.getElementById("map_canvas") != null)
                 initMississipie511();
             else if(tries < 1000)
                 setTimeout(function () {bootstrap(tries++);}, 200);
@@ -939,7 +939,7 @@
         let $OOMWazeButton = document.createElement("div");
         $OOMWazeButton.innerHTML = '<div id="OOMWazeButtonDiv" style="height:30px; width:34px; position: fixed; right:40px; top:83px; cursor: pointer; background-image: url(https://imgur.com/NTLWfFz.png); background-repeat: no-repeat;" title="Open in WME"></div>';
         //let parent = document.getElementById("content-container");
-        document.getElementById("map-container").appendChild($OOMWazeButton);
+        document.getElementById("map_canvas").appendChild($OOMWazeButton);
 
         document.getElementById("OOMWazeButtonDiv").addEventListener("click", function(){
             let center = map.getCenter();

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.02.28.02
+// @version      2019.03.01.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -206,7 +206,17 @@
     }
 
     async function getKML(url){
-        return await $.get(url);
+        try{
+            return await $.get(url);
+        }
+        catch(err){
+            let patt = new RegExp(/^<\?xml(?:.|\n)*<\/kml>/);
+            let res = patt.test(err.responseText);
+            if(res)
+                return err.responseText;
+            else
+                console.log("Error retrieving the MyMap data\n\n" + err);
+        }
     }
 
     async function loadMyMap(){
@@ -219,6 +229,7 @@
             alert("This is not a valid Google MyMap URL");
             return;
         }
+
         let mid = url.match(/mid=(.*?)(&|$)/)[1];
         let mapKML = await getKML(`https://www.google.com/maps/d/kml?mid=${mid}&forcekml=1`);
         let parser = new OL.Format.MyMapKML();
@@ -229,41 +240,28 @@
         if(W.map.getLayersByName("Google MyMap").length > 0)
             W.map.removeLayer(W.map.getLayersByName("Google MyMap")[0]);
         var OOMMyMapLayer = new OL.Layer.Vector("Google MyMap", { rendererOptions: { zIndexing: true }, uniqueName: "wme_oommymap", layerGroup: 'wme_oommymap'});
-        let color = "deepskyblue";
-        /*var layerStyle = {
-            externalGraphic: 'http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png',
-            graphicOpacity: 1,
-            strokeColor: color,
-            strokeOpacity: 0.1,
-            strokeWidth: 3,
-            fillColor: color,
-            //fillOpacity: 0.1,
-            pointRadius: 15,
-            fontColor: 'white',
-            labelOutlineColor: color,
-            labelOutlineWidth: 4,
-            labelAlign: 'left'
-        };*/
         OOMMyMapLayer.setZIndex(-9999);
-        // load geometry files
-        var features = parser.read(new XMLSerializer().serializeToString(mapKML.documentElement));
+
+        var features;
+        if(mapKML.documentElement)
+            features = parser.read(new XMLSerializer().serializeToString(mapKML.documentElement));
+        else
+            features = parser.read(mapKML);
 
         // check which attribute can be used for labels
         /*let maxlabels = 5000;
         var labelname = /^description|description$/;
         if (features.length <= maxlabels) {
-            for (var attrib in features[0].attributes) {
-                if (labelname.test(attrib.toLowerCase()) === true) {
-                    if (typeof features[0].attributes[attrib] == 'string') {
-                        //layerStyle.label = '${'+attrib+'}';
+            for (var attr in features[0].attributes) {
+                if (labelname.test(attr.toLowerCase()) === true) {
+                    if (typeof features[0].attributes[attr] == 'string') {
+                        //layerStyle.label = '${'+attr+'}';
                         break;
                     }
                 }
             }
         }*/
-        //OOMMyMapLayer.styleMap = new OL.StyleMap(layerStyle);
 
-        // add data to the map
         OOMMyMapLayer.addFeatures(features);
         W.map.addLayer(OOMMyMapLayer);
     }

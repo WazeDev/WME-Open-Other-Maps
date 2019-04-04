@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.03.20.01
+// @version      2019.04.04.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -22,10 +22,12 @@
 // @include      https://www.mapwv.gov/flood/map*
 // @include      https://roadworks.org/*
 // @include      https://www.idrivearkansas.com*
+// @include      http://bridgereports.com/*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
 // @grant        none
+// @noframes
 // @contributionURL https://github.com/WazeDev/Thank-The-Authors
 // ==/UserScript==
 
@@ -941,7 +943,9 @@
         else if(location.href.indexOf("https://roadworks.org/") > -1)
             bootstrapRoadworks(1);
         else if(location.href.indexOf("https://www.idrivearkansas.com") > -1)
-                bootstrapGeneral(initArkDOT, 1);
+            bootstrapGeneral(initArkDOT, 1);
+        else if(location.href.indexOf("http://bridgereports.com") > -1)
+            bootstrapGeneral(initBridgeReports);
         /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
             bootstrapGeneral(initNJ511, 1);
         }*/
@@ -1048,6 +1052,19 @@
             let center = map.getCenter();
             window.open(`https://www.waze.com/en-US/editor/?lon=${center.lng()}&lat=${center.lat()}&zoom=${(Math.max(0,Math.min(10,(map.getZoom() - 12))))}`);
         });
+    }
+
+    function initBridgeReports(){
+        if(document.getElementById("mapctrls")){
+            let gmapsLink =  document.querySelectorAll("a[href^='http://maps.google.com']")[0].href;
+            let params = gmapsLink.match(/\?ll=(-?\d*.\d*),(-?\d*.\d*)/);
+            let lon = params[2];
+            let lat = params[1];
+            let wazeURL = `https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${6}`;
+            let $li = document.createElement("li");
+            $li.innerHTML = `<a href="${wazeURL}" target="_blank">Waze WME</a>`
+            document.querySelector("#mapctrls > ul").prepend($li);
+        }
     }
 
     let isMiss511Loaded = false;

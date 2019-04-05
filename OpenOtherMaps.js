@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.04.04.01
+// @version      2019.04.05.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -23,6 +23,7 @@
 // @include      https://roadworks.org/*
 // @include      https://www.idrivearkansas.com*
 // @include      http://bridgereports.com/*
+// @include      http://www.deldot.gov/map*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
@@ -74,6 +75,8 @@
     var WI511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACoUlEQVQ4T52SXUhTYRzG3yUUCRJS2IWWJEFFRjcRFXXTldRFRBB1UURmTptzQy2dpmuZmoIKlvNGrGnbzjZ3tjPnx+bIY9b82Jluc87NpWtz8yvzYyjzC/vHkVF4lS8//jz/h+d5DxxehDKJvYAy1XsBsVV/s59LnCrufNhIFbU6snBbhWFMbJqMztUeK+z4J4ky8DAnBbp7DQMHuOqww2Dj+zJV+ZqRbvfPxBJD2IeakuZonja2oC287qauZ9w1G0zgd/xZEas5gd/umF6+WkVeqyJdM8HR6WWgTOc8W6wH/259H48YHg4sJb7RzwZDKkuAwYLaM0WXa257e7tIO/JSYwcBM01ijsvXWv2LsDIl5rXNLahBUjnkr+lyny/pRChdbg8sDfoWIjnK96R7yLdQqBle39wS9f0o1zuhcOS5emY5JB7wQrLS4BJ2f79Z2wM1GUZ5VRY/iBZb4AVujeIqg6GNBuNEm31qbDYYX6CFb/LUNggQVr+o13NG0I5QGna/3hja2DrNb6vQja6ub3rmV36trF0q7/QvrsJFSTUk1G7V9Vws00tNXuXgJFQQYmIR6bIv7jn4DderPr9utd94132QrWCkYfE8zeFsPIrTfKKg5UKpTk755JQ3Lo+ACtSkQEw27phaglvhmDzztElznEdwZGatzV+hc8Tmqnd8lCqhOcRRCMmxSv1ohtT0qsVWbXB+NI7jgz5Jv4eNUecErVfe6thSaiePnop3w0gVR3MU8bmqmKzmCKaENkFEsrCdDEr5tBdQShPAEvfnKMwP6r9yMdPl0naYt2tJtmTgUcO3O0Ly8QdjUrWBT1hB0HmEnjQCxJCvqXec2dgr7HLCLFJbsmQmgcbKJyzS/gkQOXIKXo2S8tJ5hJJF/02y6DfOCv0wOzejpgAAAABJRU5ErkJggg==";
     var OHGOIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAmCAYAAABkpNNFAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAuBJREFUeNrsWL9rFEEUnjsXRUE4iI2icE1io5gggrHJna0Ec6BljDaG2Oj+BWpje2djjM0laaOQYCxswqYxKQxusDI2GxRtDKwIijZxvvHeMrfZH5M4k3iDD4abH7fvzbfz3vfeToFNjG0yy6TILBSACm0E5f93vw4BFdgIat0yTKGj+s/KsR420nOelQ93sfDndza1tsxmg9Vo/XprLfi2wSb5WtoczV8un2GlA4fE2v2VF+I3y94ctyXryBDfUSEKbKJZudY2N8Q31Xi7wNylp2I8crKfVY52M+/z+8h40hz0QF8kfB3j6nyDeZ/WMu0NcKA3vGk9lF6/cDXqY4Phrx+if+f0RdbbdVzZL7AxAgQd/sbHaK05MJxrD88q2AtyQcENSvsPij5Opfq8Lpq8UVWRN9T37IFocD0I3AxNg731IhsdV85T9GblN7xToRjCSZAAlA57zl5TFeKo8ORWm2f8rUpKvlblKkcCVdahEGy3efOR0n/vnb3UNlakbH15yoTcjYGS42vHwjmC3E9bUYugRs5BywtwMJ+m00ksaL9qq1F4TkHwo1F+SXU/DmpKLyjfxio9lEF5e7ULSrQ6QeUSBYpJktunqmIsZ/V4IaoqKLEQczJZ+F8+iCI3y16OS6/GKT018MFKoGoojxuQK/U8ASkQiHr/lS1r0CdiMsPe5LslRaIYHc9MvrWXj7cwGQygJssjg3hphCo7/gxAuK9mdNgTOArRUOGqTC5h6DNBLlbhOnAX2lDSHMVR75ETkXunUT89n2QvRar8gDwZ1Bvo6XD2E6CKceboaOGArL5NIlm0IfHadlJ+EihrvqmcGFId5VJpmywaaHqhc9QpGHlVE2NNXP4oAurjrBWaIgqd4ip+o9V0AzIH6s9Gazm5z93OTda/cFJUT9bSalu+3tiNPGUqw7sJ1OuaNLvPOL/Ov15mg+fKLUYMW3FkNH3s1m2S2wL10FQcyfJbgAEAoYVrOr+EMnkAAAAASUVORK5CYII=";
     var ArkDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKTSURBVDhPrVJLTBNRFH1R40ITY1y4ceGaxMSFiTs3blwgM6ALFIzGxIWxMSZ+NsakLEgM0YSN/DrTlk5bW/qhxVoopdAP/UorxBAEi6n4oTZUiImClc5c3+tMh6nAjjM5effde8/Jm/se2jPo08Nurz+QHguGvzmTgWRL4Nnkfm1TDDFUHLF0FLFUDK+Jyl4mncScwvkMrl8RnVjKetb9UOCiXsHidMOA6xXYQr5N1UR36SjXsombYVcyVAlp6HOiEUO3keQB7SXoeGPnbUMeMFjt8NLhAteYv/wowm4c1jeXt5mInEUa6jleHxOjZmWRmxvnjTYH9BmM8NofAI3BBMOpyN8LI20lZZ9MhhYQ03ANIW39aWWhzqHi3y9koUvbDwxnBpd3pBL7g2HhQUL3R9krkkqjvouHEOqpP6EsHNRdFoqrqxUxoc3tgW6doRInpjJwPdT539yo2+KM2KZTykKd/Q6//L0gG2lNFgiEJytxj56DpZU8HDO2iv0MvYE0DVdFIzJ1hdHTGQefzLyVjQg1+BercXrmHdxLMNV+G1Kr90lGDXTV5KTllvDj109Ba7bIQpPdCaMTIXmPZwXOXBz3UwXRoAqGuklMyPVHlmf5UCwhiwjJjHRmq7z3jQchlp/DN4UfZA1Y6j4x6p0b4Rdzn2pMCKuDrjKSSMH82tePiGs6LjlIYOn29umBcmGlWHkzSlEoFgfLoLsmN59dBEEQOiX1Fnxf0h2ra2s1xyfkBhyQykzX5Mjpfq+vE6MbknwLOHlkdDx8HjfqlSKzfRB6+401Rh7fGAj4aw12Sle+A16w/WqlaCfmlj5DsrDAI7bxiSTbji7WcBc3Z3ej1TWU53m+qIr2fkBM4xlJttdA6B91DG9ioRI2mgAAAABJRU5ErkJggg==";
+    var DelDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAIySURBVDhPY/hPFkDX9vffvwcvP9x/+eHlh68v338Bol+//0LlkAC6tn///vk2rmQPaLcomq+UPIUrqLNx2SGoHBJA1/b7z98Dlx6y+rcxeLc4Vi4GksIRvc/efoZKwwCKtp+//3jULeMJ7jLMnQ3UoJY2TTJ2ApCRP3MnVAUMoGibse0sUBEQmRfN4wzsYPRu8ahbzujTCnTqrSdvoYrAAKHt3efv0nETgUo965ZHdK6zK18E1C8bP0k1dRqQEdq+FqoODKDa/v3/XzF/L1Aa6DDZhElAhl72LL7QbiDDpWoJk28rs2/riRtPIIqBAKrt7vP33MGdjD4tbrXLgEq5gzrL5u1Nm7wVyBaJ7NVInw5kuNcuA0YPRD1IG5AT1r4WKKGdOVMwvIfJp3XxvstA8RfvvgBjAige3gGSZfVru//iPVgXWNvhK49Y/NqAyLRgLlBaMWnKhI0nf/3+c+/Fe63MGUCrMqduU0ubrp8z+/XHrwhtXvUrgKoNcmdzBHQA/WBWOA/oGYmYCVKxE4DeAyJ+MAlEQhG9sb0bodr6N5wEegxoMFCzUd4coH4gAysCxsrVh6+g2j5+/QGMH2bfNqDrgTFmXbLArWapS/US1+qlQD8DPebXtNKnAYQmbToFTH1QbUCw+vA1YLQCw4rNHxQGWJFAWA88lUG1ff/5Gxi/N5+8zZm+A5iIIci6dIFDxWI46lt/AqIYCKDagODL958QBjA+IAjiHqwAoY0E8P8/AIyUqK6/J4anAAAAAElFTkSuQmCC";
+
 
     function initInterface(){
         var $section = $("<div>");
@@ -107,6 +110,7 @@
             `<div><input type="checkbox" id="chkZoomEarth" class="OOMchk"><label for="chkZoomEarth"><img src="${ZoomEarthIcon}" height="18" width ="18">Zoom Earth</label></div>`,
             `<div title='Roadworks (https://roadworks.org/)'><input type="checkbox" id="chkRoadworks" class="OOMchk"><label for="chkRoadworks"><img src="${RoadworksIcon}" height="18" width ="18">Roadworks</label></div>`,
             `<div><input type="checkbox" id="chkOHGO" class="OOMchk"><label for="chkOHGO"><img src="${OHGOIcon}" height="18" width="18">OHGO</label></div>`,
+            `<div><input type="checkbox" id="chkDelDOT" class="OOMchk"><label for="chkDelDOT"><img src="${DelDOTIcon}" height="18" width="18">DelDOT</label></div>`,
             '</br><div>',
             '<fieldset style="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
             '<legend style="margin-bottom:0px; border-bottom-style:none; width:auto;"><h4>Map Language (where applicable)</h4></legend>',
@@ -156,6 +160,7 @@
         setChecked('chkWI511', settings.WI511);
         setChecked('chkOHGO', settings.OHGO);
         setChecked('chkArkDOT', settings.ArkDOT);
+        setChecked('chkDelDOT', settings.DelDOT);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -785,6 +790,25 @@
                 window.open(`https://www.idrivearkansas.com/?lat=${latlon.lat}&lon=${latlon.lon}&zoom=${(W.map.zoom + 12)}`);
             });
         }
+
+        $('#OOMDelDOT').remove();
+        if(settings.DelDOT)
+        {
+            let $section = $("<div>", {style:"padding:8px 16px"});
+            $section.html([
+                '<span id="OOMDelDOT">',
+                `<img src="${DelDOTIcon}" alt="DelDOT" width="18" height="18" id="OOMDelDOTImg" title="Open in DelDOT Interactive Map" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+
+            $('#OOMDelDOTImg').click(function(){
+                let latlon = get4326CenterPoint();
+
+                window.open(`http://www.deldot.gov/map/index.shtml?lat=${latlon.lat}&lon=${latlon.lon}&zoom=${(W.map.zoom + 12)}`, 'DelDOT Interactive Maps');
+            });
+        }
     }
 
     function loadSettings() {
@@ -815,7 +839,8 @@
             Roadworks: false,
             WI511: false,
             OHGO: false,
-            ArkDOT: false
+            ArkDOT: false,
+            DelDOT: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -853,7 +878,8 @@
                 Roadworks: settings.Roadworks,
                 WI511: settings.WI511,
                 OHGO: settings.OHGO,
-                ArkDOT: settings.ArkDOT
+                ArkDOT: settings.ArkDOT,
+                DelDOT: settings.DelDOT
                 //NJ511: settings.NJ511
             };
 
@@ -944,6 +970,8 @@
             bootstrapRoadworks(1);
         else if(location.href.indexOf("https://www.idrivearkansas.com") > -1)
             bootstrapGeneral(initArkDOT, 1);
+        else if(location.href.indexOf("http://www.deldot.gov/map") > -1)
+            bootstrapGeneral(initDelDOT, 1);
         else if(location.href.indexOf("http://bridgereports.com") > -1)
             bootstrapGeneral(initBridgeReports);
         /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
@@ -1051,6 +1079,29 @@
         $('#OOMWazeButtonDiv').click(function(){
             let center = map.getCenter();
             window.open(`https://www.waze.com/en-US/editor/?lon=${center.lng()}&lat=${center.lat()}&zoom=${(Math.max(0,Math.min(10,(map.getZoom() - 12))))}`);
+        });
+    }
+
+    let isDelDOTLoaded = false;
+    function initDelDOT(){
+        deldotMap.map.addListener('tilesloaded', function(){
+            if(!isDelDOTLoaded){
+                if(location.search.indexOf("?") > -1){
+                    let params = location.search.match(/lat=(-?\d*.\d*)&lon=(-?\d*.\d*)&zoom=(\d+)/);
+                    deldotMap.map.setCenter({lat: parseFloat(params[1]), lng: parseFloat(params[2])});
+                    deldotMap.map.setZoom(parseInt(params[3]));
+                }
+                isDelDOTLoaded = true;
+            }
+        });
+
+        let $OOMWazeButton = document.createElement("div");
+        $OOMWazeButton.innerHTML = `<div id="OOMWazeButtonDiv" style="height:36px; width:36px; cursor: pointer; position: fixed; right:80px; top:190px;  background-image: url(${wazerIcon}); background-size: 36px 36px; background-repeat: no-repeat;" title="Open in WME"></div>`;
+        $('#map-canvas').after($OOMWazeButton);
+
+        $('#OOMWazeButtonDiv').click(function(){
+            let center = deldotMap.map.getCenter();
+            window.open(`https://www.waze.com/en-US/editor/?lon=${center.lng()}&lat=${center.lat()}&zoom=${(Math.max(0,Math.min(10,(deldotMap.map.getZoom() - 12))))}`);
         });
     }
 

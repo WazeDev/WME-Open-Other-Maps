@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.05.03.01
+// @version      2019.05.16.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -24,9 +24,11 @@
 // @include      https://www.idrivearkansas.com*
 // @include      http://bridgereports.com/*
 // @include      http://www.deldot.gov/map*
+// @include      https://bagviewer.kadaster.nl/lvbag/bag-viewer/index.html*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
-// @require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
+// require      https://greasyfork.org/scripts/13097-proj4js/code/Proj4js.js
+// @require      https://greasyfork.org/scripts/383120-proj4js-wazedev/code/Proj4js-Wazedev.js
 // @grant        none
 // @noframes
 // @contributionURL https://github.com/WazeDev/Thank-The-Authors
@@ -37,7 +39,7 @@
 /* global WazeWrap */
 /* global I18n */
 /* global W */
-/* global Proj4js */
+/* global proj4 */
 /* ecmaVersion 2017 */
 /* eslint curly: ["warn", "multi-or-nest"] */
 
@@ -76,6 +78,7 @@
     var OHGOIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAmCAYAAABkpNNFAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAuBJREFUeNrsWL9rFEEUnjsXRUE4iI2icE1io5gggrHJna0Ec6BljDaG2Oj+BWpje2djjM0laaOQYCxswqYxKQxusDI2GxRtDKwIijZxvvHeMrfZH5M4k3iDD4abH7fvzbfz3vfeToFNjG0yy6TILBSACm0E5f93vw4BFdgIat0yTKGj+s/KsR420nOelQ93sfDndza1tsxmg9Vo/XprLfi2wSb5WtoczV8un2GlA4fE2v2VF+I3y94ctyXryBDfUSEKbKJZudY2N8Q31Xi7wNylp2I8crKfVY52M+/z+8h40hz0QF8kfB3j6nyDeZ/WMu0NcKA3vGk9lF6/cDXqY4Phrx+if+f0RdbbdVzZL7AxAgQd/sbHaK05MJxrD88q2AtyQcENSvsPij5Opfq8Lpq8UVWRN9T37IFocD0I3AxNg731IhsdV85T9GblN7xToRjCSZAAlA57zl5TFeKo8ORWm2f8rUpKvlblKkcCVdahEGy3efOR0n/vnb3UNlakbH15yoTcjYGS42vHwjmC3E9bUYugRs5BywtwMJ+m00ksaL9qq1F4TkHwo1F+SXU/DmpKLyjfxio9lEF5e7ULSrQ6QeUSBYpJktunqmIsZ/V4IaoqKLEQczJZ+F8+iCI3y16OS6/GKT018MFKoGoojxuQK/U8ASkQiHr/lS1r0CdiMsPe5LslRaIYHc9MvrWXj7cwGQygJssjg3hphCo7/gxAuK9mdNgTOArRUOGqTC5h6DNBLlbhOnAX2lDSHMVR75ETkXunUT89n2QvRar8gDwZ1Bvo6XD2E6CKceboaOGArL5NIlm0IfHadlJ+EihrvqmcGFId5VJpmywaaHqhc9QpGHlVE2NNXP4oAurjrBWaIgqd4ip+o9V0AzIH6s9Gazm5z93OTda/cFJUT9bSalu+3tiNPGUqw7sJ1OuaNLvPOL/Ov15mg+fKLUYMW3FkNH3s1m2S2wL10FQcyfJbgAEAoYVrOr+EMnkAAAAASUVORK5CYII=";
     var ArkDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKTSURBVDhPrVJLTBNRFH1R40ITY1y4ceGaxMSFiTs3blwgM6ALFIzGxIWxMSZ+NsakLEgM0YSN/DrTlk5bW/qhxVoopdAP/UorxBAEi6n4oTZUiImClc5c3+tMh6nAjjM5effde8/Jm/se2jPo08Nurz+QHguGvzmTgWRL4Nnkfm1TDDFUHLF0FLFUDK+Jyl4mncScwvkMrl8RnVjKetb9UOCiXsHidMOA6xXYQr5N1UR36SjXsombYVcyVAlp6HOiEUO3keQB7SXoeGPnbUMeMFjt8NLhAteYv/wowm4c1jeXt5mInEUa6jleHxOjZmWRmxvnjTYH9BmM8NofAI3BBMOpyN8LI20lZZ9MhhYQ03ANIW39aWWhzqHi3y9koUvbDwxnBpd3pBL7g2HhQUL3R9krkkqjvouHEOqpP6EsHNRdFoqrqxUxoc3tgW6doRInpjJwPdT539yo2+KM2KZTykKd/Q6//L0gG2lNFgiEJytxj56DpZU8HDO2iv0MvYE0DVdFIzJ1hdHTGQefzLyVjQg1+BercXrmHdxLMNV+G1Kr90lGDXTV5KTllvDj109Ba7bIQpPdCaMTIXmPZwXOXBz3UwXRoAqGuklMyPVHlmf5UCwhiwjJjHRmq7z3jQchlp/DN4UfZA1Y6j4x6p0b4Rdzn2pMCKuDrjKSSMH82tePiGs6LjlIYOn29umBcmGlWHkzSlEoFgfLoLsmN59dBEEQOiX1Fnxf0h2ra2s1xyfkBhyQykzX5Mjpfq+vE6MbknwLOHlkdDx8HjfqlSKzfRB6+401Rh7fGAj4aw12Sle+A16w/WqlaCfmlj5DsrDAI7bxiSTbji7WcBc3Z3ej1TWU53m+qIr2fkBM4xlJttdA6B91DG9ioRI2mgAAAABJRU5ErkJggg==";
     var DelDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAIySURBVDhPY/hPFkDX9vffvwcvP9x/+eHlh68v338Bol+//0LlkAC6tn///vk2rmQPaLcomq+UPIUrqLNx2SGoHBJA1/b7z98Dlx6y+rcxeLc4Vi4GksIRvc/efoZKwwCKtp+//3jULeMJ7jLMnQ3UoJY2TTJ2ApCRP3MnVAUMoGibse0sUBEQmRfN4wzsYPRu8ahbzujTCnTqrSdvoYrAAKHt3efv0nETgUo965ZHdK6zK18E1C8bP0k1dRqQEdq+FqoODKDa/v3/XzF/L1Aa6DDZhElAhl72LL7QbiDDpWoJk28rs2/riRtPIIqBAKrt7vP33MGdjD4tbrXLgEq5gzrL5u1Nm7wVyBaJ7NVInw5kuNcuA0YPRD1IG5AT1r4WKKGdOVMwvIfJp3XxvstA8RfvvgBjAige3gGSZfVru//iPVgXWNvhK49Y/NqAyLRgLlBaMWnKhI0nf/3+c+/Fe63MGUCrMqduU0ubrp8z+/XHrwhtXvUrgKoNcmdzBHQA/WBWOA/oGYmYCVKxE4DeAyJ+MAlEQhG9sb0bodr6N5wEegxoMFCzUd4coH4gAysCxsrVh6+g2j5+/QGMH2bfNqDrgTFmXbLArWapS/US1+qlQD8DPebXtNKnAYQmbToFTH1QbUCw+vA1YLQCw4rNHxQGWJFAWA88lUG1ff/5Gxi/N5+8zZm+A5iIIci6dIFDxWI46lt/AqIYCKDagODL958QBjA+IAjiHqwAoY0E8P8/AIyUqK6/J4anAAAAAElFTkSuQmCC";
+    var BagViewerIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAS1BMVEX///9eprwQe5sOepqu0t3u8fR+k60uT3puhaNQbJDO1uAQNmfO5OqOoLdAXoUONGXe5OqOwdA+XYQgQ3Guu8tOao4Ac5UAKV3///8D4Kv0AAAAFnRSTlMAoe7wUA+B0JGuMO4wcL/wH3DB3lCxg1uM5AAAAAFiS0dEAIgFHUgAAAAHdElNRQfjBQ8XDAaQOANmAAAAW0lEQVQY052OSw6AIAxEi1JQFPHbuf9NVTQms3UWTd8kL63IHWeNUFpzxN7MU/HP0KBsRHRs9ECiGzogfkYzXjMD4TUqi0woc12WhyUBK78XgEyFbihKzQ4ccgKongPejNGXRgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wNS0xNlQwNjoxMjowNi0wNzowMHNvDKwAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDUtMTZUMDY6MTI6MDYtMDc6MDACMrQQAAAAAElFTkSuQmCC";
 
 
     function initInterface(){
@@ -97,6 +100,7 @@
             `<div><input type="checkbox" id="chkBogota" class="OOMchk"><label for="chkBogota"><img src="${BogotaIcon}" height="18" width ="18">Bogota</label></div>`,
             `<div><input type="checkbox" id="chkWI511" class="OOMchk"><label for="chkWI511"><img src=${WI511Icon} height="18" width="18">WI 511</label></div>`,
             `<div><input type="checkbox" id="chkArkDOT" class="OOMchk"><label for="chkArkDOT"><img src=${ArkDOTIcon} height="18" width="18">IDrive Arkansas</label></div>`,
+            `<div><input type="checkbox" id="chkBagViewer" class="OOMchk"><label for="chkBagViewer"><img src=${BagViewerIcon} height="18" width="18">Kadaster BAG Viewer</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -161,6 +165,7 @@
         setChecked('chkOHGO', settings.OHGO);
         setChecked('chkArkDOT', settings.ArkDOT);
         setChecked('chkDelDOT', settings.DelDOT);
+        setChecked('chkBagViewer', settings.BagViewer);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -490,16 +495,17 @@
                 let geoNW=new OL.Geometry.Point(e.left,e.top);
                 let geoSE=new OL.Geometry.Point(e.right,e.bottom);
 
-                Proj4js.defs["EPSG:26918"] = "+proj=utm +zone=18 +ellps=GRS80 +datum=NAD83 +units=m +no_defs";
+                //Proj4js.defs["EPSG:26918"] = "+proj=utm +zone=18 +ellps=GRS80 +datum=NAD83 +units=m +no_defs";
+                proj4.defs("EPSG:26918", "+proj=utm +zone=18 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
 
-                let source = new Proj4js.Proj('EPSG:900913');
-                let dest = new Proj4js.Proj('EPSG:26918');
+                let source = new proj4.Proj('EPSG:900913');
+                let dest = new proj4.Proj('EPSG:26918');
 
-                geoNW = new Proj4js.Point(geoNW.x,geoNW.y);
-                geoSE = new Proj4js.Point(geoSE.x,geoSE.y);
+                geoNW = new proj4.Point(geoNW.x,geoNW.y);
+                geoSE = new proj4.Point(geoSE.x,geoSE.y);
 
-                Proj4js.transform(source, dest, geoNW);
-                Proj4js.transform(source, dest, geoSE);
+                proj4.transform(source, dest, geoNW);
+                proj4.transform(source, dest, geoSE);
 
                 let mapScale = 36111.909643;
 
@@ -692,11 +698,11 @@
                 var topleft= (new OL.LonLat(W.map.getExtent().left,W.map.getExtent().top));
                 var bottomright= (new OL.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
 
-                let source = new Proj4js.Proj('EPSG:900913');
-                var topleft4686 = new Proj4js.Point(parseFloat(topleft.lon), parseFloat(topleft.lat));
-                var bottomright4686 = new Proj4js.Point(parseFloat(bottomright.lon), parseFloat(bottomright.lat));
-                Proj4js.transform(source, Proj4js.WGS84, topleft4686);
-                Proj4js.transform(source, Proj4js.WGS84, bottomright4686);
+                let source = new proj4.Proj('EPSG:900913');
+                var topleft4686 = new proj4.Point(parseFloat(topleft.lon), parseFloat(topleft.lat));
+                var bottomright4686 = new proj4.Point(parseFloat(bottomright.lon), parseFloat(bottomright.lat));
+                proj4.transform(source, proj4.WGS84, topleft4686);
+                proj4.transform(source, proj4.WGS84, bottomright4686);
 
                 let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
                 window.open(`http://mapas.bogota.gov.co/?&e=${topleft4686.x},${bottomright4686.y},${bottomright4686.x},${topleft4686.y},4686&b=261`);
@@ -809,6 +815,54 @@
                 window.open(`http://www.deldot.gov/map/index.shtml?lat=${latlon.lat}&lon=${latlon.lon}&zoom=${(W.map.zoom + 12)}`, 'DelDOT Interactive Maps');
             });
         }
+
+        $('#OOMBagViewer').remove();
+        if(settings.BagViewer){
+            let $sectionBagViewer = $("<div>", {style:"padding:8px 16px"});
+            $sectionBagViewer.html([
+                '<span id="OOMBagViewer">',
+                `<img src="${BagViewerIcon}" alt="IDrive Arkansas" width="18" height="18" id="OOMBagViewerImg" title="Open in Kadaster BAG Viewer" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBagViewer.html());
+
+            $('#OOMBagViewerImg').click(function(){
+                let e=W.map.getCenter();
+                let centerPoint = new OL.Geometry.Point(e.lon,e.lat);
+
+                proj4.defs("EPSG:28992", "+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +units=m +no_defs");
+                let source = new proj4.Proj('EPSG:900913');
+                let dest = new proj4.Proj('EPSG:28992');
+
+                centerPoint = new proj4.Point(centerPoint.x,centerPoint.y);
+
+                proj4.transform(source, dest, centerPoint);
+                debugger;
+                let z;
+                switch(W.map.zoom){
+                    case 0,1:
+                        z=2;
+                        break;
+                    case 2,3:
+                        z=3;
+                        break;
+                    case 4:
+                        z=4;
+                        break;
+                    case 5:
+                        z=5;
+                        break;
+                    case 6:
+                        z=6;
+                        break;
+                    default:
+                        z=7;
+                        break;
+                }
+                window.open(`https://bagviewer.kadaster.nl/lvbag/bag-viewer/index.html#?geometry.x=${centerPoint.x}&geometry.y=${centerPoint.y}&zoomlevel=${z}`);
+            });
+        }
     }
 
     function loadSettings() {
@@ -840,7 +894,8 @@
             WI511: false,
             OHGO: false,
             ArkDOT: false,
-            DelDOT: false
+            DelDOT: false,
+            BagViewer: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -879,7 +934,8 @@
                 WI511: settings.WI511,
                 OHGO: settings.OHGO,
                 ArkDOT: settings.ArkDOT,
-                DelDOT: settings.DelDOT
+                DelDOT: settings.DelDOT,
+                BagViewer: settings.BagViewer
                 //NJ511: settings.NJ511
             };
 
@@ -996,10 +1052,10 @@
         lat = curURL[2];
         zoom = parseInt(curURL[3]);
 
-        let source = new Proj4js.Proj('EPSG:900913');
+        let source = new proj4.Proj('EPSG:900913');
 
-        var point = new Proj4js.Point(parseFloat(lon), parseFloat(lat));
-        Proj4js.transform(source, Proj4js.WGS84, point);
+        var point = new proj4.Point(parseFloat(lon), parseFloat(lat));
+        proj4.transform(source, proj4.WGS84, point);
         return `https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
     }
 
@@ -1162,10 +1218,10 @@
         document.getElementsByClassName('mapSettingsList')[0].appendChild($OOMWazeButton);
 
         document.getElementById("OOMWazeButton").addEventListener("click", function(){
-            let source = new Proj4js.Proj('EPSG:900913');
+            let source = new proj4.Proj('EPSG:900913');
             let center = map.extent.getCenter();
-            var point = new Proj4js.Point(parseFloat(center.x), parseFloat(center.y));
-            Proj4js.transform(source, Proj4js.WGS84, point);
+            var point = new proj4.Point(parseFloat(center.x), parseFloat(center.y));
+            proj4.transform(source, proj4.WGS84, point);
             window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${(Math.max(0,Math.min(10,(map.getZoom() - 12))))}`);
         });
     }
@@ -1206,7 +1262,6 @@
         document.getElementById('nav-main').getElementsByTagName('ul')[0].appendChild($OOMWazeButton);
 
         document.getElementById("OOMWazeButton").addEventListener("click", function(){
-            let source = new Proj4js.Proj('EPSG:900913');
             let center = Elgin.map.getCenter();
             window.open(`https://www.waze.com/en-US/editor/?lon=${center.lng()}&lat=${center.lat()}&zoom=${(Math.max(0,Math.min(10,(Elgin.map.zoom - 12))))}`);
         });
@@ -1366,9 +1421,9 @@
             document.getElementById("OOMWazeButtonDiv").remove();
         $('#RoadLayerList').prepend(`<li><div id="OOMWazeButtonDiv" aria-hidden="true" style="cursor:pointer; margin-top:8px; height:36px; width:36px; background-image: url(${wazerIcon}); background-size: 36px 36px; background-repeat:no-repeat;"></div></li>`);
         $('#OOMWazeButtonDiv').click(function(){
-            let source = new Proj4js.Proj('EPSG:900913');
-            var point = new Proj4js.Point(parseFloat(view.center.x), parseFloat(view.center.y));
-            Proj4js.transform(source, Proj4js.WGS84, point);
+            let source = new proj4.Proj('EPSG:900913');
+            var point = new proj4.Point(parseFloat(view.center.x), parseFloat(view.center.y));
+            proj4.transform(source, proj4.WGS84, point);
 
             window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${view.zoom-5}`);
         });
@@ -1381,9 +1436,9 @@
         $('#tools').prepend(`<button type="button" id="btnOpenWaze" class="btn btn-default btn-lg bootstrap_btn2" style="cursor:pointer; margin-left: 0px; min-width:32px; height=32px; background-image: url(${wazerIcon}); background-size: 32px 32px; background-repeat:no-repeat; background-size:100%;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="click to open in Waze Map Editor"><span ></span></button>`);
 
         $('#btnOpenWaze').click(function(){
-            let source = new Proj4js.Proj('EPSG:900913');
-            var point = new Proj4js.Point(parseFloat(Flood.map.extent.getCenter().x), parseFloat(Flood.map.extent.getCenter().y));
-            Proj4js.transform(source, Proj4js.WGS84, point);
+            let source = new proj4.Proj('EPSG:900913');
+            var point = new proj4.Point(parseFloat(Flood.map.extent.getCenter().x), parseFloat(Flood.map.extent.getCenter().y));
+            proj4.transform(source, proj4.WGS84, point);
             let zoom = Flood.map.getLevel() - 4;
             if(zoom < 0)
                 zoom = 0;

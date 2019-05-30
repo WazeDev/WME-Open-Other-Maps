@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.05.30.01
+// @version      2019.05.30.02
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -513,8 +513,8 @@
                 geoNW = new proj4.Point(geoNW.x,geoNW.y);
                 geoSE = new proj4.Point(geoSE.x,geoSE.y);
 
-                proj4.transform(source, dest, geoNW);
-                proj4.transform(source, dest, geoSE);
+                geoNW = proj4.transform(source, dest, geoNW);
+                geoSE = proj4.transform(source, dest, geoSE);
 
                 let mapScale = 36111.909643;
 
@@ -562,8 +562,8 @@
                 geoNW = new proj4.Point(geoNW.x,geoNW.y);
                 geoSE = new proj4.Point(geoSE.x,geoSE.y);
 
-                proj4.transform(source, dest, geoNW);
-                proj4.transform(source, dest, geoSE);
+                geoNW = proj4.transform(source, dest, geoNW);
+                geoSE = proj4.transform(source, dest, geoSE);
 
                 let mapScale = 36111.909643;
 
@@ -624,7 +624,7 @@
                 var source = new proj4.Proj('EPSG:900913');
                 var dest = new proj4.Proj('ESRI:102718');
 
-                proj4.transform(source, dest, geoPoint);
+                geoPoint = proj4.transform(source, dest, geoPoint);
                 var zoom = (W.map.zoom)+3;
                 var URL='http://maps.nyc.gov/doitt/nycitymap/?z='+zoom+'&p='+(Math.round(geoPoint.x)*3.2808)+','+(Math.round(geoPoint.y)*3.2808)+'&c=GISBasic&f=DDC_PROJECTS';
                 window.open(URL,"_blank");
@@ -802,8 +802,8 @@
                 let source = new proj4.Proj('EPSG:900913');
                 var topleft4686 = new proj4.Point(parseFloat(topleft.lon), parseFloat(topleft.lat));
                 var bottomright4686 = new proj4.Point(parseFloat(bottomright.lon), parseFloat(bottomright.lat));
-                proj4.transform(source, proj4.WGS84, topleft4686);
-                proj4.transform(source, proj4.WGS84, bottomright4686);
+                topleft4686 = proj4.transform(source, proj4.WGS84, topleft4686);
+                bottomright4686 = proj4.transform(source, proj4.WGS84, bottomright4686);
 
                 let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
                 window.open(`http://mapas.bogota.gov.co/?&e=${topleft4686.x},${bottomright4686.y},${bottomright4686.x},${topleft4686.y},4686&b=261`);
@@ -938,7 +938,7 @@
 
                 centerPoint = new proj4.Point(centerPoint.x,centerPoint.y);
 
-                proj4.transform(source, dest, centerPoint);
+                centerPoint = proj4.transform(source, dest, centerPoint);
                 let z;
                 switch(W.map.zoom){
                     case 0,1:
@@ -1161,7 +1161,7 @@
         let source = new proj4.Proj('EPSG:900913');
 
         var point = new proj4.Point(parseFloat(lon), parseFloat(lat));
-        proj4.transform(source, proj4.WGS84, point);
+        point = proj4.transform(source, proj4.WGS84, point);
         return `https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
     }
 
@@ -1327,7 +1327,7 @@
             let source = new proj4.Proj('EPSG:900913');
             let center = map.extent.getCenter();
             var point = new proj4.Point(parseFloat(center.x), parseFloat(center.y));
-            proj4.transform(source, proj4.WGS84, point);
+            point = proj4.transform(source, proj4.WGS84, point);
             window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${(Math.max(0,Math.min(10,(map.getZoom() - 12))))}`);
         });
     }
@@ -1528,7 +1528,9 @@
         $('#RoadLayerList').prepend(`<li><div id="OOMWazeButtonDiv" aria-hidden="true" style="cursor:pointer; margin-top:8px; height:36px; width:36px; background-image: url(${wazerIcon}); background-size: 36px 36px; background-repeat:no-repeat;"></div></li>`);
         $('#OOMWazeButtonDiv').click(function(){
             var point = new proj4.Point(parseFloat(view.center.x), parseFloat(view.center.y));
-            proj4('EPSG:900913', 'EPSG:4326', point);
+            let source = new proj4.Proj('EPSG:900913');
+            debugger;
+            point = proj4('EPSG:900913', 'EPSG:4326', point);
 
             window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${view.zoom-5}`);
         });
@@ -1543,7 +1545,7 @@
         $('#btnOpenWaze').click(function(){
             let source = new proj4.Proj('EPSG:900913');
             var point = new proj4.Point(parseFloat(Flood.map.extent.getCenter().x), parseFloat(Flood.map.extent.getCenter().y));
-            proj4.transform(source, proj4.WGS84, point);
+            point = proj4.transform(source, proj4.WGS84, point);
             let zoom = Flood.map.getLevel() - 4;
             if(zoom < 0)
                 zoom = 0;

@@ -3,7 +3,10 @@ Open various other maps at the current WME location (if supported).
 
 Currently supported usage maps (data can be copied - does **not** violate Waze's external sources policy):
 * MiDrive
-* NY state GIS FC map
+* NYS FC map
+* NYS Orthos GIS map
+* NYS Speed Limit Map
+* NYC City Map
 * Rosreestr
 * 511PA
 * Louisiana FC

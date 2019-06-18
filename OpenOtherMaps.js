@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.06.03.01
+// @version      2019.06.18.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -48,7 +48,7 @@
     //var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
     //GM_addStyle(jqUI_CssSrc);
 
-    const updateMessage = "Adding support for loading WME from trimarc.org";
+    const updateMessage = "Adding support for opening Melvin and NaviExpert from WME";
 
     var settings = {};
     var wazerIcon = "data:image/png;base64,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";
@@ -82,7 +82,8 @@
     var ArkDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKTSURBVDhPrVJLTBNRFH1R40ITY1y4ceGaxMSFiTs3blwgM6ALFIzGxIWxMSZ+NsakLEgM0YSN/DrTlk5bW/qhxVoopdAP/UorxBAEi6n4oTZUiImClc5c3+tMh6nAjjM5effde8/Jm/se2jPo08Nurz+QHguGvzmTgWRL4Nnkfm1TDDFUHLF0FLFUDK+Jyl4mncScwvkMrl8RnVjKetb9UOCiXsHidMOA6xXYQr5N1UR36SjXsombYVcyVAlp6HOiEUO3keQB7SXoeGPnbUMeMFjt8NLhAteYv/wowm4c1jeXt5mInEUa6jleHxOjZmWRmxvnjTYH9BmM8NofAI3BBMOpyN8LI20lZZ9MhhYQ03ANIW39aWWhzqHi3y9koUvbDwxnBpd3pBL7g2HhQUL3R9krkkqjvouHEOqpP6EsHNRdFoqrqxUxoc3tgW6doRInpjJwPdT539yo2+KM2KZTykKd/Q6//L0gG2lNFgiEJytxj56DpZU8HDO2iv0MvYE0DVdFIzJ1hdHTGQefzLyVjQg1+BercXrmHdxLMNV+G1Kr90lGDXTV5KTllvDj109Ba7bIQpPdCaMTIXmPZwXOXBz3UwXRoAqGuklMyPVHlmf5UCwhiwjJjHRmq7z3jQchlp/DN4UfZA1Y6j4x6p0b4Rdzn2pMCKuDrjKSSMH82tePiGs6LjlIYOn29umBcmGlWHkzSlEoFgfLoLsmN59dBEEQOiX1Fnxf0h2ra2s1xyfkBhyQykzX5Mjpfq+vE6MbknwLOHlkdDx8HjfqlSKzfRB6+401Rh7fGAj4aw12Sle+A16w/WqlaCfmlj5DsrDAI7bxiSTbji7WcBc3Z3ej1TWU53m+qIr2fkBM4xlJttdA6B91DG9ioRI2mgAAAABJRU5ErkJggg==";
     var DelDOTIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAIySURBVDhPY/hPFkDX9vffvwcvP9x/+eHlh68v338Bol+//0LlkAC6tn///vk2rmQPaLcomq+UPIUrqLNx2SGoHBJA1/b7z98Dlx6y+rcxeLc4Vi4GksIRvc/efoZKwwCKtp+//3jULeMJ7jLMnQ3UoJY2TTJ2ApCRP3MnVAUMoGibse0sUBEQmRfN4wzsYPRu8ahbzujTCnTqrSdvoYrAAKHt3efv0nETgUo965ZHdK6zK18E1C8bP0k1dRqQEdq+FqoODKDa/v3/XzF/L1Aa6DDZhElAhl72LL7QbiDDpWoJk28rs2/riRtPIIqBAKrt7vP33MGdjD4tbrXLgEq5gzrL5u1Nm7wVyBaJ7NVInw5kuNcuA0YPRD1IG5AT1r4WKKGdOVMwvIfJp3XxvstA8RfvvgBjAige3gGSZfVru//iPVgXWNvhK49Y/NqAyLRgLlBaMWnKhI0nf/3+c+/Fe63MGUCrMqduU0ubrp8z+/XHrwhtXvUrgKoNcmdzBHQA/WBWOA/oGYmYCVKxE4DeAyJ+MAlEQhG9sb0bodr6N5wEegxoMFCzUd4coH4gAysCxsrVh6+g2j5+/QGMH2bfNqDrgTFmXbLArWapS/US1+qlQD8DPebXtNKnAYQmbToFTH1QbUCw+vA1YLQCw4rNHxQGWJFAWA88lUG1ff/5Gxi/N5+8zZm+A5iIIci6dIFDxWI46lt/AqIYCKDagODL958QBjA+IAjiHqwAoY0E8P8/AIyUqK6/J4anAAAAAElFTkSuQmCC";
     var BagViewerIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAS1BMVEX///9eprwQe5sOepqu0t3u8fR+k60uT3puhaNQbJDO1uAQNmfO5OqOoLdAXoUONGXe5OqOwdA+XYQgQ3Guu8tOao4Ac5UAKV3///8D4Kv0AAAAFnRSTlMAoe7wUA+B0JGuMO4wcL/wH3DB3lCxg1uM5AAAAAFiS0dEAIgFHUgAAAAHdElNRQfjBQ8XDAaQOANmAAAAW0lEQVQY052OSw6AIAxEi1JQFPHbuf9NVTQms3UWTd8kL63IHWeNUFpzxN7MU/HP0KBsRHRs9ECiGzogfkYzXjMD4TUqi0woc12WhyUBK78XgEyFbihKzQ4ccgKongPejNGXRgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0wNS0xNlQwNjoxMjowNi0wNzowMHNvDKwAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMDUtMTZUMDY6MTI6MDYtMDc6MDACMrQQAAAAAElFTkSuQmCC";
-
+    var MelvinIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAJlSURBVDhPhZRLTxNRGIb9L1Vbi2DBVhN0pzERZCExGjUadSm6ckllg4nRQkW0CUaI0WLrhdaY1oaKhSqppS0K3mjiBbx0gUktll5A2jmvZ85M51aUSU4yeXPmyfOd+b6zrrHRPEwXdu4wo2nXVhxpqUfbIROsJ+rQfboWA+dq8NBqRLDTgGiXHh+ubcT3mxvw27keBZcOeZeOK7p1Xh6ECmhvBXSQgk4KoH4e1G7E0wubNCAdA4mLqEBNuxUgpREFBUXQ++tqo8qiIAsFWdSlaUG0tGqjKhBvtAaoUpptDVBrawvc7kEMBx5hNOhFJORFIuxBYuQWRgba4OmoQ7T/AH5EHEhP38av8XZk79drQRbYbBdBCMFqD+HKSH97jfLKkpjwD0E5M4Oix6I2am7egxt9Drx7O8W2lUsrSE6F8XE6RN//sIwQDoupV1iY8YJbzrKs9MlFIUKJ4hnxf82C8echtuFN7BnOnzLBfsaE5ISHZbn5JOK9DfSM9Ei/sLKMW0ii8KBWLk0AmTE5GWMbwoFB6bDj/h6WZeZeYsJeww77p/8YTQjI4iyKQw1aIxk0FnBKDRl/ogB1a0DZf4AS8Sj7aNR/RzKK+ewsy8xGKMjIGnLed5QmBFz2ixIkN6Sj9zLyuSz6Lp2VQI+vHsZyPoPPY1doQxqYUcq5DVwuhdJXHwr39EojuSGP799eNbSeji3VDXnXQAFyU6pKq57+zQw0xM9aJw8SjP4za8Lv145Il2gkzZoKJENEkJlTGe1TGimmnxnR6V/FiL+TeJCXLiIZ8SCFEbuPmJFwsWlBPGTJrXP+BSCCPt81hUAnAAAAAElFTkSuQmCC"
+    var NaviExpertIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAIQSURBVDhPY/hPFiBW27+fX//9+gblEKnt36/vnxeV/Dy/HconRtvPywff1rm+iOb/srIeKkRA27+/P05sfpWp+yKU/0Uk//uJcVBxNG1/Xj758/oZlAMEQG3HNz8P5H8ezP8qUeHDlBSoOLK2vx/fvmvN+vvlA5QPct6R19lWz/34gTrf98b/eX4HKoGs7cu6eU+txT4t6v159dSPE7s+zqx97iX2zIP/uTf/yyTNn+f3/jizA6oUWdvbqqSnJgLP7CVeBOo885R75ij4zJn/mRv/ywilb3uW/rpx4n1fElQpsrY3xbEvAk2AOp+aCTy1EnhqI/DMVfRVms3PS0f+//v3cU7VixAJqFJkbS8jnL5sWvI6L+S5q8pzD5VXGe6f1878/fg2UM+PM3tehMg99xWEKkXRFuvxMtzpx+nDfz++g4j8+/Ht972rH6ZWPveTfeYu9CrbFiIOBEhBsnH5ExO5Z86arzOD3nUUv+8ufVMS+TLa4qm9wDMH/peJJp+WdkKVImv79/vX5zWLnzlpP9ERfqIv+MRQEOLPl5Gm71oz3nfngRwMAwhtIPD3z/eTh9/3N75K8HwRZvOmKOrTwr4vGxa8rYn/eQEYMH+hytC1Ae38+uX3vdt/njz8/eDOz7NHPy2b9mFKw5+nD6DSMICuDQT+/v3z6jlQ2+97N/68eAJ0AlQcCWDTRhD8/w8AgQo6iwFQOnMAAAAASUVORK5CYII="
 
     function initInterface(){
         var $section = $("<div>");
@@ -107,6 +108,8 @@
             `<div><input type="checkbox" id="chkWI511" class="OOMchk"><label for="chkWI511"><img src=${WI511Icon} height="18" width="18">WI 511</label></div>`,
             `<div><input type="checkbox" id="chkArkDOT" class="OOMchk"><label for="chkArkDOT"><img src=${ArkDOTIcon} height="18" width="18">IDrive Arkansas</label></div>`,
             `<div><input type="checkbox" id="chkBagViewer" class="OOMchk"><label for="chkBagViewer"><img src=${BagViewerIcon} height="18" width="18">Kadaster BAG Viewer</label></div>`,
+            `<div><input type="checkbox" id="chkMelvin" class="OOMchk"><label for="chkMelvin"><img src=${MelvinIcon} height="18" width="18">Melvin</label></div>`,
+            `<div><input type="checkbox" id="chkNaviExpert" class="OOMchk"><label for="chkNaviExpert"><img src=${NaviExpertIcon} height="18" width="18">NaviExpert</label></div>`,
             '</br>',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
@@ -175,6 +178,8 @@
         setChecked('chkArkDOT', settings.ArkDOT);
         setChecked('chkDelDOT', settings.DelDOT);
         setChecked('chkBagViewer', settings.BagViewer);
+        setChecked('chkMelvin', settings.Melvin);
+        setChecked('chkNaviExpert', settings.NaviExpert);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -961,14 +966,53 @@
                 window.open(`https://bagviewer.kadaster.nl/lvbag/bag-viewer/index.html#?geometry.x=${centerPoint.x}&geometry.y=${centerPoint.y}&zoomlevel=${z}`);
             });
         }
+
+        $('#OOMMelvin').remove();
+        if(settings.Melvin)
+        {
+            let $section = $("<div>", {style:"padding:8px 16px"});
+            $section.html([
+                '<span id="OOMMelvin">',
+                `<img src="${MelvinIcon}" alt="DelDOT" width="18" height="18" id="OOMMelvinImg" title="Open in Melvin" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+
+            $('#OOMMelvinImg').click(function(){
+                let extent = W.map.getExtent();
+
+                let sw = WazeWrap.Geometry.ConvertTo4326(extent.left, extent.bottom);
+                let ne = WazeWrap.Geometry.ConvertTo4326(extent.right, extent.top);
+                window.open(`https://melvin.ndw.nu/public;sw=${sw.lat},${sw.lon};ne=${ne.lat},${ne.lon}`, 'Melvin');
+            });
+        }
+
+        $('#OOMNaviExpert').remove();
+        if(settings.NaviExpert)
+        {
+            let $section = $("<div>", {style:"padding:8px 16px"});
+            $section.html([
+                '<span id="OOMNaviExpert">',
+                `<img src="${NaviExpertIcon}" alt="DelDOT" width="18" height="18" id="OOMNaviExpertImg" title="Open in NaviExpert" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+
+            $('#OOMNaviExpertImg').click(function(){
+                let latlon = get4326CenterPoint();
+                window.open(`https://traffic.naviexpert.pl/?cp=${latlon.lat},${latlon.lon},${(W.map.zoom + 12)}`, `NaviExpert`);
+            });
+        }
     }
 
     function loadSettings() {
         var loadedSettings = $.parseJSON(localStorage.getItem("OOM_Settings"));
         var defaultSettings = {
             GMaps: true,
-            Mapillary: true,
-            Terraserver: true,
+            Mapillary: false,
+            Terraserver: false,
             Wikimapia: false,
             Bing: false,
             OSM: false,
@@ -996,7 +1040,9 @@
             OHGO: false,
             ArkDOT: false,
             DelDOT: false,
-            BagViewer: false
+            BagViewer: false,
+            Melvin: false,
+            NaviExpert: false
             //NJ511: false
         };
         settings = loadedSettings ? loadedSettings : defaultSettings;
@@ -1039,7 +1085,9 @@
                 OHGO: settings.OHGO,
                 ArkDOT: settings.ArkDOT,
                 DelDOT: settings.DelDOT,
-                BagViewer: settings.BagViewer
+                BagViewer: settings.BagViewer,
+                Melvin: settings.Melvin,
+                NaviExpert: settings.NaviExpert
                 //NJ511: settings.NJ511
             };
 

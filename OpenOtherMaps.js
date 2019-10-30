@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.10.17.01
+// @version      2019.10.29.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -316,7 +316,7 @@
     function get4326CenterPoint(){
         let projI = new OL.Projection("EPSG:900913");
         let projE = new OL.Projection("EPSG:4326");
-        let center_lonlat = (new OL.LonLat(W.map.center.lon, W.map.center.lat)).transform(projI,projE);
+        let center_lonlat = (new OL.LonLat(W.map.getCenter().lon, W.map.getCenter().lat)).transform(projI,projE);
         let lat = Math.round(center_lonlat.lat * 1000000) / 1000000;
         let lon = Math.round(center_lonlat.lon * 1000000) / 1000000;
         return new OL.LonLat(lon, lat);
@@ -660,7 +660,7 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYCMaps.html());
 
             $('#OOMNYCMapsImg').click(function(){
-                var geoPoint=new OL.Geometry.Point(W.map.center.lon,W.map.center.lat);
+                var geoPoint=new OL.Geometry.Point(W.map.getCenter().lon,W.map.getCenter().lat);
 
                 proj4.defs("ESRI:102718", "+proj=lcc +lat_1=40.66666666666666 +lat_2=41.03333333333333 +lat_0=40.16666666666666 +lon_0=-74 +x_0=300000 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 no_defs");
 
@@ -686,7 +686,7 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionRosreestr.html());
 
             $('#OOMrosreestrImg').click(function(){
-                window.open(`http://pkk5.rosreestr.ru/#x=${W.map.center.lon}&y=${W.map.center.lat}&z=${(W.map.zoom + 12)}`);
+                window.open(`http://pkk5.rosreestr.ru/#x=${W.map.getCenter().lon}&y=${W.map.getCenter().lat}&z=${(W.map.zoom + 12)}`);
             });
         }
 
@@ -770,7 +770,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNM511.html());
             $('#OOMNM511Img').click(function(){
-                let latlon = W.map.center;
+                let latlon = W.map.getCenter();
 
                 //http://nmroads.com/mapIndex.html?
                 window.open(`http://nmroads.com/mapIndex.html?X=${latlon.lon}&Y=${latlon.lat}&zoom=${(W.map.zoom + 12)}`);
@@ -788,7 +788,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWVFlood.html());
             $('#OOMWVFloodImg').click(function(){
-                let latlon = W.map.center;
+                let latlon = W.map.getCenter();
 
                 //https://www.mapwv.gov/flood/map/?x=-8915274&y=4681300&l=4&v=0
                 window.open(`https://www.mapwv.gov/flood/map/?x=${latlon.lon}&y=${latlon.lat}&l=${(W.map.zoom+4)}`);
@@ -806,7 +806,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionGMDM.html());
             $('#OOMGMDMImg').click(function(){
-                let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
+                let latlon = W.map.getCenter().transform(W.map.projection, W.map.displayProjection);
 
                 window.open(`http://gaia.inegi.org.mx/mdm6/?v=${btoa("lat:"+latlon.lat+",lon:"+latlon.lon+",z:"+(W.map.zoom+8))}`);
             });
@@ -823,7 +823,7 @@
 
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionPennDOT.html());
             $('#OOMPennDOTImg').click(function(){
-                let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
+                let latlon = W.map.getCenter().transform(W.map.projection, W.map.displayProjection);
                 window.open(`https://gis.penndot.gov/OneMap?longitude=${latlon.lon}&latitude=${latlon.lat}`);
             });
         }
@@ -848,7 +848,7 @@
                 topleft4686 = proj4.transform(source, proj4.WGS84, topleft4686);
                 bottomright4686 = proj4.transform(source, proj4.WGS84, bottomright4686);
 
-                let latlon = W.map.center.transform(W.map.projection, W.map.displayProjection);
+                let latlon = W.map.getCenter().transform(W.map.projection, W.map.displayProjection);
                 window.open(`http://mapas.bogota.gov.co/?&e=${topleft4686.x},${bottomright4686.y},${bottomright4686.x},${topleft4686.y},4686&b=261`);
             });
         }

@@ -648,7 +648,7 @@
 
             $('#OOMNexarImg').click(function(){
                 let latlon = get4326CenterPoint();
-                window.open(`https://www.getnexar.com/live/?center=%257B%2522lng%2522%3A${latlon.lon}%2C%2522lat%2522%3A${latlon.lat}%257D&zoom=${(W.map.zoom + 12)}`);
+                window.open(`https://www.getnexar.com/live/?center=%7B%22lng%22%3A${latlon.lon}%2C%22lat%22%3A${latlon.lat}%7D&zoom=${(W.map.zoom + 11)}`);
             });
         }
 

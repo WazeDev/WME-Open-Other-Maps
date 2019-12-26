@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2019.12.24.01
+// @version      2019.12.26.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -397,7 +397,7 @@
             $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionTerraserver.html());
             $('#OOMTerraserverImg').click(function(){
                 var center_lonlat=OL.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
-                window.open('https://www.terraserver.com/view?utf8=✓&search_text=&searchLat=&searchLng=&lat=${center_lonlat.lat}&lng=${center_lonlat.lon}&bbox=&center=');
+                window.open(`https://www.terraserver.com/view?utf8=✓&search_text=&searchLat=&searchLng=&lat=${center_lonlat.lat}&lng=${center_lonlat.lon}&bbox=&center=`);
             });
         }
 

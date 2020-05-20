@@ -15,6 +15,7 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * GAIA - Mexico
 * PennDOT OneMap
 * Mapas Bogota
+* MaineDOT Public View Map
 
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2020.05.28.01
+// @version      2020.06.01.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -36,7 +36,7 @@
 // ==/UserScript==
 
 /* global $ */
-/* global OL */
+/* global OpenLayers */
 /* global WazeWrap */
 /* global I18n */
 /* global W */
@@ -332,6 +332,7 @@
         return new OpenLayers.LonLat(lon, lat);
     }
 
+    var insertPath = '.view-area.olMap >div > div > div.WazeControlPermalink>div';
     function LoadMapButtons(){
         $('#OOMMiDrive').remove();
         if(settings.MiDrive)
@@ -343,7 +344,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
                 var center = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.displayProjection);
@@ -361,7 +362,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMGMapsImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -381,7 +382,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionMapillary.html());
+            $(insertPath).append($sectionMapillary.html());
             $('#OOMMapillaryImg').click(function(){
                 let latlon = get4326CenterPoint();
 
@@ -400,7 +401,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionTerraserver.html());
+            $(insertPath).append($sectionTerraserver.html());
             $('#OOMTerraserverImg').click(function(){
                 var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
                 window.open(`https://www.terraserver.com/view?utf8=✓&search_text=&searchLat=&searchLng=&lat=${center_lonlat.lat}&lng=${center_lonlat.lon}&bbox=&center=`);
@@ -418,7 +419,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWikimapia.html());
+            $(insertPath).append($sectionWikimapia.html());
             $('#OOMWikimapiaImg').click(function(){
                 let latlon = get4326CenterPoint();
                 let lang = GetLanguage();
@@ -438,7 +439,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBing.html());
+            $(insertPath).append($sectionBing.html());
 
             $('#OOMBingImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -458,7 +459,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionOSM.html());
+            $(insertPath).append($sectionOSM.html());
 
             $('#OOMOSMImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -478,7 +479,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionYandex.html());
+            $(insertPath).append($sectionYandex.html());
 
             $('#OOMYandexImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -498,7 +499,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionHere.html());
+            $(insertPath).append($sectionHere.html());
 
             $('#OOMHereImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -516,7 +517,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYFC.html());
+            $(insertPath).append($sectionNYFC.html());
 
             $('#OOMNYFCImg').click(function(){
                 let e=W.map.getExtent();
@@ -566,7 +567,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYSL.html());
+            $(insertPath).append($sectionNYSL.html());
 
             $('#OOMNYSLImg').click(function(){
                 let e=W.map.getExtent();
@@ -616,7 +617,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYGIS.html());
+            $(insertPath).append($sectionNYGIS.html());
 
             $('#OOMNYGISImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -633,7 +634,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNY511.html());
+            $(insertPath).append($sectionNY511.html());
 
             $('#OOMNY511Img').click(function(){
                 let latlon = get4326CenterPoint();
@@ -650,7 +651,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNexar.html());
+            $(insertPath).append($sectionNexar.html());
 
             $('#OOMNexarImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -667,7 +668,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNYCMaps.html());
+            $(insertPath).append($sectionNYCMaps.html());
 
             $('#OOMNYCMapsImg').click(function(){
                 var geoPoint=new OpenLayers.Geometry.Point(W.map.getCenter().lon,W.map.getCenter().lat);
@@ -693,7 +694,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionRosreestr.html());
+            $(insertPath).append($sectionRosreestr.html());
 
             $('#OOMrosreestrImg').click(function(){
                 window.open(`http://pkk5.rosreestr.ru/#x=${W.map.getCenter().lon}&y=${W.map.getCenter().lat}&z=${(W.map.getZoom() + 12)}`);
@@ -709,7 +710,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionPA511.html());
+            $(insertPath).append($sectionPA511.html());
 
             $('#OOMPA511Img').click(function(){
                 let latlon = get4326CenterPoint();
@@ -727,7 +728,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMMiss511Img').click(function(){
                 let latlon = get4326CenterPoint();
@@ -746,7 +747,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionLAFC.html());
+            $(insertPath).append($sectionLAFC.html());
             $('#OOMLAFCImg').click(function(){
                 let latlon = get4326CenterPoint();
                 window.open(`http://www.arcgis.com/home/webmap/viewer.html?webmap=a37461260bec43dea7bcbf6b710a662e&center=${latlon.lon},${latlon.lat}&level=${(W.map.getZoom() + 12)}`);
@@ -762,7 +763,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNJ511.html());
+            $(insertPath).append($sectionNJ511.html());
             $('#OOMNJ511Img').click(function(){
                 let latlon = get4326CenterPoint();
                 window.open(`http://www.511nj.org/trafficmap.aspx?X=${latlon.lat}&Y=${latlon.lon}&zoom=${(W.map.getZoom() + 12)}`);
@@ -778,7 +779,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionNM511.html());
+            $(insertPath).append($sectionNM511.html());
             $('#OOMNM511Img').click(function(){
                 let latlon = W.map.getCenter();
 
@@ -796,7 +797,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWVFlood.html());
+            $(insertPath).append($sectionWVFlood.html());
             $('#OOMWVFloodImg').click(function(){
                 let latlon = W.map.getCenter();
 
@@ -814,7 +815,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionGMDM.html());
+            $(insertPath).append($sectionGMDM.html());
             $('#OOMGMDMImg').click(function(){
                 let latlon = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.displayProjection);
 
@@ -831,7 +832,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionPennDOT.html());
+            $(insertPath).append($sectionPennDOT.html());
             $('#OOMPennDOTImg').click(function(){
                 let latlon = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.displayProjection);
                 window.open(`https://gis.penndot.gov/OneMap?longitude=${latlon.lon}&latitude=${latlon.lat}`);
@@ -847,7 +848,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBogota.html());
+            $(insertPath).append($sectionBogota.html());
             $('#OOMBogotaImg').click(function(){
                 var topleft= (new OpenLayers.LonLat(W.map.getExtent().left,W.map.getExtent().top));
                 var bottomright= (new OpenLayers.LonLat(W.map.getExtent().right,W.map.getExtent().bottom));
@@ -873,7 +874,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMZoomEarthImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -892,7 +893,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMRoadworksImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -909,7 +910,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionWI511.html());
+            $(insertPath).append($sectionWI511.html());
 
             $('#OOMWI511Img').click(function(){
                 let latlon = get4326CenterPoint();
@@ -926,7 +927,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionOHGO.html());
+            $(insertPath).append($sectionOHGO.html());
 
             $('#OOMOHGOImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -943,7 +944,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionArkDOT.html());
+            $(insertPath).append($sectionArkDOT.html());
 
             $('#OOMArkDOTImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -961,7 +962,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMDelDOTImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -979,7 +980,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionBagViewer.html());
+            $(insertPath).append($sectionBagViewer.html());
 
             $('#OOMBagViewerImg').click(function(){
                 let e=W.map.getCenter();
@@ -1027,7 +1028,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMMelvinImg').click(function(){
                 let extent = W.map.getExtent();
@@ -1048,7 +1049,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($section.html());
+            $(insertPath).append($section.html());
 
             $('#OOMNaviExpertImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -1065,7 +1066,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionTranstar.html());
+            $(insertPath).append($sectionTranstar.html());
 
             $('#OOMTranstarImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -1081,7 +1082,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionMaineDOT.html());
+            $(insertPath).append($sectionMaineDOT.html());
 
             $('#OOMMaineDOTImg').click(function(){
                 let latlon = get4326CenterPoint();
@@ -1100,7 +1101,7 @@
                 '</span>'
             ].join(' '));
 
-            $('.view-area.olMap >div > div > div.WazeControlPermalink').append($sectionDriveTexas.html());
+            $(insertPath).append($sectionDriveTexas.html());
 
             $('#OOMDriveTexasImg').click(function(){
                 let latlon = get4326CenterPoint();

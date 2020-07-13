@@ -49,13 +49,12 @@
     //var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
     //GM_addStyle(jqUI_CssSrc);
 
-    const updateMessage = "";
+    const updateMessage = "Terraserver shut down - removing from options";
 
     var settings = {};
     var wazerIcon = "data:image/png;base64,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";
     var gmapsIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHiSURBVDhPY/hPCPx+9eLjtg3vVy/9evr4vz9/IIIEtL1fteSev9NdbzsIepwV/+v5U6A4SNvR59fW3TuGic5uXATXAEePMuOAdjIA9SguScKKtsS5AdXd8bZbbGEw0Uj7mLMFRCfQtQxr7h4FqnDZWLX37tmTD68m7emHazsX5AhUdMbVqkFXHYjmmulBtH3YsBqq7fD9i+6baoxW5VmuLVJemgLRtiPWFajotpfdbDO9TgPNA07mEG1fjh+Garv45Lby0uTp5zfffP4gaFsLRFtRXRBEHTJ6EBv07+dPqLbe02tWXt3fdHzJqYfXNJdnAEW0liUeOe39KM0eTdvnQ3tBIQnRBkRROzvzD0w3WJUL0XP0nPffO87fDrveQYqAJ211oGhB1gZHcD1/brtdOTX7XE8bRM+tMK9bFy9g1wbX8/d+4M9PV06dOnXowIGbMYFAbWcn9d68eROLNrien7fc3r+9CpT+8eMHUOe5vo7bIR6H9+/Dog1ZT9v8udnTzr799BOi89zO7VeKsw8dOoSuDU1PYMtRIELo/P798uL56Nqw6kHXCXYtQtu2+4dx6YEgZJ0PHz6Eavv7+QAePRAE1wkHDP///fr3du7RM1smbbqNB605+vgfVMv/////AwB1kYZCu5TA6gAAAABJRU5ErkJggg==";
     var mapillaryIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAatJREFUOE+tlFtLAkEUx/er9CEyA+sbRM9BH8EuWhL0oC8h9B7dFAIXoqe8RGgP9RDkipoSZkJpeQk1N8swldW108ywa3uZLKKFH7sz/3P+c2Z2Zhj8GPzmEYN3jh31mkvoLSDgBwQplsW5XyaHZl4T+HtwLjZDDVYnSiyGt8CdCVE1DSwjlUgTIViMQafXhekTB1WXwR64IuqaTASs0BQ60O9/wHEhqtM1CNiIJoCNcxGTJJ8DUezD7Nk6NU5GZ2RCldgiLsi8FCHXKIPJb4HHJg/h6o0qTsvACC9ssBBD02mTSrLIZCXiJtpqdA8SfBbGfQuqZCUDI1cmCO2uQEyunu9JZcpAe8wD5+UUjCn6lKimNhWyQyDPQU8UofxeBwdKljVLeJsMIlephbrYM6dOMnqqngdH3ANWbof0x2u38PBWpU6RaiSDE7AhruSydgcXlTT5diYPdLFDjWSWuV30ByvEBPPUasBkYEkVg41+c0hJdWuJfai2XonZZvpIqQtDjwgNvOM3rv1QQnvLKK2VfES+PbTDMPrmlW32/66RwZ2EXKVp/uFiY5hPR2AhGcMUotsAAAAASUVORK5CYII=";
-    var terraIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACSUlEQVQ4T6XUzW/SYBwHcLLEg8aTmVdv/gV6EJ6Wlj6FQV0NFhEQeRMGpmgW0BnjxlB8O0iixpdMmS5ZiB58iWMzvmRZFjfRbOyw+HryoIlZYjyRqLvsZwvPRGIHbH6T76F52s/T9tdU10qy2Wx7NBqVyOH/RRCE/YwRLXAdLIiiOOl0OreQpdUlHo9vt9lscwf26eHjOIKjU3fBcrwPDAiVWZZNFgqFDeTUxpFleaPJZDpjxmjpzhUEv95TsPiBgp7XD8A5PQv2eyPAuD1A0/S8JElGcpl2XEqU3b8mDhrgy8sqtNxlsNKpGbBlLwHCGDDGuXA4vIkQtQSDQZfQoYdnw6gO0gRJpacTwHXFQHnPbwlTSyAQCF49q42p1QLVikN5FfxEmFqagYdu9EHnwC2Qxp7XgZ0Dg2sDAx496PXVMi4PiLfzVfD6zdWDP5RJx2QEgpsC6x4ENGOowJbefth5+Vrr4Lc3NIy+MMG5xxj6R/k/TY3wELvAAi+iyt02BX8qnXzFwqmxGqLV1CMedofpxmD5HQXDE5wmoNXQSWZl8OJpBLnx1jG1K4J+v3+XzY6WErnWwWN5DIILgcPhmCFMfbxer8Vs5j/vPUzDifv1g/i76lACKUaZNlpECHUXi8X1hNBMm9VqzdB4R7nrPPsPlhjkwGJXPiFBmM1kMtvINc2j/Em28jw/rT7SkSEOeh9icHcbgaKp75FIpCedTreRU1tPqVRa5/P5ZCNDL7BmAyibPAmFQpvJ8tqTTCbblfeLyWGD6HS/AREwNmot2NXWAAAAAElFTkSuQmCC";
     var wikimapiaIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAACeklEQVQ4T5VUTWgTQRRebf2v9Te0m5nNJjuzaRuxl4LoQUMPCnoRKcWjUD14K+LFm+LFS6ngD57Eo6AXEdGDQsSDilQP2oOK6EHSmN2djaFYawrZfm+yYlpCbB88mJ33vW++997sGM0WDQ2tUzyzN2DynOJOwWeiGnL5OA6vzD5LuUFxcSVgohhwWQfZHL5fY30xhvzf6pxvUklxHyQ1xcQfkNzw2IAbSNkd2fbGGNbeYiWT8FrAxdfAkkciw1gbOs62kGUHg153IIa2txJ394HAC5gzD5LDRFJhYhj9eQplPxSTD2Joe1OWe5l6goTrROJx9xDKm1FcRuQgexJD2xuAb6mxZUuKes/gFqh7pIlXTyTmAZ6inlSZ4+L7y1+SVRHpBCae+7v6tipL7EHTvzcTIaagsNDsZStNA1kTsMxIY885QYpCnPrpZyq1Y6Y3bWP9YQnRMkd8zmPOURIRWnJC7yezJw3dEyYXAhMT0zdbXMXewnKCfy6mvFS/GeXznRjQRyierfT0pUEkx+BRyMUrmlrRzO4G+EUrEhz4m66GLivpnkIepi0elhO5LqOUymZQ3nsNZuJS0TQ3R7nc+pDJCwC+RPI0FL7Dvbrt29l+kHRgPYw9HwfOhpY4TsQGqQB4xGdOlQKKOdcC7jJ96k7ZTWtSeQ8E0ehoBzBncOA3UgMBN0u4MnpqZAUj30nMANCPWvOTooxbPhFa7kH8g1bjRXDGEX9DzW6UKe6WE4mumGKpAbQfgGeQ7en6m/rTcPFLt8GSZ6dRfpzW2iq2vR0qDoDoNBInMZk7IL6F9XmUfSw0nZTuyUqNelfHy0BPDD0lVH4camGGsQj+znJFw2F9rQAAAABJRU5ErkJggg==";
     var bingIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAAB70lEQVQ4T62TOUtDURCFn/uuiCIIojYWKhZi7y+w8S9obS1iYmJcUQIuQSsRQWy10SJErFxQ0UKwECxMXELAECMhhMQc51xzJS/kaaEXJu/lzcx3z70zYwD4F1M/1dPTqJqaAp8lTieKHA7UyHv295/MBKKVTU6id20NfevrKBZgZQZSlfFbmQlUK2aMj8N1dIREKoWt62s0zs2hwuXKm5xtJlDdzAwMmw02n48OROJxtLvdSiWP+dMRyTAryoDS6TQCkQhaFhfVfXGTWjGdmAs1gbQi++EhHQi8vaFzZQVN8/MosNthiFXKMRmXq5AMS5BfFPV4PDi4u8Pm1RUGtrfRIHfGGFaWORpGhiUo+P6O+tlZuI+P1X+um2AQy6en6F5dRanAdIvIsga9RKNoXlhAlySd+P2IJRLqO9eExLDCzPkV9CygNqmaMTqKjqUlXD49qbZIfnyoFlGgfIpyq/Ygd8TyD+/t4TYUQkoAaolvaHdXxTInvyLZhbKZ9BqL4TwQYND3unh8xODODsqlepZV04rGvF46TOs+HMbI/v7XZtIG1RlI3qrROA68YJuoCouieDIJz9kZWnlXsgn7SDempSLtKJeRYBIHt39jQyngmOgKMS4bQjOBdBCfTOL0F8p4UIHu5FyAtm/Q3w3GJ+jeRjZzKMG3AAAAAElFTkSuQmCC";
     var osmIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAAEAUlEQVQ4T32Ue0xTVwDGL1vYw7kty+YykJAtY2FuIYASgyzBGTNn1Lm4ZE83idPJssUZ1i0ukT8U2YZBNGGMAUJb2tIHUAqUR73lJX15y20F2gJFkL54tLS08hLd49tpQaPZ40u+nD/O+X73O+eee6m+kORldlZmMfqkDYxHnMWy5eus3u4X7MGeA9qpBq50+MKQyFZQr/cKs/qnBU9c8ys3WgOqT2yBDvlwsKuUul/GWWkvAcE4Wo0+b+3KUIgG42uG2iWBYqwMSmsp5L0S0IxmpdvUBxXThTptNWx+tQ9A1BqGgHySE4xXAsbKg8EhgNmnADMjR5uDB4GhBDqrBd6l25hdvoPpxRW452/BOhOErFMBs1v5yhqGimpiS9OZGQn0k0LoBypxdUoMk68eV8ZroDYZI+GwJxdW7bp5C8P+RZinQ/iprOLkGoeiWJfy4EioE9bAZQxOtcDkrkWXswpc9a+RYIA08RMHV34nrW5jIrSMfu98xA0ao3sNQ1GWuTaxNajCoL8Vg7MtMAxXQ2j7mYAkcJBQuEF4dNxcxo3gMgZ9C/dA2jEPUlMzYimAihoINHuII2dzzS5Dnb0Ichsfks4W2AOLkXDYo3NLBLIKuGvd+CSSk9M3Urxu3mOGyZpl44wMrEsKZkyILlcV6AkxqhrrMUCCQ/4FWO5rcdcj5CEqAzudkJDwaHhn0fRIBW2YroHeTt7amACmmWbQTikq6ppQLKz9B2CAeDy4BDfZ6qlzRXnx8UnPREB8+myefkoE/XU+dKN8GJw0cS+qlT3YtWc/uI3tD0DCZ+WYW4CovfGPdz98+8XY2FefDYOiCkWc93QeATQuPrpZEQwWGU4XfIuiH49h74G9+Or7wxC0i9FqNEBlNpGxE0KVFHIND+crc/cnJiY+GQZR3TbZp+wUaeFug8ZZh29ys/HWzl3Yt2c7fhOVkrtUhdreYojpQkhVhbioOoXyjrNQmiV/fnxs3zaCeDgC6vP0CLvccjCTCnx98gu8mbkD6ekZ+JJzCJfJp6EbUqP/uhysvQ5X+rmoYM/gkvkMyrR5dhJ/LgIhekg1XuPQORTIzvkcGelvIC1tK45zskBrfkHvjWZoJzpw1UVgPiUUoyWo7M8D15KP8/R3fJJfbXPw+O6nmmy80JETn/21ZXMaklNSwcnPhtp+CS10iVPSU8honTWLOmc7GE8r5MMXwbXmo9x0ev4H/pHDEciaooleF5YcZTenbLqTtm1rHyf/qPCdj3Z8QOZeIn5+w4anU3IvZOdUKouk5wQ5xe9zdmetX//Ia2RuXRhwT3FxcY9nZm45tHN7SsGmpKTMmJiYBxesKvy7iCZe3cp/KQyLT4pcrP9f+K+iqL8B4XkGClAVarkAAAAASUVORK5CYII=";
@@ -123,7 +122,6 @@
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
             `<div><input type="checkbox" id="chkGMaps" class="OOMchk"><label for="chkGMaps"><img src="${gmapsIcon}" height="18" width="18">Google Maps</label></div>`,
             `<div><input type="checkbox" id="chkMapillary" class="OOMchk"><label for="chkMapillary"><img src="${mapillaryIcon}" height="18" width="18">Mapillary</label></div>`,
-            `<div><input type="checkbox" id="chkTerraserver" class="OOMchk"><label for="chkTerraserver"><img src="${terraIcon}" height="18" width="18">Terraserver</label></div>`,
             `<div><input type="checkbox" id="chkWikimapia" class="OOMchk"><label for="chkWikimapia"><img src="${wikimapiaIcon}" height="18" width="18">Wikimapia</label></div>`,
             `<div><input type="checkbox" id="chkBing" class="OOMchk"><label for="chkBing"><img src="${bingIcon}" height="18" width="18">Bing Maps</label></div>`,
             `<div><input type="checkbox" id="chkOSM" class="OOMchk"><label for="chkOSM"><img src="${osmIcon}" height="18" width ="18">Open Street Map</label></div>`,
@@ -162,7 +160,6 @@
         loadSettings();
         setChecked('chkGMaps', settings.GMaps);
         setChecked('chkMapillary', settings.Mapillary);
-        setChecked('chkTerraserver', settings.Terraserver);
         setChecked('chkWikimapia', settings.Wikimapia);
         setChecked('chkBing', settings.Bing);
         setChecked('chkOSM', settings.OSM);
@@ -387,24 +384,6 @@
                 let latlon = get4326CenterPoint();
 
                 window.open(`https://www.mapillary.com/app/?lat=${latlon.lat}&lng=${latlon.lon}&z=${( W.map.getZoom() + 11)}`, 'Mapillary');
-            });
-        }
-
-
-        //****************** Terraserver *********************
-        $('#OOMTerraserver').remove();
-        if(settings.Terraserver){
-            var $sectionTerraserver = $("<div>", {style:"padding:8px 16px"});
-            $sectionTerraserver.html([
-                '<span id="OOMTerraserver">',
-                `<img src="${terraIcon}" alt="Terraserver" width="18" height="18" id="OOMTerraserverImg" title="Open in Terraserver" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
-                '</span>'
-            ].join(' '));
-
-            $(insertPath).append($sectionTerraserver.html());
-            $('#OOMTerraserverImg').click(function(){
-                var center_lonlat=OpenLayers.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon,W.map.getCenter().lat);
-                window.open(`https://www.terraserver.com/view?utf8=✓&search_text=&searchLat=&searchLng=&lat=${center_lonlat.lat}&lng=${center_lonlat.lon}&bbox=&center=`);
             });
         }
 
@@ -1115,7 +1094,6 @@
             var defaultSettings = {
                 GMaps: true,
                 Mapillary: false,
-                Terraserver: false,
                 Wikimapia: false,
                 Bing: false,
                 OSM: false,
@@ -1165,7 +1143,6 @@
                 var localsettings = {
                     GMaps: settings.GMaps,
                     Mapillary: settings.Mapillary,
-                    Terraserver: settings.Terraserver,
                     Wikimapia: settings.Wikimapia,
                     Bing: settings.Bing,
                     OSM: settings.OSM,

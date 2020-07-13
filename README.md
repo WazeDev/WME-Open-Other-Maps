@@ -21,7 +21,6 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps
 * Mapillary
-* Terraserver
 * Wikimapia
 * Bing Maps
 * Open Street Map

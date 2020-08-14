@@ -7,14 +7,21 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * NYS Orthos GIS map
 * NYS Speed Limit Map
 * NYC City Map
+* 511NY
+* Nexar
 * Rosreestr
 * 511PA
+* Mississippi 511
 * Louisiana FC
 * NMroads (New Mexico 511)
 * WV Flood
 * GAIA - Mexico
 * PennDOT OneMap
 * Mapas Bogota
+* WI 511
+* iDrive Arkansas
+* Kadaster BAG Viewer
+* NaviExpert
 * MaineDOT Public View Map
 * DriveTexas.org
 * Red Vial Nacional (Chile)
@@ -29,6 +36,10 @@ Currently supported reference maps (no data can be copied - violate Waze's exter
 * Here
 * ZoomEarth
 * Roadworks
+* OHGO
+* DelDOT
+* Melvin
+* Transtar
 
 ![alt text](https://imgur.com/V1QODfB.png)
 

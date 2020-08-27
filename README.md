@@ -40,6 +40,7 @@ Currently supported reference maps (no data can be copied - violate Waze's exter
 * DelDOT
 * Melvin
 * Transtar
+* Wegstatus
 
 ![alt text](https://imgur.com/V1QODfB.png)
 

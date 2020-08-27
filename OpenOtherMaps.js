@@ -27,6 +27,7 @@
 // @include      https://bagviewer.kadaster.nl/lvbag/bag-viewer/index.html*
 // @include      http://www.trimarc.org*
 // @include      http://traffic.houstontranstar.org/layers/layers_ve.aspx*
+// @include      https://drivetexas.org/*
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/383120-proj4-wazedev/code/proj4-Wazedev.js
@@ -1324,6 +1325,8 @@
                 bootstrapGeneral(initBridgeReports);
             else if(location.href.indexOf("http://www.trimarc.org") > -1)
                 bootstrapGeneral(initTrimarc);
+            else if(location.href.indexOf("drivetexas.org") > -1)
+                bootstrapGeneral(initDriveTexas);
             /*else if(location.href.indexOf("http://www.511nj.org/trafficmap") > -1){
             bootstrapGeneral(initNJ511, 1);
         }*/
@@ -1480,6 +1483,18 @@
             });
         }
 
+        function initDriveTexas(){
+            let $OOMWazeButton = document.createElement("div");
+            $OOMWazeButton.innerHTML = `<div id="OOMWazeButtonDiv" style="height:36px; width:36px; position: fixed; left:10px; top:240px; cursor: pointer; background-image: url(${wazerIcon}); background-size: 36px 36px; background-repeat: no-repeat;" title="Open in WME"></div>`;
+            let parent = document.getElementById("app");
+            parent.appendChild($OOMWazeButton);
+
+            document.getElementById("OOMWazeButtonDiv").addEventListener("click", function(){
+                window.open(DriveTxToWaze());
+            });
+
+        }
+
         let isMiss511Loaded = false;
         function initMississipie511(){
             map.addListener('tilesloaded', function() {
@@ -1611,6 +1626,16 @@
             zoom = parseInt(curURL[2]);
             if(zoom > 21)
                 zoom = 17;
+            return `https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
+        }
+
+        function DriveTxToWaze() {
+            let lon, lat, zoom;
+            let curURL = location.href.split('#').pop().split('/');
+            lat = curURL[2];
+            lon = curURL[3].split('?')[0]
+            zoom = parseInt(curURL[1]);
+
             return `https://www.waze.com/en-US/editor/?lon=${lon}&lat=${lat}&zoom=${(Math.max(0,Math.min(10,(zoom - 12))))}`;
         }
 

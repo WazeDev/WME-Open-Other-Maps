@@ -26,6 +26,9 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * DriveTexas.org
 * Red Vial Nacional (Chile)
 * 511LA
+* Mississauga Ontario
+* Niagara Region Ontario
+* Hamilton Ontario
 
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps

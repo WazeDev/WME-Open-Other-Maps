@@ -26,6 +26,11 @@ Currently supported usage maps (data can be copied - does **not** violate Waze's
 * DriveTexas.org
 * Red Vial Nacional (Chile)
 * 511LA
+* Hamilton Ontario
+* Niagara Ontario
+* Mississauga ON
+* Brampton ON
+* Halton ON Red Light Cameras
 
 Currently supported reference maps (no data can be copied - violate Waze's external sources policy):
 * Google Maps

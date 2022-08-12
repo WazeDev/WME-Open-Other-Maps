@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2021.07.28.01
+// @version      2022.08.11.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -321,7 +321,7 @@
         let mapKML = await getKML(`https://www.google.com/maps/d/kml?mid=${mid}&forcekml=1`);
         let parser = new OpenLayers.Format.MyMapKML();
         parser.extractStyles = true;
-        parser.internalProjection = W.map.getProjectionObject();
+        parser.internalProjection = W.Config.map.projection.remote;
         parser.externalProjection = new OpenLayers.Projection("EPSG:4326");
 
         if(W.map.getLayersByName("Google MyMap").length > 0)
@@ -387,7 +387,7 @@
             $(insertPath).append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
-                var center = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.getOLMap().displayProjection);
+                var center = W.map.getCenter().transform(W.Config.map.projection.remote, W.map.getOLMap().displayProjection);
                 window.open(`https://mdotjboss.state.mi.us/MiDrive/map?constZone=true&incidents=true&lat=${center.lat}&lon=${center.lon}&zoom=${W.map.getZoom() + 12}`, 'MiDrive');
             });
         }
@@ -855,7 +855,7 @@
 
             $(insertPath).prepend($sectionGMDM.html());
             $('#OOMGMDMImg').click(function(){
-                let latlon = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.getOLMap().displayProjection);
+                let latlon = W.map.getCenter().transform(W.Config.map.projection.remote, W.map.getOLMap().displayProjection);
 
                 window.open(`http://gaia.inegi.org.mx/mdm6/?v=${btoa("lat:"+latlon.lat+",lon:"+latlon.lon+",z:"+(W.map.getZoom()+8))}`);
             });
@@ -872,7 +872,7 @@
 
             $(insertPath).prepend($sectionPennDOT.html());
             $('#OOMPennDOTImg').click(function(){
-                let latlon = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.getOLMap().displayProjection);
+                let latlon = W.map.getCenter().transform(W.Config.map.projection.remote, W.map.getOLMap().displayProjection);
                 window.open(`https://gis.penndot.gov/OneMap?longitude=${latlon.lon}&latitude=${latlon.lat}`);
             });
         }
@@ -897,7 +897,7 @@
                 topleft4686 = proj4.transform(source, proj4.WGS84, topleft4686);
                 bottomright4686 = proj4.transform(source, proj4.WGS84, bottomright4686);
 
-                let latlon = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.getOLMap().displayProjection);
+                let latlon = W.map.getCenter().transform(W.Config.map.projection.remote, W.map.getOLMap().displayProjection);
                 window.open(`http://mapas.bogota.gov.co/?&e=${topleft4686.x},${bottomright4686.y},${bottomright4686.x},${topleft4686.y},4686&b=261`);
             });
         }
@@ -1160,7 +1160,7 @@
             $(insertPath).prepend($section.html());
 
             $('#OOMRedVialImg').click(function(){
-                var center = W.map.getCenter().transform(W.map.getProjectionObject(), W.map.getOLMap().displayProjection);
+                var center = W.map.getCenter().transform(W.Config.map.projection.remote, W.map.getOLMap().displayProjection);
                 //https://sitministerial.maps.arcgis.com/apps/webappviewer/index.html?id=ccc8ce73d80d4b48a4cbce97ff89d74c&center=-72.86780,-40.07118&level=12
 
                 window.open(`https://sitministerial.maps.arcgis.com/apps/webappviewer/index.html?id=ccc8ce73d80d4b48a4cbce97ff89d74c&center=${center.lon},${center.lat}&level=${W.map.getZoom() + 8}`, 'RedVial');

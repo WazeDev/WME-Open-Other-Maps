@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2022.08.11.02
+// @version      2022.08.12.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -1161,7 +1161,7 @@
             $(insertPath).prepend($section.html());
 
             $('#OOMRedVialImg').click(function(){
-                var center = W.map.getCenter().transform(W.Config.map.projection.remote, W.Config.map.projection.local);
+                var center = W.map.getCenter().transform(W.Config.map.projection.local,W.Config.map.projection.remote );
                 //https://sitministerial.maps.arcgis.com/apps/webappviewer/index.html?id=ccc8ce73d80d4b48a4cbce97ff89d74c&center=-72.86780,-40.07118&level=12
 
                 window.open(`https://sitministerial.maps.arcgis.com/apps/webappviewer/index.html?id=ccc8ce73d80d4b48a4cbce97ff89d74c&center=${center.lon},${center.lat}&level=${W.map.getZoom() + 8}`, 'RedVial');

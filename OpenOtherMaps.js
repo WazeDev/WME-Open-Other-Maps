@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2022.08.23.01
+// @version      2023.02.04.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @include      https://www.waze.com/editor*
@@ -32,7 +32,7 @@
 // @exclude      https://www.waze.com/*/user/editor*
 // @require      https://greasyfork.org/scripts/24851-wazewrap/code/WazeWrap.js
 // @require      https://greasyfork.org/scripts/383120-proj4-wazedev/code/proj4-Wazedev.js
-// @grant        none
+// @grant           GM_xmlhttpRequest
 // @noframes
 // @contributionURL https://github.com/WazeDev/Thank-The-Authors
 // ==/UserScript==
@@ -51,7 +51,7 @@
     //var jqUI_CssSrc = GM_getResourceText("jqUI_CSS");
     //GM_addStyle(jqUI_CssSrc);
 
-    const updateMessage = 'Tweaky tweaky';
+    const updateMessage = 'Fixing Google MyMap display and adding WV511 option';
 
     var settings = {};
     var wazerIcon = "data:image/png;base64,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";
@@ -102,6 +102,7 @@
     //    var MiltONIcon = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAYABgAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABgAAAAAQAAAGAAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAABKgAwAEAAAAAQAAAA0AAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIAA0AEgMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAQCAwMDAgQDAwMEBAQEBQkGBQUFBQsICAYJDQsNDQ0LDAwOEBQRDg8TDwwMEhgSExUWFxcXDhEZGxkWGhQWFxb/2wBDAQQEBAUFBQoGBgoWDwwPFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhb/3QAEAAL/2gAMAwEAAhEDEQA/APp/wz+0HoGpaYuuX/hfxJpHh2a6lt7fXLq2je0kaORkJYxuzRqWQgFgB0qxe+E774haJH4xv9Y1CyvYSbvw/FaXbxR2mPuM4UgSFgOd2Rg+hxWN8D7OwPiT4h/BTVbC31Tw9Y3MlxElygKvBeEyPbunRlDM2Dxweld98Q7iHwP8KGtfD1nDaw2luljYwqMR2yY2Lgdwo6DNRTwld4+nKNR2T0W2rta9t0lfRq2uuyOriCGEownFQtFRve97pq8X3Urb677WOf0X4xWEmjWkl/a7bp7dGuFVuBIVG4D8c1a/4W/ov/Pu3/fVXvDvwz8Ow+H7GGRJJnjtY1aRiAXIUAsfrVz/AIVv4a/593/MV9VzZR/L+Z+eey4j/n/GP+R//9k=";
     var BramONIcon = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAABKgAwAEAAAAAQAAABAAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIABAAEgMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/3QAEAAL/2gAMAwEAAhEDEQA/AOs8Aa5rWr211canqMt4jTeTFEwVcFV3McqB1JA/CtbxLrFzpOg309teOkkcRCGMLkOzBU45GASMk9u1cfo+tDRlm1mKGSS1nIluB5RTd82xpfLH3ZFJAkVflcEOvOVq1qV42sQSaTLZIHikiS6WGQrFK5y6xhyoOwKN7tjOAAMk8PEYKtPGqqrcl15WStdW9fz82KnXhDDOnvKz+99f67ehTs/Fnieaxt5W1W5YvGrFtic5H+7U3/CUeJv+gnc/98J/8TTbXxGfskPk32reV5a7Ps9rbRx7ccbFbLKuOgPIHWpv+Ejm/wCf7Xf+/Np/hXt8sf5F93/APOtL+Zn/2Q==";
     var HaltRLCIcon = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAABKgAwAEAAAAAQAAAAwAAAAA/+0AOFBob3Rvc2hvcCAzLjAAOEJJTQQEAAAAAAAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/AABEIAAwAEgMBEQACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgMDAwMDAwMDAwP/2wBDAQEBAQEBAQIBAQICAgECAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP/3QAEAAP/2gAMAwEAAhEDEQA/AP7nfjZ8c/hZ+zx4A1f4mfF7xfp3hDwno8Z3XF0J7vUtWvmRmtdD8N6FYRXOs+JvEWosmy2sLGGe6nfhUPJHnZrm2X5Jgp5hmdWNLCw3b1bb0jGMVeU5yfuwhFOUpNRim2k/NzbN8vyPA1MyzSoqWEpq7dnKTfSMIRTnOctowhGU5PSMW7I/m9/bY/b2+PHx18L/AB1k8JQa18H/AIWfBLx98HfDNh4P07VBF4z8ceL9a17xfrM8fxN8QaNdNBHpsMPgNI08PafMbESTOt9PqAJgh/GeK+L86x2GzCeEjLD4LA1sNGEIytUq1HOUpRqyi7KLUIxVOLs7v2kpqTpx/F+KuK86zKhj5UFLDZfgq2FUKcZNValV1Jykq04StyNU4RVGL5XeSqzqxm6UP6ZvAvjbQ/HPgjwd410++s5NP8YeFfD3imxdbqHD2fiDSLTVrZx7NDdqa/cMPXp4jDwxFNpwnCMk+6kk1+Z+54bEU8Th6eIptOnUhGSd91JJr8z/0P2b+KPhu5/an/a0+Oen/FbxZ4su7D4e/t1/Cz4OeCbDTb6wTTfC3w08HfCV/iNL4X0PStX0vWNM0yLxp4rcz6/dwwpf6mgjjadUgtxF+N4jCy4i4gx1LMatX2eGzihSpqLVo06WGp4jkUXGSSqVZydWSSnUjywcuWMUvw14epxNxPmkMyr1uTCZ7hqFJRceWFGlg6OK9nGMozilVqzm600lVqRcYOajTpqH6mTf8Eyf2ZNZ0j446RrafEbVbH4+/E7Svil41STx1e6fJYeKPC3jHxX4q0T/AIROfRLXS5tB062vfFV3A8KtJ9osysMzOFJP2j4HyGpSxdKqq8oY2uqtS9Wa9+FSVSPI4tciUpPSNrxsm2kfoMuB8hq0sXSqqvKGMxEa1T97OL54VZVY8ji4uCUpNNJ2lH3Zcyuje8O/sCeAvCHh/QvCfhn4zftG6P4b8L6Ppnh3w9pEPxB0K5h0vQ9EsoNN0nTornUPBV5f3EdjYW0cSvPNLM4XLuzEse/C8OYbBYang8LXxUMNSpxhCPOnyxilGKvKLk7JJXbbfVtnXhOF8JgcLSwWExGLjhaNOMIR9opWhBKMVzTTlKySV5Nye7bd2//Z";
+    var WV511Icon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAACoUlEQVQ4T52SXUhTYRzG3yUUCRJS2IWWJEFFRjcRFXXTldRFRBB1UURmTptzQy2dpmuZmoIKlvNGrGnbzjZ3tjPnx+bIY9b82Jluc87NpWtz8yvzYyjzC/vHkVF4lS8//jz/h+d5DxxehDKJvYAy1XsBsVV/s59LnCrufNhIFbU6snBbhWFMbJqMztUeK+z4J4ky8DAnBbp7DQMHuOqww2Dj+zJV+ZqRbvfPxBJD2IeakuZonja2oC287qauZ9w1G0zgd/xZEas5gd/umF6+WkVeqyJdM8HR6WWgTOc8W6wH/259H48YHg4sJb7RzwZDKkuAwYLaM0WXa257e7tIO/JSYwcBM01ijsvXWv2LsDIl5rXNLahBUjnkr+lyny/pRChdbg8sDfoWIjnK96R7yLdQqBle39wS9f0o1zuhcOS5emY5JB7wQrLS4BJ2f79Z2wM1GUZ5VRY/iBZb4AVujeIqg6GNBuNEm31qbDYYX6CFb/LUNggQVr+o13NG0I5QGna/3hja2DrNb6vQja6ub3rmV36trF0q7/QvrsJFSTUk1G7V9Vws00tNXuXgJFQQYmIR6bIv7jn4DderPr9utd94132QrWCkYfE8zeFsPIrTfKKg5UKpTk755JQ3Lo+ACtSkQEw27phaglvhmDzztElznEdwZGatzV+hc8Tmqnd8lCqhOcRRCMmxSv1ohtT0qsVWbXB+NI7jgz5Jv4eNUecErVfe6thSaiePnop3w0gVR3MU8bmqmKzmCKaENkFEsrCdDEr5tBdQShPAEvfnKMwP6r9yMdPl0naYt2tJtmTgUcO3O0Ly8QdjUrWBT1hB0HmEnjQCxJCvqXec2dgr7HLCLFJbsmQmgcbKJyzS/gkQOXIKXo2S8tJ5hJJF/02y6DfOCv0wOzejpgAAAABJRU5ErkJggg==";
 
     function initInterface(){
         var $section = $("<div>");
@@ -148,6 +149,7 @@
             `<div><input type="checkbox" id="chkrosreestr" class="OOMchk"><label for="chkrosreestr"><img src="${rosreestrIcon}" height ="18" width="18">Rosreestr</label></div>`,
             `<div><input type="checkbox" id="chkWI511" class="OOMchk"><label for="chkWI511"><img src=${WI511Icon} height="18" width="18">WI 511</label></div>`,
             `<div><input type="checkbox" id="chkWVFlood" class="OOMchk"><label for="chkWVFlood"><img src="${WVFloodIcon}" height="18" width="18">WV Flood</label></div>`,
+            `<div><input type="checkbox" id="chkWV511" class="OOMchk"><label for="chkWV511"><img src="${WV511Icon}" height="18" width="18">WV 511</label></div>`,
             '</fieldset></br>',
             /*'<fieldset style="border: 1px solid silver; padding: 8px; border-radius: 4px;">',
             "<p>The below maps are for <span style='color:red; font-weight:bold;'>reference only</span> and <b>no data</b> should be copied from them as it violates Waze's external sources policy.</p>",
@@ -236,6 +238,7 @@
         //        setChecked('chkMiltON', settings.MiltON);
         setChecked('chkBramON', settings.BramON);
         setChecked('chkHaltRLC', settings.HaltRLC);
+        setChecked('chkWV511', settings.WV511);
 
         if(settings.LangSetting == 0)
             setChecked("radOOMNoLang", true);
@@ -294,7 +297,7 @@
 
     async function getKML(url){
         try{
-            return await $.get(url);
+            return await wrapGMXMLHTTP(url);
         }
         catch(err){
             let patt = new RegExp(/^<\?xml(?:.|\n)*<\/kml>/);
@@ -304,6 +307,29 @@
             else
                 console.log("Error retrieving the MyMap data\n\n" + err);
         }
+    }
+
+    async function wrapGMXMLHTTP(url){
+        return new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+                url,
+                method: 'GET',
+                onload(res) {
+                    if (res.status < 400) {
+                        resolve(res.responseText);
+                    } else {
+                        console.log("error");
+                        console.log(res.status);
+                        // handle errors here
+                    }
+                },
+                onerror(res) {
+                    // handle errors here
+                    console.log("Error:");
+                    console.log(res.text);
+                }
+            });
+        });
     }
 
     async function loadMyMap(){
@@ -321,7 +347,7 @@
         let mapKML = await getKML(`https://www.google.com/maps/d/kml?mid=${mid}&forcekml=1`);
         let parser = new OpenLayers.Format.MyMapKML();
         parser.extractStyles = true;
-        parser.internalProjection = W.Config.map.projection.remote;
+        parser.internalProjection = W.Config.map.projection.local;
         parser.externalProjection = new OpenLayers.Projection("EPSG:4326");
 
         if(W.map.getLayersByName("Google MyMap").length > 0)
@@ -387,7 +413,6 @@
             $(insertPath).append($section.html());
 
             $('#OOMMiDriveImg').click(function(){
-                debugger;
                 var center = W.map.getCenter().transform(W.Config.map.projection.local, W.Config.map.projection.remote);
                 window.open(`https://mdotjboss.state.mi.us/MiDrive/map?constZone=true&incidents=true&lat=${center.lat}&lon=${center.lon}&zoom=${W.map.getZoom() -1 }`, 'MiDrive');
             });
@@ -678,6 +703,23 @@
             $('#OOMLA511Img').click(function(){
                 let latlon = get4326CenterPoint();
                 window.open(`https://511la.org/?latitude=${latlon.lat}&longitude=${latlon.lon}&zoom=${(W.map.getZoom() + 12)}`);
+            });
+        }
+
+        $('#OOMWV511').remove();
+        if(settings.WV511){
+            let $sectionWV511 = $("<div>", {style:"padding:8px 16px"});
+            $sectionWV511.html([
+                '<span id="OOMWV511">',
+                `<img src="${WV511Icon}" alt="WV511" width="18" height="18" id="OOMWV511Img" title="Open in WV511.org" style="cursor:pointer; float: left; display:inline-block; margin: 2px 5px 0 3px;">`,
+                '</span>'
+            ].join(' '));
+
+            $(insertPath).prepend($sectionWV511.html());
+
+            $('#OOMWV511Img').click(function(){
+                let latlon = get4326CenterPoint();
+                window.open(`https://WV511.org/?lat=${latlon.lat}&lng=${latlon.lon}&zoom=${W.map.getZoom()}`);
             });
         }
 
@@ -1244,6 +1286,7 @@
 
             });
         }
+
         //         $('#OOMTorON').remove();
         //                 let latlon = get4326CenterPoint();
         //                 let zoomtable = [225000,115000,57000,28000,14000,7000,2000,1000,500,250,100];
@@ -1400,6 +1443,7 @@
                 //MiltON: false
                 BramON: false,
                 HaltRLC: false,
+                WV511: false,
             };
             settings = loadedSettings ? loadedSettings : defaultSettings;
             for (var prop in defaultSettings) {
@@ -1459,7 +1503,8 @@
                     HamON: settings.HamON,
                     MissON: settings.MissON,
                     BramON: settings.BramON,
-                    HaltRLC: settings.HaltRLC
+                    HaltRLC: settings.HaltRLC,
+                    WV511: settings.WV511
                 };
 
                 localStorage.setItem("OOM_Settings", JSON.stringify(localsettings));
@@ -1986,7 +2031,6 @@
             $('#OOMWazeButtonDiv').click(function(){
                 var point = new proj4.toPoint([parseFloat(view.center.x), parseFloat(view.center.y)]);
                 let source = new proj4.Proj('EPSG:900913');
-                debugger;
                 point = proj4('EPSG:900913', 'EPSG:4326', point);
 
                 window.open(`https://www.waze.com/en-US/editor/?lon=${point.x}&lat=${point.y}&zoom=${view.zoom-5}`);
@@ -2017,5 +2061,7 @@
             }
         }
 
+
         bootstrap();
     })();
+

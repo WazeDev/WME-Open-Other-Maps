@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2024.07.19.01
+// @version      2024.09.10.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @match        https://www.waze.com/editor*
 // @match        https://www.waze.com/*/editor*
 // @match        https://beta.waze.com*
-// @match        *://www.google.com/maps/*
+// @match        *://www.google.com/maps*
+// @match        *://maps.google.com*
 // @match        *wv511.org/*
 // @match        http://www.511virginia.org/mobile/?menu_id=incidents
 // @match        https://mdotjboss.state.mi.us/MiDrive/map*
@@ -35,6 +36,8 @@
 // @grant           GM_xmlhttpRequest
 // @noframes
 // @contributionURL https://github.com/WazeDev/Thank-The-Authors
+// @downloadURL https://update.greasyfork.org/scripts/32758/WME%20Open%20Other%20Maps.user.js
+// @updateURL https://update.greasyfork.org/scripts/32758/WME%20Open%20Other%20Maps.meta.js
 // ==/UserScript==
 
 /* global $ */

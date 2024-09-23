@@ -406,15 +406,6 @@
         return new OpenLayers.LonLat(lon, lat);
     }
 
-    function getOLMapExtent() {
-        let extent = W.map.getExtent();
-        if (Array.isArray(extent)) {
-            extent = new OpenLayers.Bounds(extent);
-            extent.transform('EPSG:4326', 'EPSG:3857');
-        }
-        return extent;
-    }
-
     var insertPath = '.WazeControlPermalink';
     function LoadMapButtons(){
         $('#OOMMiDrive').remove();
@@ -585,7 +576,7 @@
             $(insertPath).prepend($sectionNYFC.html());
 
             $('#OOMNYFCImg').click(function(){
-                let e=getOLMapExtent();
+                let e=W.map.getOLExtent();
                 let geoNW=new OpenLayers.Geometry.Point(e.left,e.top);
                 let geoSE=new OpenLayers.Geometry.Point(e.right,e.bottom);
 
@@ -635,7 +626,7 @@
             $(insertPath).prepend($sectionNYSL.html());
 
             $('#OOMNYSLImg').click(function(){
-                let e=getOLMapExtent();
+                let e=W.map.getOLExtent();
                 let geoNW=new OpenLayers.Geometry.Point(e.left,e.top);
                 let geoSE=new OpenLayers.Geometry.Point(e.right,e.bottom);
 
@@ -965,8 +956,8 @@
 
             $(insertPath).prepend($sectionBogota.html());
             $('#OOMBogotaImg').click(function(){
-                var topleft= (new OpenLayers.LonLat(getOLMapExtent().left,getOLMapExtent().top));
-                var bottomright= (new OpenLayers.LonLat(getOLMapExtent().right,getOLMapExtent().bottom));
+                var topleft= (new OpenLayers.LonLat(W.map.getOLExtent().left,W.map.getOLExtent().top));
+                var bottomright= (new OpenLayers.LonLat(W.map.getOLExtent().right,W.map.getOLExtent().bottom));
 
                 let source = new proj4.Proj('EPSG:900913');
                 var topleft4686 = new proj4.toPoint([parseFloat(topleft.lon), parseFloat(topleft.lat)]);
@@ -1146,7 +1137,7 @@
             $(insertPath).prepend($section.html());
 
             $('#OOMMelvinImg').click(function(){
-                let extent = getOLMapExtent();
+                let extent = W.map.getOLExtent();
 
                 let sw = WazeWrap.Geometry.ConvertTo4326(extent.left, extent.bottom);
                 let ne = WazeWrap.Geometry.ConvertTo4326(extent.right, extent.top);
@@ -1346,7 +1337,7 @@
         //         if(settings.BurlON)
         //         {
         //             let $section = $("<div>", {style:"padding:8px 16px"});
-        //                 let e=getOLMapExtent();
+        //                 let e=W.map.getOLExtent();
         //                 let geoNW=new OpenLayers.Geometry.Point(e.left,e.top);
         //                 let geoSE=new OpenLayers.Geometry.Point(e.right,e.bottom);
         //             $section.html([
@@ -1365,7 +1356,7 @@
         //         if(settings.MiltON)
         //         {
         //             let $section = $("<div>", {style:"padding:8px 16px"});
-        //                 let e=getOLMapExtent();
+        //                 let e=W.map.getOLExtent();
         //                 let geoNW=new OpenLayers.Geometry.Point(e.left,e.top);
         //                 let geoSE=new OpenLayers.Geometry.Point(e.right,e.bottom);
         //             $section.html([

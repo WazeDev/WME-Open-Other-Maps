@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         WME Open Other Maps
 // @namespace    https://greasyfork.org/users/30701-justins83-waze
-// @version      2024.09.21.01
+// @version      2024.09.23.01
 // @description  Links for opening external resources at the WME location and WME from external resources
 // @author       JustinS83
 // @match        https://www.waze.com/editor*
 // @match        https://www.waze.com/*/editor*
-// @match        https://beta.waze.com*
+// @match        https://beta.waze.com/editor*
+// @match        https://beta.waze.com/*/editor*
 // @match        *://www.google.com/maps*
 // @match        *://maps.google.com*
 // @match        *wv511.org/*

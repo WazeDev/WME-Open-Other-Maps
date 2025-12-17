@@ -1695,8 +1695,7 @@
         function initGoogleMaps(){
             let $OOMWazeButton = document.createElement("div");
             $OOMWazeButton.innerHTML = `<div id="OOMWazeButtonDiv" style="height:36px; width:36px; position: fixed; right:30px; top:75px; cursor: pointer; background-image: url(${wazerIcon}); background-size: 36px 36px; background-repeat: no-repeat;" title="Open in WME"></div>`;
-            let parent = document.getElementById("content-container");
-            parent.appendChild($OOMWazeButton);
+            document.body.appendChild($OOMWazeButton);
 
             document.getElementById("OOMWazeButtonDiv").addEventListener("click", function(){
                 window.open(GMToWaze());
